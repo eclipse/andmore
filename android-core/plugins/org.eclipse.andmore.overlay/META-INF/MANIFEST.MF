@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ADT XML Overlay
+Bundle-SymbolicName: overlay.org.eclipse.andmore.overlay;singleton:=true
+Bundle-Version: 0.5.0.qualifier
+Bundle-Vendor: The Android Open Source Project
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.ui,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.wst.sse.core,
+ org.eclipse.wst.sse.ui,
+ org.eclipse.wst.xml.core,
+ org.eclipse.wst.xml.ui,
+ org.eclipse.andmore
+Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.jface.text.formatter
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

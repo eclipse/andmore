@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+      <groupId>org.eclipse.andmore</groupId>
+      <artifactId>andmore-parent</artifactId>
+      <version>0.5.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.eclipse.andmore</groupId>
+  <artifactId>andmore-core</artifactId>
+  <version>0.5.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+    
+  
+  <modules>    
+    <module>plugins/android</module>
+    <module>plugins/android.codeutils</module>
+    <module>plugins/android.linux.x86</module>
+    <module>plugins/android.linux.x86_64</module>
+    <module>plugins/android.macosx</module>
+    <module>plugins/android.win32.x86</module>
+    <module>plugins/android.win32.x86_64</module>
+    <module>plugins/certmanager</module>
+    <module>plugins/common</module>
+    <module>plugins/db.core</module>
+    <module>plugins/db.devices</module>
+    <module>plugins/devices.services</module>
+    <module>plugins/emulator</module>
+    <module>plugins/handset</module>
+    <module>plugins/installer</module>
+    <module>plugins/launch</module>
+    <module>plugins/logger</module>
+    <module>plugins/logger.collector</module>
+    <module>plugins/mat</module>
+    <module>plugins/packaging.ui</module>
+    <module>plugins/remote.device</module>
+    <module>plugins/snippets</module>
+    <module>plugins/translation</module>
+    <module>plugins/videos</module>
+
+    <module>features/basic</module>
+    <module>features/feature</module>
+    <module>site</module>
+
+  </modules>
+  
+  
+  <build>
+  	<sourceDirectory>src</sourceDirectory>
+  </build>
+</project>

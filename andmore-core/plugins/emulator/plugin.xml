@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+
+<!--
+  Copyright (C) 2012 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<plugin>
+   <extension-point id="skin" name="%extensionPointSkin" schema="schema/skin.exsd"/>
+   <extension-point id="deviceFramework" name="Android Supported Device Framework" schema="schema/deviceFramework.exsd"/>
+   <extension-point id="androidEmulatorDefinition" name="Android Emulator Definition" schema="schema/androidEmulatorDefinition.exsd"/>
+   <extension-point id="androidPerspectiveExtension" name="Android Perspective Extension" schema="schema/androidPerspectiveExtension.exsd"/>
+   <extension id="status.offlineNoData" point="org.eclipse.sequoyah.device.framework.status">
+      <status
+            canDeleteInstance="true"
+            canEditProperties="true"
+            defaultServiceId="org.eclipse.andmore.android.emulator.startService"
+            id="org.eclipse.andmore.android.emulator.status.offlineNoData"
+            image="icons/stopped-icon-16x16.png"
+            name="%status.offlineNoData">
+      </status>
+   </extension>
+   <extension id="status.offline" point="org.eclipse.sequoyah.device.framework.status">
+      <status
+            canDeleteInstance="true"
+            canEditProperties="true"
+            defaultServiceId="org.eclipse.andmore.android.emulator.startService"
+            id="org.eclipse.andmore.android.emulator.status.offline"
+            image="icons/stopped-icon-16x16.png"
+            name="%status.offline">
+      </status>
+   </extension>
+   <extension id="status.online" point="org.eclipse.sequoyah.device.framework.status">
+      <status
+            canDeleteInstance="false"
+            canEditProperties="true"
+            defaultServiceId="org.eclipse.andmore.android.emulator.stopService"
+            id="org.eclipse.andmore.android.emulator.status.online"
+            image="icons/started-icon-16x16.png"
+            name="%status.online">
+      </status>
+   </extension>
+   <extension id="status.notavailable" point="org.eclipse.sequoyah.device.framework.status">
+      <status
+            canDeleteInstance="true"
+            canEditProperties="false"
+            id="org.eclipse.andmore.android.emulator.status.notavailable"
+            image="icons/notavailable-icon-16x16.png"
+            name="%status.notavailable">
+      </status>
+   </extension>
+   <extension point="org.eclipse.ui.propertyPages">
+      <page class="org.eclipse.andmore.android.emulator.device.ui.AndroidPropertiesPage" id="android.emulator.device.property.page" name="%android.emulator.device.property.page.name">
+         <enabledWhen>
+            <instanceof value="org.eclipse.andmore.android.emulator.device.instance.AndroidDeviceInstance">
+            </instanceof>
+         </enabledWhen>
+      </page>
+      <page category="android.emulator.device.property.page" class="org.eclipse.andmore.android.emulator.device.ui.AndroidPropertiesStartupOptionsPage" id="android.emulator.device.property.page.startupOptions" name="%android.emulator.device.property.page.startupOptions.name">
+         <enabledWhen>
+            <instanceof value="org.eclipse.andmore.android.emulator.device.instance.AndroidDeviceInstance">
+            </instanceof>
+         </enabledWhen>
+      </page>
+      <page
+            category="android.emulator.device.property.page"
+            class="org.eclipse.andmore.android.emulator.device.ui.DevicePropertiesPage"
+            id="android.emulator.device.properties.page"
+            name="%android.emulator.device.properties.page.name">
+         <enabledWhen>
+            <instanceof
+                  value="org.eclipse.andmore.android.emulator.device.instance.AndroidDeviceInstance">
+            </instanceof>
+         </enabledWhen>
+      </page>
+   </extension>
+   <extension id="initEmulatorService" name="initEmulatorService" point="org.eclipse.sequoyah.device.framework.service">
+      <service copyright="Copyright (C) 2012 The Android Open Source Project" description="Service to initialize an Android Emulator device" handler="org.eclipse.andmore.android.emulator.device.init.InitServiceHandler" icon="icons/iniciate-icon-16x16.png" id="org.eclipse.andmore.android.emulator.initEmulatorService" name="%initEmulatorServiceName" provider="Motorola Mobility, Inc." version="0.2.0" visible="false">
+      </service>
+   </extension>
+   <extension id="org.eclipse.andmore.android.emulator.androidDevice" name="%initEmulatorServiceName" point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service id="org.eclipse.andmore.android.emulator.initEmulatorService">
+         <status endId="org.eclipse.andmore.android.emulator.status.offline" haltId="org.eclipse.andmore.android.emulator.status.offlineNoData" startId="OFF">
+         </status></service>
+   </extension>
+   <extension point="org.eclipse.andmore.android.emulator.deviceFramework">
+      <deviceFramework class="org.eclipse.andmore.android.emulator.device.TmLDeviceFrameworkSupport">
+      </deviceFramework>
+   </extension>
+  <extension id="tmlInstanceViewContribution" point="org.eclipse.andmore.android.emulator.androidPerspectiveExtension">
+     <view area="devicemanagementviews" id="org.eclipse.sequoyah.device.framework.ui.InstanceMgtView">
+     </view>
+     <view area="emulationviews" id="org.eclipse.andmore.ddms.views.DeviceView">
+     </view>
+     <view area="emulationviews" id="org.eclipse.andmore.ddms.views.LogCatView">
+     </view>
+     <view area="emulationviews" id="org.eclipse.andmore.ddms.views.ThreadView">
+     </view>
+     <view area="emulationviews" id="org.eclipse.andmore.ddms.views.HeapView">
+     </view>
+     <view area="emulationviews" id="org.eclipse.andmore.ddms.views.FileExplorerView">
+     </view>
+     <view area="emulationviews" id="org.eclipse.andmore.ddms.views.EmulatorControlView">
+     </view>
+  </extension>
+  <extension id="androidDevice" name="androidDevice" point="org.eclipse.sequoyah.device.framework.deviceTypes">     
+     	<deviceType
+            dropSupportHandler="org.eclipse.andmore.android.emulator.device.EmulatorDropSupportHandler"
+            handler="org.eclipse.andmore.android.emulator.device.AndroidDeviceHandler"
+            icon="icons/plate16.gif"
+            id="org.eclipse.andmore.android.emulator.androidDevice"
+            isAbstract="false"
+            isPersistent="true"
+            label="%android.emulator.device.wizard.name"
+            name="%android.emulator.device.wizard.name">
+     	</deviceType>     
+  </extension>
+  <extension point="org.eclipse.sequoyah.device.framework.ui.newDeviceWizardPages">
+       <wizardPage id="org.eclipse.andmore.android.emulator.device.ui.wizard.mainPage" operationClass="org.eclipse.andmore.android.emulator.device.ui.wizard.WizardMainPageOperation" pageClass="org.eclipse.andmore.android.emulator.device.ui.wizard.WizardMainPage">
+          <deviceType deviceTypeId="org.eclipse.andmore.android.emulator.androidDevice">
+          </deviceType>
+       </wizardPage>
+       <wizardPage id="org.eclipse.andmore.android.emulator.device.ui.wizard.startupOptionsPage" pageClass="org.eclipse.andmore.android.emulator.device.ui.wizard.WizardStartupOptionsPage">
+          <deviceType deviceTypeId="org.eclipse.andmore.android.emulator.androidDevice">
+          </deviceType>
+       </wizardPage>
+   </extension>
+  <extension point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.andmore.android.emulator.device.refresh.InstancesListRefreshHandler"
+            id="org.eclipse.andmore.android.device.refresh.avd.list"
+            name="%toolbarRefreshList">
+      </command>
+      <command defaultHandler="org.eclipse.andmore.android.emulator.device.handlers.OpenNewDeviceWizardHandler" id="org.eclipse.andmore.android.device.new.avd.wizard" name="%newAvdWizardName">
+      </command>
+  </extension>
+  <extension point="org.eclipse.ui.menus">
+   	<menuContribution locationURI="toolbar:org.eclipse.sequoyah.device.framework.ui.InstanceMgtView">
+         <command commandId="org.eclipse.andmore.android.device.refresh.avd.list" icon="icons/refresh.png" label="%toolbarRefreshList">
+         </command>         
+   	</menuContribution>
+   	 <menuContribution locationURI="menu:motorolaMenu?after=otherNewWizardsSeparator">
+       <command commandId="org.eclipse.andmore.android.device.new.avd.wizard" icon="icons/device.png" label="%newAvdWizardName" style="push">
+       </command>
+    </menuContribution>
+   </extension>
+  <extension
+        point="org.eclipse.ui.startup">
+     <startup
+           class="org.eclipse.andmore.android.emulator.device.CreateAVDOnStartupListener">
+     </startup>
+     <startup
+           class="org.eclipse.andmore.android.emulator.device.SequoyahInstanceBackward">
+     </startup>
+  </extension>
+  <extension
+        point="org.eclipse.sequoyah.device.framework.ui.deviceManagerView">
+     <Style
+           useDropDown="true"
+           viewLayout="horizontal">
+     </Style>
+  </extension>
+   <extension
+         id="resetService"
+         name="resetService"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="%copyright"
+            description="%resetServiceDescription"
+            handler="org.eclipse.andmore.android.emulator.service.reset.ResetServiceHandler"
+            icon="resource/reset.png"
+            id="org.eclipse.andmore.android.emulator.resetService"
+            name="%resetServiceName"
+            parallelized="true"
+            provider="%providerName"
+            version="0.2.0"
+            visible="true">
+      </service>
+   </extension>
+  <extension
+         id="org.eclipse.andmore.android.emulator.androidDevice"
+         name="%resetServiceName"
+         point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service
+            id="org.eclipse.andmore.android.emulator.resetService">
+         <status
+               endId="org.eclipse.andmore.android.emulator.status.offlineNoData"
+               haltId="org.eclipse.andmore.android.emulator.status.offline"
+               startId="org.eclipse.andmore.android.emulator.status.offline">
+         </status></service>
+   </extension>
+   <extension
+         id="stopService"
+         name="%stopServiceName"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="%copyright"
+            description="%stopDescription"
+            handler="org.eclipse.andmore.android.emulator.service.stop.StopEmulatorHandler"
+            icon="icons/stop.png"
+            id="org.eclipse.andmore.android.emulator.stopService"
+            name="%stopServiceName"
+            parallelized="true"
+            provider="%providerName"
+            version="0.2.0"
+            visible="true">
+      </service>
+   </extension>
+   <extension
+         id="org.eclipse.andmore.android.emulator.androidDevice"
+         name="%stopServiceName"
+         point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service
+            id="org.eclipse.andmore.android.emulator.stopService">
+         <status
+               endId="org.eclipse.andmore.android.emulator.status.offline"
+               haltId="org.eclipse.andmore.android.emulator.device.status.online"               
+               startId="org.eclipse.andmore.android.emulator.status.online">
+         </status>
+      </service>
+   </extension>
+   <extension
+         id="org.eclipse.andmore.android.emulator.androidDevice"
+         name="%repairServiceName"
+         point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service
+            id="org.eclipse.andmore.android.emulator.repairService">
+         <status
+               endId="org.eclipse.andmore.android.emulator.status.offline"
+               haltId="org.eclipse.andmore.android.emulator.status.notavailable"
+               startId="org.eclipse.andmore.android.emulator.status.notavailable">
+         </status>
+      </service>
+   </extension>
+   <extension
+         id="repairService"
+         name="%repairServiceName"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="%copyright"
+            description="%repairDescription"
+            handler="org.eclipse.andmore.android.emulator.service.repair.RepairAvdHandler"
+            icon="icons/repair.png"
+            id="org.eclipse.andmore.android.emulator.repairService"
+            name="%repairServiceName"
+            parallelized="true"
+            provider="%providerName"
+            version="0.1.0"
+            visible="true">
+      </service>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.andmore.android.emulator.view.popup">
+         <command
+               commandId="org.eclipse.andmore.android.device.stop.emulator"
+               icon="icons/stop.png"
+               id="blah"
+               label="%stopServiceName"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.andmore.android.emulator.service.stop.StopEmulatorCommand"
+            id="org.eclipse.andmore.android.device.stop.emulator"
+            name="%stopServiceName">
+      </command>
+   </extension>
+    <extension
+         id="org.eclipse.andmore.android.emulator10.defaultEmulatorDefinitions"
+         name="Default Emulator Definitions"
+         point="org.eclipse.andmore.android.emulator.androidEmulatorDefinition">
+      <skin
+            id="org.eclipse.andmore.android.emulator.skin.android.androidSkin"
+            size="HVGA">
+      </skin>
+      <startLogic
+            class="org.eclipse.andmore.android.emulator10.StartAndroidEmulatorLogic">
+      </startLogic>
+      <inputLogic
+            class="org.eclipse.andmore.android.emulator.core.utils.TelnetAndroidInput"></inputLogic>
+   </extension>
+   <extension
+         id="startService"
+         name="%startServiceName"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="%copyright"
+            description="%startDescription"
+            handler="org.eclipse.andmore.android.emulator.service.start.StartEmulatorHandler"
+            icon="icons/start.png"
+            id="org.eclipse.andmore.android.emulator.startService"
+            interval="1000"
+            name="%startServiceName"
+            parallelized="true"
+            provider="%providerName"
+            version="0.2.0"
+            visible="true">
+      </service>
+   </extension>
+   <extension
+         id="org.eclipse.andmore.android.emulator.androidDevice"
+         name="%startServiceName"
+         point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service
+            id="org.eclipse.andmore.android.emulator.startService">
+         <status
+               endId="org.eclipse.andmore.android.emulator.status.online"
+               haltId="org.eclipse.andmore.android.emulator.status.offlineNoData"
+               startId="org.eclipse.andmore.android.emulator.status.offlineNoData">
+         </status>
+         <status
+               endId="org.eclipse.andmore.android.emulator.status.online"
+               haltId="org.eclipse.andmore.android.emulator.status.offline"
+               startId="org.eclipse.andmore.android.emulator.status.offline">
+         </status></service>
+   </extension>
+   <extension
+         id="org.eclipse.andmore.android.emulator.skin.android.androidSkin"
+         name=""
+         point="org.eclipse.andmore.android.emulator.skin">
+      <skinInfo
+            class="org.eclipse.andmore.android.emulator.skin.android.AndroidSkin"
+            skinId="org.eclipse.andmore.android.emulator.skin.android.androidSkin"
+            skinName="Android Google Skin">
+      </skinInfo>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.debug.ui.DebugPerspective">
+         <viewShortcut
+               id="org.eclipse.andmore.android.emulator.androidView">
+         </viewShortcut>
+         <view
+               id="org.eclipse.andmore.android.emulator.androidView"
+               minimized="false"
+               ratio="0.7"
+               relationship="stack"
+               relative="org.eclipse.ui.views.ContentOutline"
+               showTitle="true"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="studioAndroidViewCategory"
+            class="org.eclipse.andmore.android.emulator.ui.view.AndroidView"
+            icon="resource/emulator.png"
+            id="org.eclipse.andmore.android.emulator.androidView"
+            name="%androidEmulatorViewName">
+      </view>      
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.andmore.android.emulator.ui.handlers.ChangeZoomHandler"
+            commandId="org.eclipse.andmore.android.emulator.ui.change.zoom">
+      </handler>
+      <handler
+            class="org.eclipse.andmore.android.emulator.ui.handlers.ZoomInOutHandler"
+            commandId="org.eclipse.andmore.android.emulator.ui.zoomInOut">
+      </handler>
+      <handler
+            class="org.eclipse.andmore.android.emulator.ui.handlers.ShowViewHandler"
+            commandId="org.eclipse.andmore.android.emulator.ui.show.android.emulator.view">
+      </handler>
+      <!--handler
+            class="org.eclipse.andmore.android.emulator.ui.handlers.ChangeEmulatorOrientationHandler"
+            commandId="changeEmulatorOrientationCommand">
+      </handler-->
+      <handler
+            class="org.eclipse.andmore.android.emulator.ui.handlers.ChangeEmulatorOrientationHandler"
+            commandId="switchToNextLayoutCommand">
+      </handler>  
+   </extension>
+
+   
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.eclipse.andmore.android.emulator.ui.show.android.emulator.view"
+            name="%androidEmulatorViewName">
+         <commandParameter
+               id="activeViewId"
+               name="activeViewId"
+               optional="false">
+         </commandParameter>
+      </command>
+      <command
+            id="switchToNextLayoutCommand"
+            name="%menuSwitchToNextLayout">
+            <commandParameter
+               id="activeViewId"
+               name="activeViewId"
+               optional="false">
+         </commandParameter>
+      </command>
+      <command
+            id="org.eclipse.andmore.android.emulator.ui.zoomInOut"
+            name="%submenuZoom">
+         <commandParameter
+               id="activeViewId"
+               name="activeViewId"
+               optional="false">
+         </commandParameter>
+         <commandParameter
+               id="zoomChangeFactor"
+               name="zoomChangeFactor"
+               optional="false">
+         </commandParameter>
+      </command>
+      <command
+            id="org.eclipse.andmore.android.emulator.ui.change.zoom"
+            name="%submenuZoom">
+         <commandParameter
+               id="activeViewId"
+               name="activeViewId"
+               optional="false">
+         </commandParameter>
+         <commandParameter
+               id="zoomFactor"
+               name="zoomFactor"
+               optional="true">
+         </commandParameter>
+      </command>
+   </extension>
+   
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.andmore.android.emulator.androidView">
+         <menu
+               label="%submenuZoom">
+                        <command
+                              commandId="org.eclipse.andmore.android.emulator.ui.change.zoom"
+                              label="%menuZoom25"
+                              style="radio">
+                           <parameter
+                                 name="activeViewId"
+                                 value="org.eclipse.andmore.android.emulator.androidView">
+                           </parameter>
+                           <parameter
+                                 name="zoomFactor"
+                                 value="0.25">
+                           </parameter>
+         </command>
+         <command
+               commandId="org.eclipse.andmore.android.emulator.ui.change.zoom"
+               label="%menuZoom50"
+               style="radio">
+            <parameter
+                  name="activeViewId"
+                  value="org.eclipse.andmore.android.emulator.androidView">
+            </parameter>
+            <parameter
+                  name="zoomFactor"
+                  value="0.50">
+            </parameter>
+         </command>
+         <command
+               commandId="org.eclipse.andmore.android.emulator.ui.change.zoom"
+               label="%menuZoom75"
+               style="radio">
+            <parameter
+                  name="activeViewId"
+                  value="org.eclipse.andmore.android.emulator.androidView">
+            </parameter>
+            <parameter
+                  name="zoomFactor"
+                  value="0.75">
+            </parameter>
+         </command>
+         <command
+               commandId="org.eclipse.andmore.android.emulator.ui.change.zoom"
+               label="%menuZoom100"
+               style="radio">
+            <parameter
+                  name="activeViewId"
+                  value="org.eclipse.andmore.android.emulator.androidView">
+            </parameter>
+            <parameter
+                  name="zoomFactor"
+                  value="1.00">
+            </parameter>
+         </command>
+         <command
+               commandId="org.eclipse.andmore.android.emulator.ui.change.zoom"
+               label="%menuZoomFit"
+               style="radio">
+            <parameter
+                  name="activeViewId"
+                  value="org.eclipse.andmore.android.emulator.androidView">
+            </parameter>
+            <parameter
+                  name="zoomFactor"
+                  value="0.00">
+            </parameter>
+         </command>
+         <separator
+               name="separator"
+               visible="true">
+         </separator>         
+                  
+          <command
+               commandId="org.eclipse.andmore.android.emulator.ui.zoomInOut"
+               icon="resource/zoom-in.png"
+               label="%menuZoomIn"
+               style="push">
+            <parameter
+                  name="activeViewId"
+                  value="org.eclipse.andmore.android.emulator.androidView">
+            </parameter>
+            <parameter
+                  name="zoomChangeFactor"
+                  value="0.25">
+            </parameter>
+         </command>
+         <command
+               commandId="org.eclipse.andmore.android.emulator.ui.zoomInOut"
+               icon="resource/zoom-out.png"
+               label="%menuZoomOut"
+               style="push">
+            <parameter
+                  name="activeViewId"
+                  value="org.eclipse.andmore.android.emulator.androidView">
+            </parameter>
+            <parameter
+                  name="zoomChangeFactor"
+                  value="-0.25">
+            </parameter>
+         </command>        
+         </menu>
+         <separator
+               name="emulator.separator"
+               visible="true">
+         </separator>
+         <command
+               commandId="switchToNextLayoutCommand"
+               icon="resource/flip.png"
+               id="androidViewSwitchOrientation"
+               label="%toolbarSwitchLayout"
+               style="push"
+               tooltip="%toolbarSwitchLayout">
+               <parameter
+                   name="activeViewId"
+                   value="org.eclipse.andmore.android.emulator.androidView">
+               </parameter>
+         </command>
+      </menuContribution>
+      
+      
+      <menuContribution
+            locationURI="toolbar:org.eclipse.andmore.android.emulator.androidView">
+         <command
+               commandId="org.eclipse.andmore.android.emulator.ui.zoomInOut"
+               icon="resource/zoom-in.png"
+               label="%menuZoomIn"
+               style="push">
+            <parameter
+                  name="activeViewId"
+                  value="org.eclipse.andmore.android.emulator.androidView">
+            </parameter>
+            <parameter
+                  name="zoomChangeFactor"
+                  value="0.25">
+            </parameter>
+         </command>
+         <command
+               commandId="org.eclipse.andmore.android.emulator.ui.zoomInOut"
+               icon="resource/zoom-out.png"
+               label="%menuZoomOut"
+               style="push">
+            <parameter
+                  name="activeViewId"
+                  value="org.eclipse.andmore.android.emulator.androidView">
+            </parameter>
+            <parameter
+                  name="zoomChangeFactor"
+                  value="-0.25">
+            </parameter>
+         </command>
+         <separator
+               name="separator"
+               visible="true">
+         </separator>
+         <command
+               commandId="switchToNextLayoutCommand"
+               icon="resource/flip.png"
+               id="androidViewSwitchOrientation"
+               label="%toolbarSwitchLayout"
+               style="push"
+               tooltip="%toolbarSwitchLayout">
+               <parameter
+                   name="activeViewId"
+                   value="org.eclipse.andmore.android.emulator.androidView">
+               </parameter>
+         </command>
+      </menuContribution>
+   </extension>
+         <extension
+               point="org.eclipse.ui.newWizards">
+            <category
+                  id="org.eclipse.andmore.android.emulator.ui.wizardCategory"
+                  name="%android.emulator.wizard.category">
+            </category>
+         </extension>
+</plugin>

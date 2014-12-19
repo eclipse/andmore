@@ -1,0 +1,2086 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.eclipse.andmore.android.codesnippets.AndroidSnippetsStartup"></startup>
+   </extension>
+   <extension point="org.eclipse.wst.common.snippets.SnippetContributions">
+    <category
+          description="%category.service.description"
+          id="android_services"
+          label="%category.service">
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.service.systemService00.description"
+             id="org.eclipse.andmore.android.codesnippets.item3"
+             label="%snippet.service.systemService00">
+          <content>
+             // To use this ActivityManager method, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.GET_TASKS&quot;/&gt;
+ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+          </content>
+       </item>
+       <item
+             description="%snippet.service.systemService01.description"
+             id="org.eclipse.andmore.android.codesnippets.item4"
+             label="%snippet.service.systemService01">
+          <content>
+             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+          </content>
+       </item>
+       <item
+             description="%snippet.service.systemService02.description"
+             id="org.eclipse.andmore.android.codesnippets.item5"
+             label="%snippet.service.systemService02">
+          <content>
+             AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+          </content>
+       </item>
+       <item
+             description="%snippet.service.systemService03.description"
+             id="org.eclipse.andmore.android.codesnippets.item6"
+             label="%snippet.service.systemService03">
+          <content>
+             ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+          </content>
+       </item>
+       <item
+       class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.service.systemService04.description"
+             id="org.eclipse.andmore.android.codesnippets.item7"
+             label="%snippet.service.systemService04">
+          <content>
+             // To use this ConectivityManager method, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot;/&gt;
+ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+          </content>
+       </item>
+       <item
+             description="%snippet.service.systemService05.description"
+             id="org.eclipse.andmore.android.codesnippets.item8"
+             label="%snippet.service.systemService05">
+          <content>
+             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+          </content>
+       </item>
+       <item
+             description="%snippet.service.systemService06.description"
+             id="org.eclipse.andmore.android.codesnippets.item9"
+             label="%snippet.service.systemService06">
+          <content>
+             KeyguardManager keyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+          </content>
+       </item>
+       <item
+             description="%snippet.service.systemService07.description"
+             id="org.eclipse.andmore.android.codesnippets.item10"
+             label="%snippet.service.systemService07">
+          <content>
+             LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+          </content>
+       </item>
+       <item
+             description="%snippet.service.systemService08.description"
+             id="org.eclipse.andmore.android.codesnippets.item11"
+             label="%snippet.service.systemService08">
+          <content>
+             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+          </content>
+       </item>
+       <item
+             description="%snippet.service.systemService09.description"
+             id="org.eclipse.andmore.android.codesnippets.item12"
+             label="%snippet.service.systemService09">
+          <content>
+             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+          </content>
+       </item>
+       <item
+       class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.service.systemService10.description"
+             id="org.eclipse.andmore.android.codesnippets.item13"
+             label="%snippet.service.systemService10">
+          <content>
+             // To use this PowerManager method, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.DEVICE_POWER&quot;/&gt;
+PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+          </content>
+       </item>
+       <item
+             description="%snippet.service.systemService11.description"
+             id="org.eclipse.andmore.android.codesnippets.item14"
+             label="%snippet.service.systemService11">
+          <content>
+             SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+          </content>
+       </item>
+       <item
+             description="%snippet.service.systemService12.description"
+             id="org.eclipse.andmore.android.codesnippets.item15"
+             label="%snippet.service.systemService12">
+          <content>
+             SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+          </content>
+       </item>
+       <item
+       class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.service.systemService13.description"
+             id="org.eclipse.andmore.android.codesnippets.item32"
+             label="%snippet.service.systemService13">
+          <content>
+             // To use this TelephonyManager method, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.READ_PHONE_STATE&quot;/&gt;
+TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+          </content>
+       </item>
+       <item
+       class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.service.systemService14.description"
+             id="org.eclipse.andmore.android.codesnippets.item33"
+             label="%snippet.service.systemService14">
+          <content>
+             // To use this Vibrator method, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.VIBRATE&quot;/&gt;
+Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+          </content>
+       </item>
+       <item
+       class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.service.systemService15.description"
+             id="org.eclipse.andmore.android.codesnippets.item34"
+             label="%snippet.service.systemService15">
+          <content>
+             // To use this WallpaperService method, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.SET_WALLPAPER&quot;/&gt;
+WallpaperService wallpaperService = (WallpaperService) getSystemService(Context.WALLPAPER_SERVICE);
+          </content>
+       </item>
+       <item
+       class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.service.systemService16.description"
+             id="org.eclipse.andmore.android.codesnippets.item35"
+             label="%snippet.service.systemService16">
+          <content>
+             // To use this WifiManager method, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.ACCESS_WIFI_STATE&quot;/&gt;
+WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+          </content>
+       </item>
+       <item
+             description="%snippet.service.systemService17.description"
+             id="org.eclipse.andmore.android.codesnippets.item36"
+             label="%snippet.service.systemService17">
+          <content>
+             WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+          </content>
+       </item>
+    </category>         
+		
+		
+		
+		<category
+        description="%category.general.description"
+        id="android_general"
+        label="%category.general">
+        <item
+        class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+              description="%snippet.general.sendSMS.description"
+              id="org.eclipse.andmore.android.codesnippets.item9"
+              label="%snippet.general.sendSMS">
+           <content>
+              // To use these SmsManager methods, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.SEND_SMS&quot;/&gt;
+SmsManager m = SmsManager.getDefault();
+String destinationNumber =&quot;0123456789&quot;;  
+String text = &quot;Hello!&quot;;  
+m.sendTextMessage(destinationNumber, null, text, null, null);
+           </content>
+        </item>
+        <item
+              description="%snippet.general.toast.description"
+              id="org.eclipse.andmore.android.codesnippets.item8"
+              label="%snippet.general.toast">
+           <content>
+              Toast.makeText(this, &quot;Put your message here&quot;, Toast.LENGTH_SHORT).show();
+           </content>
+        </item>
+        <item
+              description="%snippet.general.statusBar.description"
+              id="org.eclipse.andmore.android.codesnippets.item31"
+              label="%snippet.general.statusBar">
+           <content>
+              int notificationID = 10;
+NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+// Create the notification
+Notification notification = new Notification(R.drawable.yourIconId, &quot;Put your notification text here&quot;, System.currentTimeMillis());
+// Create the notification's expanded message
+// When the user clicks on it, it opens your activity
+Intent intent = new Intent(this, YourActivityName.class);
+PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+notification.setLatestEventInfo(this, &quot;Put your title here&quot;, &quot;Put your text here&quot;, pendingIntent);
+// Show notification
+notificationManager.notify(notificationID, notification);
+           </content>
+        </item>
+        <item
+        class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+              description="%snippet.general.vibrateTime.description"
+              id="org.eclipse.andmore.android.codesnippets.item6"
+              label="%snippet.general.vibrateTime">
+           <content>
+              // To use these Vibrator methods, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.VIBRATE&quot;/&gt;
+// Vibrate for 1 second
+Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE); 
+vibrator.vibrate(1000);
+           </content>
+        </item>
+        <item
+        class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+              description="%snippet.general.vibratePattern.description"
+              id="org.eclipse.andmore.android.codesnippets.item25"
+              label="%snippet.general.vibratePattern">
+           <content>
+// To use these Vibrator methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.VIBRATE&quot;/&gt;
+// Vibrate in a pattern with 0ms off(start immediately), 200ms on, 100ms off, 100ms on, 500ms off, 500ms on,
+// repeating the pattern starting from index 4: 100ms on. 
+// Note that you'll have to call vibrator.cancel() in order to stop the vibrator.
+// Change the second parameter to -1 if you want play the pattern only once. 
+Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+vibrator.vibrate(new long[] {0, 200, 100, 100, 500, 500}, 4);
+           </content>
+        </item>
+        <item
+        class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+              description="%snippet.general.strictMode.description"
+              id="org.eclipse.andmore.android.codesnippets.item25"
+              label="%snippet.general.strictMode">
+           <content>
+        // Add or remove any policies and penalties strict mode checking.
+        // This is for application development and testing and should be
+        // removed before your application reaches the market.
+        // For more details of what each method does, check
+        // http://developer.android.com/reference/android/os/StrictMode.ThreadPolicy.Builder.html
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                 .detectDiskReads()
+                 .detectDiskWrites()
+                 .detectNetwork()   // or .detectAll() for all detectable problems
+                 .penaltyDialog() 
+                 .penaltyLog()	
+                 .build());
+         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                 .detectLeakedSqlLiteObjects()
+                 .penaltyLog() 
+                 .penaltyDeath() 
+                 .build());
+         // you can also use the penaltyDropBox() as an alternative to displaying a violation occurrence
+           </content>
+        </item>
+		 </category>
+		 
+		 
+		 
+		 
+	   <category
+          description="%category.database.description"
+          id="android_database"
+          label="%category.database">
+       <item
+             description="%snippet.database.createOrOpenDb.description"
+             id="org.eclipse.andmore.android.codesnippets.item29"
+             label="%snippet.database.createOrOpenDb">
+          <content>
+             SQLiteDatabase db =openOrCreateDatabase(&quot;MyDatabaseName&quot;, MODE_PRIVATE, null);
+          </content>
+       </item>
+       <item
+             description="%snippet.database.deleteDb.description"
+             id="org.eclipse.andmore.android.codesnippets.item5"
+             label="%snippet.database.deleteDb">
+          <content>
+             boolean success = deleteDatabase(&quot;MyDatabaseName&quot;);
+          </content>
+       </item>
+       <item
+             description="%snippet.database.createTbl.description"
+             id="org.eclipse.andmore.android.codesnippets.item17"
+             label="%snippet.database.createTbl">
+          <content>
+             db.execSQL(&quot;CREATE TABLE MyTableName (_id INTEGER PRIMARY KEY AUTOINCREMENT, YourColumnName TEXT);&quot;);
+          </content>
+       </item>
+       <item
+             description="%snippet.database.deleteTbl.description"
+             id="org.eclipse.andmore.android.codesnippets.item18"
+             label="%snippet.database.deleteTbl">
+          <content>
+             db.execSQL(&quot;DROP TABLE IF EXISTS MyTableName&quot;);
+          </content>
+       </item>
+       <item
+             description="%snippet.database.insertEntry.description"
+             id="org.eclipse.andmore.android.codesnippets.item20"
+             label="%snippet.database.insertEntry">
+          <content>
+             // Since SQL doesn&apos;t allow the insertion of a completely empty row, the second parameter of db.insert defines the column that will receive NULL if cv is empty
+ContentValues cv=new ContentValues();
+cv.put(&quot;YourColumnName&quot;, &quot;YourColumnValue&quot;);
+db.insert(&quot;MyTableName&quot;, &quot;YourColumnName&quot;, cv);
+          </content>
+       </item>
+       <item
+             description="%snippet.database.updateEntry.description"
+             id="org.eclipse.andmore.android.codesnippets.item21"
+             label="%snippet.database.updateEntry">
+          <content>
+             ContentValues cv=new ContentValues();
+cv.put(&quot;YourColumnName&quot;, &quot;YourColumnValue&quot;);
+db.update(&quot;MyTableName&quot;, cv, &quot;_id=?&quot;, new String[]{&quot;1&quot;});
+          </content>
+       </item>
+       <item
+             description="%snippet.database.deleteEntry.description"
+             id="org.eclipse.andmore.android.codesnippets.item22"
+             label="%snippet.database.deleteEntry">
+          <content>
+             db.delete(&quot;MyTableName&quot;,&quot;_id=?&quot;, new String[]{&quot;1&quot;});
+          </content>
+       </item>
+       <item
+             description="%snippet.database.runQuery.description"
+             id="org.eclipse.andmore.android.codesnippets.item23"
+             label="%snippet.database.runQuery">
+          <content>
+             Cursor c=db.rawQuery(SQL_COMMAND, null);
+          </content>
+       </item>
+       </category>
+       
+       
+       
+       
+       
+       <category
+             description="%category.menus.description"
+             id="android_menus"
+             label="%category.menus">
+       <item
+             description="%snippet.menus.handleItems.description"
+             id="org.eclipse.andmore.android.codesnippets.item3"
+             label="%snippet.menus.handleItems">
+          <content>
+             /*
+* Add this in your Activity
+*/
+private final int MENU_ITEM_0 = 0;  
+private final int MENU_ITEM_1 = 1;  
+ 
+
+/** 
+ * Add menu items
+ * 
+ * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+ */
+public boolean onCreateOptionsMenu(Menu menu) {  
+    menu.add(0, MENU_ITEM_0, 0, &quot;Menu Item 0&quot;);  
+    menu.add(0, MENU_ITEM_1, 0, &quot;Menu Item 1&quot;);  
+    return true;  
+}  
+ 
+/** 
+ * Define menu action
+ * 
+ * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+ */
+public boolean onOptionsItemSelected(MenuItem item) {  
+    switch (item.getItemId()) {  
+        case MENU_ITEM_0:  
+        	// put your code here 
+        	break;
+        case MENU_ITEM_1: 
+        	// put your code here 
+        	break;
+	  default:
+		// put your code here	  
+    }  
+    return false;  
+}
+          </content>
+       </item>
+       <item
+             description="%snippet.menus.disableItem.description"
+             id="org.eclipse.andmore.android.codesnippets.item2"
+             label="%snippet.menus.disableItem">
+          <content>
+             menu.findItem(&quot;yourItemId&quot;).setEnabled(false);
+          </content>
+       </item>
+       <item
+             description="%snippet.menus.subItem.description"
+             id="org.eclipse.andmore.android.codesnippets.item3"
+             label="%snippet.menus.subItem">
+          <content>
+             SubMenu subMenu = menu.addSubMenu(&quot;YourMenu&quot;);
+			 subMenu.add(&quot;YourSubMenu1&quot;);
+             
+          </content>
+       </item>
+       <item
+             description="%snippet.menus.declareMenuXML.description"
+             id="org.eclipse.andmore.android.codesnippets.item4"
+             label="%snippet.menus.declareMenuXML">
+          <content>
+             &lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+    &lt;item android:id=&quot;@+id/menu_0&quot;
+          android:title=&quot;Menu Item 0&quot; /&gt;
+    &lt;item android:id=&quot;@+id/menu_1&quot;
+          android:title=&quot;Menu Item 1&quot; /&gt;
+&lt;/menu&gt;
+          </content>
+       </item>
+       <item
+             description="%snippet.menus.inflateMenu.description"
+             id="org.eclipse.andmore.android.codesnippets.item5"
+             label="%snippet.menus.inflateMenu">
+          <content>
+             /**
+* Inflate Menu from XML
+*/
+public boolean onCreateOptionsMenu(Menu menu) {
+    super.onCreateOptionsMenu(menu);
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.yourXMLName, menu);
+    return true;
+}
+          </content>
+       </item>
+       <item
+             description="%snippet.menus.showActionBar.description"
+             id="org.eclipse.andmore.android.codesnippets.item6"
+             label="%snippet.menus.showActionBar">
+          <content>
+             //Notes: 
+// - The Action Bar was introduced in API level 11.
+//    If you set minSDKVersion &lt; 11 or targetSDKVersion &lt; 11 or 
+//    if you do not set any of these, getActionBar() will return null. 
+// - If you removed the Action Bar using a theme,
+//   getActionBar() will return null.
+if (getActionBar() != null){
+	getActionBar().show();
+}
+          </content>
+       </item>
+       <item
+             description="%snippet.menus.hideActionBar.description"
+             id="org.eclipse.andmore.android.codesnippets.item7"
+             label="%snippet.menus.hideActionBar">
+          <content>
+             //Notes: 
+// - The Action Bar was introduced in API level 11.
+//    If you set minSDKVersion &lt; 11 or targetSDKVersion &lt; 11 or 
+//    if you do not set any of these, getActionBar() will return null. 
+// - If you removed the Action Bar using a theme,
+//   getActionBar() will return null.
+if (getActionBar() != null){
+	getActionBar().hide();
+}
+          </content>
+       </item>
+       <item
+             description="%snippet.menus.toggle.actionbar.description"
+             id="org.eclipse.andmore.android.codesnippets.item9"
+             label="%snippet.menus.toggle.actionbar.label">
+          <content>
+             //Toggles action bar state (If visible, hides it. If hidden, shows it)
+ActionBar bar = getActionBar();
+if (bar != null) {
+	if (bar.isShowing()) {
+		bar.hide();
+	}
+	else {
+		bar.show();
+	}
+}
+          </content>
+       </item>
+       <item
+             description="%snippet.menus.manage.actionbar.description"
+             id="org.eclipse.andmore.android.codesnippets.item8"
+             label="%snippet.menus.manage.actionbar.label">
+          <content>
+             //Sets the action bar navigation mode
+ActionBar actionBar = getActionBar();
+actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+          </content>
+       </item>
+    </category>
+    <category
+          description="%category.dialogs.description"
+          id="android_dialogs"
+          label="%category.dialogs">
+       <item
+             description="%snippet.dialogs.alert.description"
+             id="org.eclipse.andmore.android.codesnippets.item26"
+             label="%snippet.dialogs.alert">
+          <content>
+             AlertDialog.Builder builder = new AlertDialog.Builder(this);
+builder.setMessage(&quot;Put your question here?&quot;)
+       .setCancelable(false)
+       .setPositiveButton(&quot;Yes&quot;, new DialogInterface.OnClickListener() {
+           public void onClick(DialogInterface dialog, int id) {
+                // put your code here
+           }
+       })
+       .setNegativeButton(&quot;No&quot;, new DialogInterface.OnClickListener() {
+           public void onClick(DialogInterface dialog, int id) {
+        	   // put your code here 
+        	   dialog.cancel();
+           }
+       });
+AlertDialog alertDialog = builder.create();
+alertDialog.show();
+          </content>
+       </item>
+       <item
+             description="%snippet.dialogs.progressDialog"
+             id="org.eclipse.andmore.android.codesnippets.item27"
+             label="%snippet.dialogs.progressDialog">
+          <content>
+             ProgressDialog dialog = ProgressDialog.show(this, &quot;Your Title&quot;, &quot;Put your message here&quot;, true);
+          </content>
+       </item>
+       <item
+             description="%snippet.dialogs.progressBar.description"
+             id="org.eclipse.andmore.android.codesnippets.item29"
+             label="%snippet.dialogs.progressBar">
+          <content>
+             ProgressDialog progressDialog = new ProgressDialog(this);
+progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+progressDialog.setMax(PROGRESS_MAX);
+progressDialog.setMessage(&quot;Put your message here&quot;);
+progressDialog.setCancelable(false);
+progressDialog.incrementProgressBy(PROGRESS_INCREMENT);
+          </content>
+       </item>
+       <item
+             description="%snippet.dialogs.datePicker.description"
+             id="org.eclipse.andmore.android.codesnippets.item28"
+             label="%snippet.dialogs.datePicker">
+          <content>
+             // Define the date picker dialog listener, which will be called after
+// the user picks a date in the displayed dialog
+DatePickerDialog.OnDateSetListener datePickerDialogListener =
+    new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, 
+                              int monthOfYear, int dayOfMonth) {
+            // put your code here
+        	// update your model/view with the date selected by the user
+        }
+    };
+
+// Get the current date
+Calendar calendar = Calendar.getInstance();
+int year = calendar.get(Calendar.YEAR);
+int month = calendar.get(Calendar.MONTH);
+int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+// Create a date picker dialog
+DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+		datePickerDialogListener,
+		year, month, day);
+
+// Display the date picker dialog
+datePickerDialog.show();
+             
+          </content>
+       </item>
+       <item
+             description="%snippet.dialogs.timePicker.description"
+             id="org.eclipse.andmore.android.codesnippets.item25"
+             label="%snippet.dialogs.timePicker">
+          <content>
+             // Define the date picker dialog listener, which will be called after
+// the user picks a time in the displayed dialog
+TimePickerDialog.OnTimeSetListener timePickerDialogListener =
+    new TimePickerDialog.OnTimeSetListener() {
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        	// put your code here
+        	// update your model/view with the date selected by the user
+        }
+    };
+
+// Get the current time
+Calendar c = Calendar.getInstance();
+int hour = c.get(Calendar.HOUR_OF_DAY);
+int minute = c.get(Calendar.MINUTE);
+
+// Create a time picker dialog
+TimePickerDialog timerPickerDialog = new TimePickerDialog(this,
+		timePickerDialogListener, hour, minute, false);
+
+// Display the time picker dialog
+timerPickerDialog.show();
+             
+          </content>
+       </item>
+       <item
+             description="%snippet.dialogs.custom.description"
+             id="org.eclipse.andmore.android.codesnippets.item30"
+             label="%snippet.dialogs.custom">
+          <content>
+             Dialog dialog = new Dialog(this);
+dialog.setContentView(R.layout.yourLayoutId);
+dialog.show();
+             
+          </content>
+       </item>
+       <item
+             id="org.eclipse.andmore.android.codesnippets.item9"
+             label="%snippet.dialogs.customAlert">
+          <content>
+             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+View layout = inflater.inflate(R.layout.yourLayoutId, (ViewGroup) findViewById(R.id.yourLayoutRoot));
+AlertDialog.Builder builder = new AlertDialog.Builder(this)
+	.setView(layout);
+AlertDialog alertDialog = builder.create();
+alertDialog.show();
+             
+          </content>
+       </item>
+    </category>
+    
+    
+    
+    
+    <category
+          description="%category.screen.description"
+          id="android_screen"
+          label="%category.screen">
+       <item
+             description="%snippet.screen.fullscreen.description"
+             id="org.eclipse.andmore.android.codesnippets.item5"
+             label="%snippet.screen.fullscreen">
+          <content>
+             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+          </content>
+       </item>
+       <item
+             description="%snippet.screen.size.description"
+             id="org.eclipse.andmore.android.codesnippets.item24"
+             label="%snippet.screen.size">
+          <content>
+             Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+int width = display.getWidth();  
+int height = display.getHeight();
+          </content>
+       </item>
+       <item
+             description="%snippet.screen.orientation.description"
+             id="org.eclipse.andmore.android.codesnippets.item1"
+             label="%snippet.screen.orientation">
+          <content>
+             Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+int orientation = display.getOrientation();
+          </content>
+       </item>
+    </category>
+    <category
+          description="%category.gps.description"
+          id="android_gps"
+          label="%category.gps">
+       <item
+       class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.gps.currentCoordinates.description"
+             id="org.eclipse.andmore.android.codesnippets.item6"
+             label="%snippet.gps.currentCoordinates">
+          <content>
+             // To use these LocationManager methods, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot;/&gt;
+LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// called when the location provider status changes. Possible status: OUT_OF_SERVICE, TEMPORARILY_UNAVAILABLE or AVAILABLE.
+	}
+	public void onProviderEnabled(String provider) {
+		// called when the location provider is enabled by the user
+	}
+	public void onProviderDisabled(String provider) {
+		// called when the location provider is disabled by the user. If it is already disabled, it&apos;s called immediately after requestLocationUpdates
+	}
+	
+	public void onLocationChanged(Location location) {
+		double latitute = location.getLatitude();
+		double longitude = location.getLongitude();
+		// do whatever you want with the coordinates
+	}
+});
+          </content>
+       </item>
+       <item
+       class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.gps.lastCoordinates.description"
+             id="org.eclipse.andmore.android.codesnippets.item4"
+             label="%snippet.gps.lastCoordinates">
+          <content>
+             // To use these LocationManager methods, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot;/&gt;
+LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+double latitute, longitude = 0;
+if(location != null){
+	latitute = location.getLatitude();
+	longitude = location.getLongitude();
+}
+             
+          </content>
+       </item>
+       <item
+             description="%snippet.gps.distance.description"
+             id="org.eclipse.andmore.android.codesnippets.item7"
+             label="%snippet.gps.distance">
+          <content>
+             Location originLocation = new Location(&quot;gps&quot;);
+Location destinationLocation = new Location(&quot;gps&quot;);
+originLocation.setLatitude(originLatitude);
+originLocation.setLongitude(originLongitude);
+destinationLocation.setLatitude(originLatitude);
+destinationLocation.setLongitude(originLongitude);
+float distance = originLocation.distanceTo(destinationLocation);
+             
+          </content>
+       </item>
+       <item
+       class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.gps.listenerChanges.description"
+             id="org.eclipse.andmore.android.codesnippets.item1"
+             label="%snippet.gps.listenerChanges">
+          <content>
+             // To use these LocationManager methods, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot;/&gt;
+LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+locationManager.addGpsStatusListener(new GpsStatus.Listener(){
+
+	public void onGpsStatusChanged(int event) {
+		switch(event){
+			// Event sent when the GPS system has started
+			case GpsStatus.GPS_EVENT_STARTED:
+				// put your code here
+				break;
+				
+			// Event sent when the GPS system has stopped
+			case GpsStatus.GPS_EVENT_STOPPED:
+				// put your code here
+				break;
+				
+			// Event sent when the GPS system has received its first fix since starting
+			case GpsStatus.GPS_EVENT_FIRST_FIX:
+				// put your code here
+				break;
+			
+			// Event sent periodically to report GPS satellite status
+			case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+				// put your code here
+				break;
+		    	 
+		}
+	}
+});
+          </content>
+       </item>
+       <item
+       class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.gps.listenerProximity.description"
+             id="org.eclipse.andmore.android.codesnippets.item2"
+             label="%snippet.gps.listenerProximity">
+          <content>
+             // To use these LocationManager methods, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot;/&gt;
+// Use PendingIntent.getActivity(Context, int, Intent, int), PendingIntent.getBroadcast(Context, int, Intent, int) or PendingIntent.getService(Context, int, Intent, int) to create the PendingIntent, which will be used to generate an Intent to fire when the proximity condition is satisfied.
+PendingIntent pendingIntent;
+// latitude 	the latitude of the central point of the alert region
+// longitude 	the longitude of the central point of the alert region
+// radius 		the radius of the alert region, in meters
+LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+locationManager.addProximityAlert(latitude, longitude, radius, -1, pendingIntent);
+          </content>
+       </item>
+    </category>
+    <category
+          description="%category.media.description"
+          id="android_media"
+          label="%category.media">
+       <item
+             description="%snippet.media.playAudioVideoRaw.description"
+             id="org.eclipse.andmore.android.codesnippets.item17"
+             label="%snippet.media.playAudioVideoRaw">
+          <content>
+             // Put the media file into the res/raw folder of your application
+MediaPlayer mp = MediaPlayer.create(this, R.raw.yourSoundId);
+mp.start();
+          </content>
+       </item>
+       <item
+             description="%snippet.media.playAudioVideoFile.description"
+             id="org.eclipse.andmore.android.codesnippets.item18"
+             label="%snippet.media.playAudioVideoFile">
+          <content>
+             MediaPlayer mp = new MediaPlayer();
+mp.setDataSource(FILE_PATH_OR_URL);
+mp.prepare();
+mp.start();
+          </content>
+       </item>
+       <item
+       class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.media.startRecordingAudio.description"
+             id="org.eclipse.andmore.android.codesnippets.item16"
+             label="%snippet.media.startRecordingAudio">
+          <content>
+             // To use these MediaRecorder methods, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.RECORD_AUDIO&quot;/&gt;
+MediaRecorder recorder = new MediaRecorder();
+recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+recorder.setOutputFile(PATH_NAME); // The file must already exist
+recorder.prepare();
+recorder.start();
+          </content>
+       </item>
+       <item
+             description="%snippet.media.stopRecording.description"
+             id="org.eclipse.andmore.android.codesnippets.item21"
+             label="%snippet.media.stopRecording">
+          <content>
+             recorder.stop();
+recorder.release();
+          </content>
+       </item>
+    </category>
+    <category
+          description="%category.motorolaapi.description"                   
+          id="android_motorolaapi"
+          label="%category.motorolaapi">
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"           
+             description="%snippet.motorolaapi.ffcamera.description"
+             id="org.eclipse.andmore.android.codesnippets.motorolaapi1"
+             label="%snippet.motorolaapi.ffcamera">
+          <content>
+             // To use these Camera methods, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.CAMERA&quot;/&gt;
+// Add an import com.motorola.hardware.frontcamera.FrontCamera; statement
+// Add an import android.hardware.Camera; statement
+// Note that you need to add a Motorola library to make this work.
+// See more details at: 
+// https://developer.motorola.com/docstools/library/motorola-front-facing-camera-api/
+
+Camera frontCam = FrontCamera.getFrontCamera();
+// the frontCam object represents the front-facing camera
+// treat it like any other Camera object
+frontCam.release();   // always release when done with the Camera object
+          </content>
+       </item>
+       <item description="%snippet.motorolaapi.hdmi.description"
+             id="org.eclipse.andmore.android.codesnippets.motorolaapi2"
+             label="%snippet.motorolaapi.hdmi">
+          <content>
+// Insert the code below into the onReceive method of a BroadcastReceiver class
+// This broadcast receiver must have the following intent filter:
+// &lt;intent-filter&gt;
+//     &lt;action android:name="com.motorola.intent.action.externaldisplaystate"/&gt;
+// &lt;/intent-filter&gt;
+// More details about Motorola HDMI Status API are available at: 
+// https://developer.motorola.com/docstools/library/motorola-hdmi-status-api/
+final String EXTDISP_PUBLIC_STATE = "com.motorola.intent.action.externaldisplaystate";
+final String EXTRA_HDCP = "";
+final String EXTRA_HDMI = "";
+   
+String action = intent.getAction();
+Bundle extras = (intent != null) ? intent.getExtras() : null;
+
+if (action.equals(EXTDISP_PUBLIC_STATE))
+{
+   if (extras != null)
+   {
+      int hdmi = extras.getInt(EXTRA_HDMI);
+      int hdcp = extras.getInt(EXTRA_HDCP);
+      // Application decides what to do with this information
+   }
+}     
+          </content>
+       </item>
+    </category>
+    <category
+          description="%category.preferences.description"
+          id="org.eclipse.andmore.android.codesnippets.category2"
+          label="%category.preferences">
+       <item
+             description="%snippet.preferences.loadSharedPreference.description"
+             id="org.eclipse.andmore.android.codesnippets.item5"
+             label="%snippet.preferences.loadSharedPreference">
+          <content>
+// Use MODE_WORLD_READABLE and/or MODE_WORLD_WRITEABLE to grant access to other applications
+SharedPreferences preferences = getSharedPreferences(&quot;YourPreferencesName&quot;, MODE_PRIVATE);
+String preferenceValue = preferences.getString(&quot;yourPreferenceKey&quot;, &quot;defaultValue&quot;);
+          </content>
+       </item>
+       <item
+             description="%snippet.preferences.loadSharedPreferenceFromPreferenceManager.description"
+             id="org.eclipse.andmore.android.codesnippets.item8"
+             label="%snippet.preferences.loadSharedPreferenceFromPreferenceManager">
+          <content>
+// Use MODE_WORLD_READABLE and/or MODE_WORLD_WRITEABLE to grant access to other applications
+SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+String preferenceValue = preferences.getString(&quot;yourPreferenceKey&quot;, &quot;defaultValue&quot;);
+          </content>
+       </item>
+       <item
+             description="%snippet.preferences.writeSharedPreference.description"
+             id="org.eclipse.andmore.android.codesnippets.item7"
+             label="%snippet.preferences.writeSharedPreference">
+          <content>
+// Use MODE_WORLD_READABLE and/or MODE_WORLD_WRITEABLE to grant access to other applications
+SharedPreferences preferences = getSharedPreferences(&quot;YourPreferencesName&quot;, MODE_PRIVATE);
+SharedPreferences.Editor editor = preferences.edit();
+editor.putString(&quot;yourPreferenceKey&quot;, &quot;Your Preference Value&quot;);
+editor.commit();
+          </content>
+       </item>
+       <item
+             description="%snippet.preferences.writeSharedPreferenceFromPreferenceManager.description"
+             id="org.eclipse.andmore.android.codesnippets.item5"
+             label="%snippet.preferences.writeSharedPreferenceFromPreferenceManager">
+          <content>
+// Use MODE_WORLD_READABLE and/or MODE_WORLD_WRITEABLE to grant access to other applications
+SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+SharedPreferences.Editor editor = preferences.edit();
+editor.putString(&quot;yourPreferenceKey&quot;, &quot;Your Preference Value&quot;);
+editor.commit();
+          </content>
+       </item>
+    </category>
+    <category
+          description="%category.resources.description"
+          id="android_resources"
+          label="%category.resources">
+       <item
+             description="%snippet.resources.listAssets.description"
+             id="org.eclipse.andmore.android.codesnippets.item24"
+             label="%snippet.resources.listAssets">
+          <content>
+             String fileArray[] = this.getAssets().list(&quot;&quot;);
+          </content>
+       </item>
+       <item
+             description="%snippet.resources.readFile.description"
+             id="org.eclipse.andmore.android.codesnippets.item22"
+             label="%snippet.resources.readFile">
+          <content>
+             InputStream is = this.getAssets().open(fileName);
+          </content>
+       </item>
+       <item
+             description="%snippet.resources.readXmlFile.description"
+             id="org.eclipse.andmore.android.codesnippets.item23"
+             label="%snippet.resources.readXmlFile">
+          <content>
+             XmlResourceParser xmlParser = this.getAssets().openXmlResourceParser(fileName);
+             
+          </content>
+       </item>
+    </category>
+    
+    
+    
+    <category
+          description="%category.log.description"
+          id="android_log"
+          label="%category.log">
+       <item
+             description="%snippet.log.error.description"
+             id="org.eclipse.andmore.android.codesnippets.item16"
+             label="%snippet.log.error">
+          <content>
+             Log.e(&quot;YourIdentifier&quot;,&quot;This is an error message&quot;);
+          </content>
+       </item>
+       <item
+             description="%snippet.log.warning.description"
+             id="org.eclipse.andmore.android.codesnippets.item26"
+             label="%snippet.log.warning">
+          <content>
+             Log.w(&quot;YourIdentifier&quot;,&quot;This is a warning message&quot;);
+          </content>
+       </item>
+       <item
+             description="%snippet.log.info.description"
+             id="org.eclipse.andmore.android.codesnippets.item27"
+             label="%snippet.log.info">
+          <content>
+             Log.i(&quot;YourIdentifier&quot;,&quot;This is an information message&quot;);
+          </content>
+       </item>
+       <item
+             description="%snippet.log.debug.description"
+             id="org.eclipse.andmore.android.codesnippets.item28"
+             label="%snippet.log.debug">
+          <content>
+             Log.d(&quot;YourIdentifier&quot;,&quot;This is a debug message&quot;);
+          </content>
+       </item>
+    </category>
+    <category
+          description="%category.localization.description"
+          id="android_localization"
+          label="%category.localization">
+       <item
+             description="%snippet.localization.string.description"
+             id="org.eclipse.andmore.android.codesnippets.item1"
+             label="%snippet.localization.string">
+          <content>
+             String text = getResources().getString(R.string.yourStringID);
+          </content>
+       </item>
+       <item
+             description="%snippet.localization.drawable.description"
+             id="org.eclipse.andmore.android.codesnippets.item2"
+             label="%snippet.localization.drawable">
+          <content>
+             Drawable drawable = getResources().getDrawable(R.drawable.yourDrawableID);
+          </content>
+       </item>
+       <item
+             description="%snippet.localization.curLocale.description"
+             id="org.eclipse.andmore.android.codesnippets.item4"
+             label="%snippet.localization.curLocale">
+          <content>
+             Locale curLocale = java.util.Locale.getDefault();
+          </content>
+       </item>
+       <item
+             description="%snippet.localization.resLocale.description"
+             id="org.eclipse.andmore.android.codesnippets.item5"
+             label="%snippet.localization.resLocale">
+          <content>
+             Locale resLocale = getResources().getConfiguration().locale;
+          </content>
+       </item>
+       <item
+             description="%snippet.localization.dynamicMsg.description"
+             id="org.eclipse.andmore.android.codesnippets.item3"
+             label="%snippet.localization.dynamicMsg">
+          <content>
+             // yourMsgID =&quot;The language is {0}&quot;
+String msg = getResources().getString(R.string.yourMsgID); 
+Object[] arguments = {
+        	java.util.Locale.getDefault().getDisplayLanguage()
+};
+String fullMsg = java.text.MessageFormat.format(msg, arguments);
+          </content>
+       </item>
+    </category>
+    <category
+          description="%category.bluetooth.description"
+          id="android_bluetooth"
+          label="%category.bluetooth">
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.bluetooth.check.description"
+             id="org.eclipse.andmore.android.codesnippets.bt1"
+             label="%snippet.bluetooth.check">
+          <content>
+             // To use this BluetoothAdapter method, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot;/&gt;
+// Trying to get the adapter
+BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+
+if (btAdapter == null) {
+      // Bluetooth is not supported, do something here to warn the user
+      return;
+}
+          </content>
+       </item>
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.bluetooth.connect.description"
+             id="org.eclipse.andmore.android.codesnippets.bt7"
+             label="%snippet.bluetooth.connect">
+          <content>
+             // To use these BluetoothAdapter methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot;/&gt;
+/*
+ * This code is loose here but you will
+ * likely use it inside a thread
+ * 
+ * Make sure you have the &apos;device&apos; variable (BluetoothDevice)
+ * at the point you insert this code
+ */
+
+// UUID for your application
+UUID MY_UUID = UUID.fromString(&quot;yourdata&quot;);     
+
+// Get the adapter
+BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+
+// The socket
+BluetoothSocket socket = null;
+try {
+    // Your app UUID string (is also used by the server) 
+    socket = device.createRfcommSocketToServiceRecord(MY_UUID); 	
+} catch (IOException e) { }
+
+// For performance reasons
+btAdapter.cancelDiscovery();
+
+try {
+    // Be aware that this is a blocking operation. You probably want to use this in a thread
+    socket.connect();
+    
+} catch (IOException connectException) {
+    // Unable to connect; close the socket and get out
+    try {
+    	socket.close();
+    } catch (IOException closeException) {
+    	// Deal with it
+    }
+    return;
+}
+
+// Now manage your connection (in a separate thread)
+myConnectionManager(socket);
+          </content>
+       </item>
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.bluetooth.enable.description"
+             id="org.eclipse.andmore.android.codesnippets.bt2"
+             label="%snippet.bluetooth.enable">
+          <content>
+             // To use these BluetoothAdapter methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot;/&gt;
+/* This number is used to identify this request (&quot;Enable Bluetooth&quot;) 
+ * when the callback method onActivityResult() is called. Your
+ * interaction with the Bluetooth stack will probably start there. 
+ * 
+ * You probably want to insert this as a global variable 
+ */
+int ENABLE_BLUETOOTH = 1;
+    
+// Get the adapter
+BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+
+if (btAdapter == null) {	
+    return;
+}
+  	
+// If Bluetooth is not yet enabled, enable it    
+if (!btAdapter.isEnabled()) {
+    Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+    startActivityForResult(enableBluetooth, ENABLE_BLUETOOTH);
+    // Now implement the onActivityResult() and wait for it to be invoked with ENABLE_BLUETOOTH 
+}
+          </content>
+       </item>
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.bluetooth.getpaired.description"
+             id="org.eclipse.andmore.android.codesnippets.bt4"
+             label="%snippet.bluetooth.getpaired">
+          <content>
+             // To use these BluetoothAdapter methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot;/&gt;
+// Get the adapter
+BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+
+// Get the paired devices
+Set&lt;BluetoothDevice&gt; devices = btAdapter.getBondedDevices();
+
+// If there are paired devices, do whatever you&apos;re supposed to do
+if (devices.size() &gt; 0) {
+    for (BluetoothDevice pairedDevice : devices) {
+        // do something useful with the device
+    }
+}
+          </content>
+       </item>
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.bluetooth.discoverable.description"
+             id="org.eclipse.andmore.android.codesnippets.bt3"
+             label="%snippet.bluetooth.discoverable">
+          <content>
+             // To use these BluetoothAdapter methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot;/&gt;
+//Get the adapter	
+BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+
+if (btAdapter == null) {	
+    return;
+}
+
+// If Bluetooth is not discoverable, make it discoverable
+if (btAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {	
+	Intent makeDiscoverable = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+    makeDiscoverable.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 500);
+	// In a real situation you would probably use startActivityForResult to get the user&apos;s choice.
+    startActivity(makeDiscoverable);
+}
+          </content>
+       </item>
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.bluetooth.incoming.description"
+             id="org.eclipse.andmore.android.codesnippets.bt6"
+             label="%snippet.bluetooth.incoming">
+          <content>
+             // To use these BluetoothAdapter methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot;/&gt;
+// UUID for your application
+UUID MY_UUID = UUID.fromString(&quot;yourdata&quot;);        
+
+// SDP record name used when creating the server socket
+String NAME = &quot;BluetoothExample&quot;;
+
+// The server socket
+BluetoothServerSocket btServerSocket =  null;
+
+// The adapter
+BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+
+// The socket
+BluetoothSocket socket = null;
+
+try {
+	btServerSocket = btAdapter.listenUsingRfcommWithServiceRecord(NAME, MY_UUID);
+
+	// This operation is blocking: you will wait until it returns or an error occurs
+    socket = btServerSocket.accept();	
+} catch (IOException e) {
+	// Deal with it
+}
+
+if (socket != null) {
+	/* The connection was accepted. Do what you want to do.
+	* For example, get the streams        	       	
+	*/
+    InputStream inputStream = null;
+    OutputStream outputStream = null;
+    try {
+        inputStream = socket.getInputStream();
+        outputStream = socket.getOutputStream();
+    } catch (IOException e) {
+        // Deal with it
+    }                       
+}
+          </content>
+       </item>
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.bluetooth.discover.description"
+             id="org.eclipse.andmore.android.codesnippets.bt5"
+             label="%snippet.bluetooth.discover">
+          <content>
+             // To use these BluetoothDevice methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot;/&gt;
+
+// BroadcastReceiver that is notified as each device is found and when the discovery process completes 
+// Should be an internal class or in a separate .java file
+final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        String action = intent.getAction();
+
+        // Device was discovered
+        if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+            BluetoothDevice device = 
+intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+                // device is not already paired. Do something useful here.
+            }
+        // Discovery is finished
+        } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+        	// do something useful here                
+        }
+    }
+};
+
+// Register for notification upon discovery of a Bluetooth device
+IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+this.registerReceiver(bluetoothReceiver, intentFilter);
+
+// Register for notification upon completion of the device discovery process 
+intentFilter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+this.registerReceiver(bluetoothReceiver, intentFilter);
+
+          </content>
+       </item>
+    </category>
+    <category
+          description="%category.sql.description"
+          id="android_sql"
+          label="%category.sql">
+       <item
+             description="%snippet.sql.create.description"
+             id="org.eclipse.andmore.android.codesnippets.sql1"
+             label="%snippet.sql.create">
+          <content>
+             CREATE TABLE songs(
+    id  INTEGER,
+    name  TEXT,         
+    genre  TEXT, 
+    rate  REAL,     
+    some_raw_data BLOB      
+);
+          </content>
+       </item>
+       <item
+             description="%snippet.sql.createfromtable.description"
+             id="org.eclipse.andmore.android.codesnippets.sql2"
+             label="%snippet.sql.createfromtable">
+          <content>
+             SELECT *  INTO rockssongs
+FROM songs WHERE genre =&apos;rock&apos;;
+          </content>
+       </item>
+       <item
+             description="%snippet.sql.count.description"
+             id="org.eclipse.andmore.android.codesnippets.sql3"
+             label="%snippet.sql.count">
+          <content>
+             SELECT COUNT(DISTINCT student_city) AS total
+FROM students;
+          </content>
+       </item>
+       <item
+             description="%snippet.sql.delete.description"
+             id="org.eclipse.andmore.android.codesnippets.sql4"
+             label="%snippet.sql.delete">
+          <content>
+DELETE FROM songs
+WHERE rating&lt; 5;
+          </content>
+       </item>
+       <item
+             description="%snippet.sql.drop.description"
+             id="org.eclipse.andmore.android.codesnippets.sql5"
+             label="%snippet.sql.drop">
+          <content>
+             DROP TABLE&quot;bad_songs&quot;;
+          </content>
+       </item>
+       <item
+             description="%snippet.sql.left.description"
+             id="org.eclipse.andmore.android.codesnippets.sql6"
+             label="%snippet.sql.left">
+          <content>
+             SELECT students.name 
+FROM students LEFT JOIN math_class
+    ON students.id = math_class.student_id 
+WHERE math_class.grade &gt; 5;
+          </content>
+       </item>
+       <item
+             description="%snippet.sql.inner.description"
+             id="org.eclipse.andmore.android.codesnippets.sql7"
+             label="%snippet.sql.inner">
+          <content>
+             SELECT DISTINCT students.id, students.name
+FROM students INNER JOIN math_class ON students.id = math_class.student_id;
+          </content>
+       </item>
+       <item
+             description="%snippet.sql.insert.description"
+             id="org.eclipse.andmore.android.codesnippets.sql8"
+             label="%snippet.sql.insert">
+          <content>
+             INSERT INTO albums(ambum_id, artist_name, album_name)
+VALUES(&apos;12345&apos;, &apos;David Bowie&apos;,&apos;Ziggy Stardust&apos;);
+          </content>
+       </item>
+       <item
+             description="%snippet.sql.update.description"
+             id="org.eclipse.andmore.android.codesnippets.sql9"
+             label="%snippet.sql.update">
+          <content>
+             UPDATE songs SET already_listened =&quot;yes&quot;
+WHERE genre = &quot;rock&quot;;
+          </content>
+       </item>
+    </category>
+    <category
+          description="%category.web.description"
+          id="android_web"
+          label="%category.web">
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.web.get.description"
+             id="org.eclipse.andmore.android.codesnippets.web1"
+             label="%snippet.web.get">
+          <content>
+             // To use these Internet methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+URI myURI = null;
+try {
+	myURI = new URI(&quot;www.webserver.org&quot;);
+} catch (URISyntaxException e) {
+	// Deal with it
+}
+HttpClient httpClient = new DefaultHttpClient();
+HttpGet getMethod = new HttpGet(myURI);
+HttpResponse webServerResponse = null;
+try {
+	webServerResponse = httpClient.execute(getMethod);
+} catch (ClientProtocolException e) {
+	// Deal with it
+} catch (IOException e) {
+	// Deal with it
+}
+
+HttpEntity httpEntity = webServerResponse.getEntity();
+
+if (httpEntity != null) {
+	// You have your response; handle it. For instance, with an input
+	// stream
+	// InputStream input = entity.getContent();
+}
+          </content>
+       </item>
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.web.post.description"
+             id="org.eclipse.andmore.android.codesnippets.web2"
+             label="%snippet.web.post">
+          <content>
+             // To use these Internet methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+// Create the Apache HTTP client and post  
+ HttpClient httpclient = new DefaultHttpClient();
+ HttpPost httppost = new HttpPost(&quot;http://www.website.org/service.php&quot;);  
+   
+     try {  
+         // Add data to your post  
+     List&lt;NameValuePair&gt; pairs = new ArrayList&lt;NameValuePair&gt;(2);  
+     pairs.add(new BasicNameValuePair(&quot;ID&quot;, &quot;VALUE&quot;));  
+     pairs.add(new BasicNameValuePair(&quot;string&quot;, &quot;Yeah!&quot;));  
+     httppost.setEntity(new UrlEncodedFormEntity(pairs));  
+   
+     //Finally, execute the request  
+     HttpResponse webServerAnswer = httpclient.execute(httppost);  
+       
+ } catch (ClientProtocolException e) {  
+     //Deal with it  
+ } catch (IOException e) {  
+     //Deal with it  
+ }
+          </content>
+       </item>
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.web.json.description"
+             id="org.eclipse.andmore.android.codesnippets.web3"
+             label="%snippet.web.json">
+          <content>
+             // To use these Internet methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+// The JSON objects
+JSONObject myJSON = null;
+JSONArray names = null;
+JSONArray values = null;
+  
+String restWebServerResponse = &quot;TheResponse&quot;;
+try{  
+        myJSON = new JSONObject(restWebServerResponse);  
+        names = myJSON.names();  
+        values = myJSON.toJSONArray(names);    
+}  
+catch (JSONException e) {  
+        // Deal with it  
+}        
+  	         
+for (int i = 0; i &lt; values.length(); i++) {	   	 	   	 
+  // Do something with values.getString(i)
+}
+          </content>
+       </item>
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.web.rest.description"
+             id="org.eclipse.andmore.android.codesnippets.web4"
+             label="%snippet.web.rest">
+          <content>
+             // To use these Internet methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+// This assumes that you have a URL from which to get the answer
+URI myURL = new URI(&quot;www.website.org&quot;);
+
+// The HTTP objects
+HttpClient httpClient = new DefaultHttpClient();
+HttpGet getMethod = new HttpGet(myURL);
+HttpResponse httpResponse;
+
+// The query result
+String result = null;
+
+try {
+	httpResponse = httpClient.execute(getMethod);
+	// You might want to check response.getStatusLine().toString()
+
+	HttpEntity entity = httpResponse.getEntity();
+
+	if (entity != null) {
+		InputStream instream = entity.getContent();
+		BufferedReader reader = new BufferedReader( new InputStreamReader(instream));
+		StringBuilder sb = new StringBuilder();
+		String line = null;
+	try {
+		while ((line = reader.readLine()) != null) {
+			sb.append(line + &quot;\n&quot;);
+		}
+	} catch (IOException e) {
+	// Deal with it
+	} finally {
+		try {
+			instream.close();
+		} catch (IOException e) {
+		// Deal with it
+		}
+	}
+	
+	// Handle the result (for instance, get a JSON object
+	// using the &quot;Retrieve JSON from a server response&quot; snippet)
+	handleResult(result);
+	}
+} catch (ClientProtocolException e) {
+	// Deal with it
+} catch (IOException e) {
+	// Deal with it
+}
+          </content>
+       </item>
+       <item
+       class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.web.email.description"
+             id="org.eclipse.andmore.android.codesnippets.web5"
+             label="%snippet.web.email">
+          <content>
+             // To use these Internet methods, AndroidManifest.xml must have the following permission:
+// &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+emailIntent.setType(&quot;plain/text&quot;);  
+emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{&quot;to@email.com&quot;});  
+emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, &quot;Hello!&quot;);  
+emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, &quot;Hello!&quot;);  
+
+startActivity(Intent.createChooser(emailIntent, &quot;Send mail...&quot;));
+          </content>
+       </item>
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.web.urlconnection.description"
+             id="org.eclipse.andmore.android.codesnippets.web6"
+             label="%snippet.web.urlconnection">
+          <content>
+             // To use these Internet methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+// The data that is retrieved 
+String result = null;
+
+try {
+     // This assumes that you have a URL from which the response will come
+     URL url = new URL(&quot;www.webaddress.org&quot;);
+     
+     // Open a connection to the URL and obtain a buffered input stream
+     URLConnection connection = url.openConnection();
+     InputStream inputStream = connection.getInputStream();
+     BufferedInputStream bufferedInput = new BufferedInputStream(inputStream);
+     
+     // Read the response into a byte array
+     ByteArrayBuffer byteArray = new ByteArrayBuffer(50);
+     int current = 0;
+     while((current = bufferedInput.read()) != -1){
+          byteArray.append((byte)current);
+     }
+
+     // Construct a String object from the byte array containing the response
+     result = new String(byteArray.toByteArray());
+} catch (Exception e) {
+	
+}
+
+// Handle the result
+handleResult(result);
+          </content>
+       </item>
+       <item
+             class="org.eclipse.andmore.android.codesnippets.AndroidPermissionInsertSnippet"
+             description="%snippet.web.soap.description"
+             id="org.eclipse.andmore.android.codesnippets.web7"
+             label="%snippet.web.soap">
+          <content>
+             // To use these Internet methods, AndroidManifest.xml must have the following permission:
+//&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+/* This example is intended to be used with the kSOAP 
+ * project (http://ksoap2.sourceforge.net/), which
+ * provides some objects to deal with SOAP within 
+ * mobile development.
+ * 
+ * You must download the kSOAP objects and 
+ * have something like this in your import list:
+ * import org.ksoap2.SoapEnvelope; // (and other necessary classes)
+ */
+String SOAP_ACTION = &quot;yourMethod&quot;;
+String METHOD_NAME = &quot;yourMethod&quot;;
+String NAMESPACE = &quot;http://namespace.com/&quot;;
+String URL = &quot;http://server.org&quot;;
+
+SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+request.addProperty(&quot;property1&quot;, &quot;property&quot;);
+ 
+SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+envelope.setOutputSoapObject(request);
+HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+androidHttpTransport.call(SOAP_ACTION, envelope);
+ 
+Object results = envelope.getResponse();
+ 
+// Handle the results
+handleResults(results);
+          </content>
+       </item>
+    </category>
+    <category
+          description="%category.sensors.description"
+          id="android_sensor"
+          label="%category.sensors">
+       <item
+             description="%snnipet.sensor.detect.description"
+             id="org.eclipse.andmore.android.codesnippets.sensor1"
+             label="%snnipet.sensor.detect">
+          <content>
+             // This code requires API level 3 (Android 1.5) or higher
+SensorManager manager = (SensorManager) getSystemService(SENSOR_SERVICE);
+boolean isAccelerometerSupported = true;
+if(manager.getSensorList(Sensor.TYPE_ACCELEROMETER).isEmpty()){
+     isAccelerometerSupported = false;
+}
+          </content>
+       </item>
+       <item
+             description="%snnipet.sensor.getorientation.description"
+             id="org.eclipse.andmore.android.codesnippets.sensor2"
+             label="%snnipet.sensor.getorientation">
+          <content>
+             // This code requires API level 3 (Android 1.5) or higher
+SensorManager manager;
+manager = (SensorManager) getSystemService(SENSOR_SERVICE);
+manager.registerListener(new SensorEventListener(){
+            				public void onAccuracyChanged(Sensor sensor, int accuracy){
+			            	}
+
+			            	public void onSensorChanged(SensorEvent event){
+			                  if(event.sensor.getType() == Sensor.TYPE_ORIENTATION){
+			                       // The contents of the values[] array depends upon the sensor type.
+			                       // See the description of the values[] array in the SensorEvent object documentation.
+			                       float azimuth = Math.round(event.values[0]);
+			                       float pitch = Math.round(event.values[1]);
+			                       float roll = Math.round(event.values[2]);	        	     
+		                       
+			                       // Do something with the device orientation values
+		                  	  }
+		             		}},
+		             		manager.getDefaultSensor(Sensor.TYPE_ORIENTATION), 
+			                SensorManager.SENSOR_DELAY_NORMAL);
+          </content>
+       </item>
+    </category>
+   
+    <category
+          description="%category.ui.description"
+          id="ui"
+          label="%category.ui">
+       <item
+             description="%snippet.ui.gestures.description"
+             id="org.eclipse.andmore.android.codesnippets.ui1"
+             label="%snippet.ui.gestures.string">
+          <content>
+private static final float DISTANCE_DIP = 16.0f;
+private static final float PATH_DIP = 40.0f;
+// convert dip measurements to pixels
+final float scale = getResources().getDisplayMetrics().density;
+int scaledDistance = (int) (DISTANCE_DIP * scale + 0.5f);
+int scaledPath = (int) (PATH_DIP * scale + 0.5f);
+// For more information about touch gestures and screens support, see:
+// http://developer.android.com/resources/articles/gestures.html
+// http://developer.android.com/reference/android/gesture/package-summary.html
+// http://developer.android.com/guide/practices/screens_support.html
+          </content>
+       </item>
+       <item
+             description="%snippet.ui.background.description"
+             id="org.eclipse.andmore.android.codesnippets.ui3"
+             label="%snippet.ui.background.string">
+          <content>
+             originalImage = Bitmap.createScaledBitmap( 
+originalImage,     // bitmap to resize 
+view.getWidth(),   // new width 
+view.getHeight(),  // new height 
+true);             // bilinear filtering
+            
+          </content>
+       </item>
+       <item
+             description="%snippet.ui.sizes.description"
+             id="org.eclipse.andmore.android.codesnippets.ui2"
+             label="%snippet.ui.sizes.string">
+          <content>
+             public void onSizeChanged(int w, int h, int oldW,
+int oldH) {
+// Calculate relative sizes at runtime
+// mButton and mButtonBackGround are of type Drawable
+int selfW = mButton.getIntrinsicWidth();
+int selfH = mButton.getIntrinsicHeight();
+int marginX = (w - selfW) / 2;
+int marginY = (h - selfH) / 2;
+mButtonBackground.setBounds(marginX, marginY, 
+marginX + selfW, marginY + selfH);
+mButton.setBounds(marginX, marginY, 
+marginX + selfW, marginY + selfH);
+// Implement the measureText method to resize text data, if applicable
+measureText();
+}
+          </content>
+       </item>
+       <item
+             description="%snippet.ui.widget.description"
+             id="org.eclipse.andmore.android.codesnippets.ui4"
+             label="%snippet.ui.widget.string">
+          <content>
+          // Add import android.view.View.OnClickListener; statement
+// Add import android.widget.Button; statement
+// Add import android.view.View; statement
+         
+Button b1 = (Button) findViewById(R.id.your_button_id); // Use this method carefully, it consumes lots of system resources
+b1.setOnClickListener(new OnClickListener() {			
+	public void onClick(View v) {
+		// Handle the button click here as you wish				
+	}
+});
+          </content>
+       </item>
+       <item
+             description="%snippet.ui.moveout.description"
+             id="org.eclipse.andmore.android.codesnippets.ui5"
+             label="%snippet.ui.moveout.string">
+          <content>
+// You must provide types for the three generic parameters before the code will compile.          
+// For more details, see http://developer.android.com/reference/android/os/AsyncTask.html 
+ private class MoveOutOfUIthread extends AsyncTask&lt;
+                Params, // one or more values of this type are passed to doInBackground()
+                Progress, // the type of the progress units published during background crunching.
+                Result // the type of the result returned by doInBackground()
+                &gt; 
+ {
+
+         protected Integer doInBackground(Params... p1, p2, p3) {
+             // your background task here
+             Result result = new Result();
+             return result;
+         }
+        
+         protected void onPostExecute(Result r) {
+             // this gets the object returned by doInBackground, and executes on the UI thread
+         }
+ }   
+ new MoveOutOfUIthread().execute(p1, p2, p3);
+          </content>
+       </item>
+       <item
+             description="%snippet.ui.backgroundtaskwithnotification.description"
+             id="org.eclipse.andmore.android.codesnippets.ui6"
+             label="%snippet.ui.backgroundtaskwithnotification.string">
+          <content>
+             // This code is supposed to be used as an inner class and will start a
+	// background task while it notifies the user via the status bar. The outer class
+	// must implement Context (sub)classes like Activity and Service. Use
+	// new BackgroundTaskWithStatusBarNotification(id, title, text,
+	// context).execute() to start the background task.
+	private class BackgroundTaskWithStatusBarNotification extends
+			AsyncTask&lt;Void, Integer, Void&gt; {
+
+		// A unique identifier for the notification.
+		private int mId;
+
+		// The text that will be displayed when the status bar is expanded.
+		private String mShortDesc;
+
+		// The text that flows by in the status bar when the notification first
+		// activates.
+		private String mContent;
+
+		// The application context where the task was launched.
+		private Context mContext;
+
+		// The notification itself.
+		private Notification mNotification;
+
+		// The notification manager retrieved from the system.
+		private NotificationManager mNotificationManager;
+
+		// An intent that will be launched when user clicks the
+		// notification
+		PendingIntent mPendingIntent;
+
+		public BackgroundTaskWithStatusBarNotification(int id,
+				String shortDesc, String content, Context context) {
+			mId = id;
+			mShortDesc = shortDesc;
+			mContent = content;
+			mContext = context;
+		}
+
+		protected void onPreExecute() {
+			mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+			mNotification = new Notification(
+					android.R.drawable.stat_sys_download, mContent,
+					System.currentTimeMillis());
+
+			// TODO: enter the initial text for your task here, such as:
+			// &quot;0% complete&quot;.
+			String progressText = &quot;your_text_here&quot;;
+
+			// this intent will be launched when user clicks the notification in the
+			// status bar and will start activity YourActivity
+			Intent intent = new Intent(mContext, YourActivity.class);
+			mPendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0);
+
+			// updates the notification
+			mNotification.setLatestEventInfo(mContext, mShortDesc,
+					progressText, mPendingIntent);
+			mNotification.flags = Notification.FLAG_ONGOING_EVENT;
+			mNotificationManager.notify(mId, mNotification);
+		}
+
+		@Override
+		protected Void doInBackground(Void... argList) {
+
+			// TODO: add the content of your background task here. Call
+			// AsyncTask.publishProgress() method to update the  
+			// tasks progress (method onProgressUpdate() will handle this
+			// progress update).
+
+			return null;
+		}
+
+		protected void onProgressUpdate(Integer... progress) {
+
+			// TODO: supply the text that must be displayed while the task is in
+			// progress. For instance, &quot;progress[0] + &quot;% complete&quot;.
+			String contentText = &quot;your_text_here&quot;;
+
+			// updates the notification
+			mNotification.setLatestEventInfo(mContext, mShortDesc, contentText,
+					mPendingIntent);
+			mNotificationManager.notify(mId, mNotification);
+		}
+
+		protected void onPostExecute(Void result) {
+			// TODO: supply the final text that must be displayed when the task
+			// is done. For instance, &quot;Done&quot;.
+			String contentText = &quot;your_text_here&quot;;
+
+			// updates the notification
+			mNotification.icon = android.R.drawable.stat_sys_download_done;
+			mNotification.setLatestEventInfo(mContext, mShortDesc, contentText,
+					mPendingIntent);
+			mNotificationManager.notify(mId, mNotification);
+		}
+}
+          </content>
+       </item>
+       <item
+             description="%snippet.ui.hide.statusbar.description"
+             id="org.eclipse.andmore.android.codesnippets.item6"
+             label="%snippet.ui.hide.statusbar.label">
+          <content>
+             //Hides status bar (if it was showing)
+View v = findViewById(R.id.view_id); //for example, the ID representing the root of a linear layout
+v.setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
+          </content>
+       </item>
+       <item
+             description="%snippet.ui.visible.statusbar.description"
+             id="org.eclipse.andmore.android.codesnippets.item7"
+             label="%snippet.ui.visible.statusbar.label">
+          <content>
+             //Shows status bar (if it was hidden)
+View v = findViewById(R.id.view_id); //for example, the ID representing the root of a linear layout
+v.setSystemUiVisibility(View.STATUS_BAR_VISIBLE);
+          </content>
+       </item>
+    </category>  
+    <category
+          description="%intents.ui.description"
+          id="android_intents"
+          label="%intents.ui">
+       <item
+             description="%intents.start.activity.explicitly.description"
+             id="org.eclipse.andmore.android.codesnippets.intents1"
+             label="%intents.start.activity.explicitly.label">
+          <content>
+             //Calls another activity, by name, without passing data
+
+Intent iExp = new Intent(this, ActivityToCall.class); //TODO  Replace 'ActivityToCall' with the class name of the activity being called
+
+startActivity(iExp);
+          </content>
+       </item>
+       <item
+             description="%intents.start.activity.implicitly.description"
+             id="org.eclipse.andmore.android.codesnippets.item2"
+             label="%intents.start.activity.implicitly.label">
+          <content>
+             //Calls another activity, by action and category, without passing data
+//refer to AndroidManifest.xml&lt;intent-filter&gt; when determining the action and category of the activity to call
+Intent iImp = new Intent(&quot;actionName&quot;); //TODO Replace 'actionName' as appropriate for your action (for example, Intent.ACTION_EDIT)
+iImp.addCategory(&quot;categoryName&quot;); //TODO Replace 'categoryName' as appropriate for your category (for example, Intent.CATEGORY_DEFAULT)
+startActivity(iImp);
+          </content>
+       </item>
+       <item
+             description="%intents.start.activity.for.result.description"
+             id="org.eclipse.andmore.android.codesnippets.item3"
+             label="%intents.start.activity.for.result.label">
+          <content>
+             //Calls another activity, identified by action and category, passing data URL and a MIME type
+//The class calling the snippet code must implement the following method:
+//protected void onActivityResult (int requestCode, int resultCode, Intent data) {}
+Intent iImp = new Intent();
+iImp.setAction(&quot;actionName&quot;); //TODO Replace 'actionName' as appropriate for your action (for example, Intent.ACTION_EDIT)
+iImp.addCategory(&quot;categoryName&quot;); //TODO Replace 'categoryName' as appropriate for your category (for example, Intent.CATEGORY_DEFAULT)
+//optional - set data and MIME type for the intent
+iImp.setDataAndType(Uri.parse(&quot;http://com.example.project/folder&quot;), &quot;text/plain&quot;); //TODO Change URL and MIME type as appropriate
+startActivityForResult(iImp, 0); //TODO The second parameter (here, zero) is the request code to be used in onActivityResult(); change this parameter to an appropriate value for your activity
+          </content>
+       </item>
+       <item
+             description="%intents.send.broadcast.description"
+             id="org.eclipse.andmore.android.codesnippets.item4"
+             label="%intents.send.broadcast.label">
+          <content>
+             //Broadcasts an event notification
+//before sending broadcast, make sure that your application has permission to broadcast the action. Otherwise, a SecurityException: Permission denial will be thrown
+Intent iBroad = new Intent();
+iBroad.setAction(&quot;actionName&quot;); //TODO Replace 'actionName' as appropriate for your action (for example, Intent.ACTION_EDIT)
+iBroad.addCategory(&quot;categoryName&quot;); //TODO Replace 'categoryName' as appropriate for your category (for example, Intent.CATEGORY_DEFAULT) 
+this.sendBroadcast(iBroad);
+            
+          </content>
+       </item>
+       <item
+             description="%intents.start.service.description"
+             id="org.eclipse.andmore.android.codesnippets.item5"
+             label="%intents.start.service.label">
+          <content>
+             //Starts a service (task to be accomplished in the background, without UI)
+//The class employing the snippet code must implement ServiceConnection
+Intent iServ = new Intent();
+iServ.setClass(getBaseContext(), ServiceName.class); //TODO Replace 'ServiceName' with the class name for your Service
+bindService(iServ, this, BIND_AUTO_CREATE);
+startService(iServ);
+          </content>
+       </item>
+    </category>
+    <category
+          description="%fragments.ui.description"
+          id="android_fragments"
+          label="%fragments.ui">
+       <item
+             description="%fragments.replace.transaction.description"
+             id="org.eclipse.andmore.android.codesnippets.item10"
+             label="%fragments.replace.transaction.label">
+          <content>
+             //Replaces a container's fragment(s)
+FragmentTransaction ft = getFragmentManager().beginTransaction();
+MyFragment newFrag =new MyFragment(); //TODO Change to your fragment constructor
+ft.addToBackStack(null); //Allows this transaction to be undone when the back button is pressed
+ft.replace(R.id.containerId, newFrag, &quot;newFragTag&quot;); //TODO Replace 'R.id.containerId' (with the ID of a View) and 'newFragTag'
+ft.commit();
+          </content>
+       </item>
+       <item
+             description="%fragments.add.transaction.description"
+             id="org.eclipse.andmore.android.codesnippets.item11"
+             label="%fragments.add.transaction.label">
+          <content>
+             //Adds a fragment to a specified layout
+FragmentTransaction ft = getFragmentManager().beginTransaction();
+MyFragment newFrag =new MyFragment(); //TODO Change to your fragment constructor
+ft.addToBackStack(null); //Allows this transaction to be undone when the back button is pressed
+ft.add(R.id.layoutId, newFrag); //TODO Replace 'R.id.layoutId' (with the ID of a layout)
+ft.commit();
+          </content>
+       </item>
+    </category>
+	<category
+          description="%category.facerecog.description"
+          id="face_recognition"
+          label="%category.facerecog">
+       <item
+             description="%snippet.facerecog.description"
+             id="org.eclipse.andmore.android.codesnippets.facerecog1"
+             label="%snippet.facerecog.string">
+          <content>
+             //Make sure the bitmap file was generated using the RGB_565
+        //configuration, or else it cannot be used for detection
+        //For more information, see  http://developer.android.com/reference/android/media/FaceDetector.html#findFaces(android.graphics.Bitmap, android.media.FaceDetector.Face[])
+        BitmapFactory.Options bmpOptions = new BitmapFactory.Options();
+        bmpOptions.inPreferredConfig = Bitmap.Config.RGB_565;
+        
+        //Decode the file from Resources and get some of its parameters.
+        //You can also use any of the decode methods from BitmapFactory
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), /*TODO: Insert your drawable resource ID here*/, bmpOptions);
+              int MaxNumberOfDetectedFaces = 2;
+              
+              //Instantiate a vector with the number of faces you want
+              Face[] faces = new FaceDetector.Face[MaxNumberOfDetectedFaces];
+              //Instantiate a FaceDetector object for the bitmap
+              FaceDetector fd = new FaceDetector(bmp.getWidth(), bmp.getHeight(), MaxNumberOfDetectedFaces);
+
+              //Use the findfaces() method to actually process the bitmap
+              if (fd.findFaces(bmp, faces) &gt; 0) {
+                     //Do something here. You can see how accurate the detection was
+                     //by calling confidence() on any of the found faces.
+			//In this example, it looks only for the first face (faces[0]).
+                     Toast.makeText(this, &quot;Confidence: &quot; + faces[0].confidence(), Toast.LENGTH_SHORT).show();
+              }
+              else {
+                     //No faces were found in the bitmap
+                     Toast.makeText(this, &quot;No face found!&quot;, Toast.LENGTH_SHORT).show();
+              }
+          </content>
+       </item>
+    </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <viewShortcut
+               id="org.eclipse.wst.common.snippets.internal.ui.SnippetsView">
+         </viewShortcut>
+         <view
+               id="org.eclipse.wst.common.snippets.internal.ui.SnippetsView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.views.ContentOutline"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+ </plugin>

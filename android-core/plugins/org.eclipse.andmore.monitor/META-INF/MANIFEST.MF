@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: com.android.ide.eclipse.monitor;singleton:=true
+Bundle-Version: 0.5.0.qualifier
+Bundle-Activator: com.android.ide.eclipse.monitor.MonitorPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.android.ide.eclipse.ddms,
+ com.android.ide.eclipse.traceview,
+ com.android.ide.eclipse.base
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: %Bundle-Vendor
+Bundle-ClassPath: .,
+ libs/sdkuilib.jar
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

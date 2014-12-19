@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.andmore.android.feature"
+      label="%feature.android.label"
+      version="0.5.0.qualifier"
+      provider-name="%feature.android.provider.name"
+      plugin="org.eclipse.andmore.android.product"
+      os="linux,macosx,win32"
+      ws="carbon,cocoa,gtk,win32"
+      arch="ppc,x86,x86_64">
+
+   <description>
+      %feature.android.description
+   </description>
+
+   <copyright>
+      %feature.android.copyright
+   </copyright>
+
+   <license url="">
+      %feature.android.license
+   </license>
+
+   <includes
+         id="org.eclipse.andmore.android.basic.feature"
+         version="0.0.0"/>
+
+   <requires>
+      <import feature="org.eclipse.andmore.feature" version="0.0.0"/>
+      <import feature="org.eclipse.andmore.hierarchyviewer.feature" version="0.0.0"/>
+      <import feature="org.eclipse.andmore.ddms.feature" version="0.0.0"/>
+      <import feature="org.eclipse.andmore.traceview.feature" version="0.0.0"/>
+      <import feature="org.eclipse.datatools.enablement.sqlite.feature" version="1.8.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.datatools.common.doc.user" version="1.8.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.datatools.sqltools.doc.user" version="1.8.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.datatools.connectivity.doc.user" version="1.8.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.datatools.doc.user" version="1.8.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.gef" version="3.6.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.jdt" version="3.6.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.mat.feature" version="1.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.mat.chart.feature" version="1.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.sequoyah.device.feature" version="2.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.sequoyah.localization.tools.feature" version="2.1.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.sequoyah.localization.android.feature" version="2.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.wst.common.fproj" version="3.2.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.wst.jsdt.feature" version="1.2.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.wst.server_adapters.feature" version="3.2.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.wst.web_ui.feature" version="3.2.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.wst.xml_core.feature" version="3.2.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.wst.xml_ui.feature" version="3.2.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.wst.xsl.feature" version="1.1.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.platform" version="3.6.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.epp.mpc" version="1.1.1" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.andmore.android"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.emulator"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.launch"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.packaging.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.handset"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.remote"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.macosx"
+         os="macosx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.linux.x86"
+         os="linux"
+         arch="x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.linux.x86_64"
+         os="linux"
+         arch="x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.win32.x86"
+         os="win32"
+         ws="win32"
+         arch="x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.win32.x86_64"
+         os="win32"
+         ws="win32"
+         arch="x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.mat"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.devices.services"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.videos"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.db.devices"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.installer"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.logger.collector"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

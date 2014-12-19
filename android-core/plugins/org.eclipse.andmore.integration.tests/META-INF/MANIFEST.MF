@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Android Plugin Tests
+Bundle-SymbolicName: org.eclipse.andmore.integration.tests
+Bundle-Version: 0.5.0.qualifier
+Bundle-Vendor: The Android Open Source Project
+Fragment-Host: org.eclipse.andmore
+Require-Bundle: org.junit,
+ org.eclipse.andmore.base,
+ org.eclipse.andmore,
+ org.easymock
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .,
+ libs/kxml2-2.3.0.jar,
+ libs/testutils.jar,
+ libs/lint-api.jar,
+ libs/lint-checks.jar,
+ libs/easymock.jar

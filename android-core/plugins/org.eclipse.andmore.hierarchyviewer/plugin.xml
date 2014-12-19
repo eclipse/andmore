@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.hierarchyviewer.views.DeviceSelectorView"
+            icon="icons/device.png"
+            id="org.eclipse.andmore.hierarchyviewer.views.DeviceSelectorView"
+            name="Windows">
+      </view>
+            <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.hierarchyviewer.views.PixelPerfectView"
+            icon="icons/pixel-perfect.png"
+            id="org.eclipse.andmore.hierarchyviewer.views.PixelPerfectView"
+            name="Pixel Perfect">
+      </view>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.hierarchyviewer.views.PixelPerfectLoupeView"
+            icon="icons/pixel-perfect.png"
+            id="org.eclipse.andmore.hierarchyviewer.views.PixelPerfectLoupeView"
+            name="Pixel Perfect Loupe">
+      </view>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.hierarchyviewer.views.PixelPerfectTreeView"
+            icon="icons/pixel-perfect.png"
+            id="org.eclipse.andmore.hierarchyviewer.views.PixelPerfectTreeView"
+            name="Pixel Perfect Tree">
+      </view>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.hierarchyviewer.views.TreeViewView"
+            icon="icons/tree-view.png"
+            id="org.eclipse.andmore.hierarchyviewer.views.TreeViewView"
+            name="Tree View">
+      </view>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.hierarchyviewer.views.PropertyView"
+            icon="icons/tree-view.png"
+            id="org.eclipse.andmore.hierarchyviewer.views.PropertyView"
+            name="View Properties">
+      </view>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.hierarchyviewer.views.TreeOverviewView"
+            icon="icons/tree-view.png"
+            id="org.eclipse.andmore.hierarchyviewer.views.TreeOverviewView"
+            name="Tree Overview">
+      </view>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.hierarchyviewer.views.LayoutView"
+            icon="icons/tree-view.png"
+            id="org.eclipse.andmore.hierarchyviewer.views.LayoutView"
+            name="Layout View">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipse.andmore.hierarchyviewer.PixelPerfectPespective"
+            icon="icons/pixel-perfect.png"
+            id="org.eclipse.andmore.hierarchyviewer.PixelPerfectPespective"
+            name="Pixel Perfect"/>
+      <perspective
+            class="org.eclipse.andmore.hierarchyviewer.TreeViewPerspective"
+            icon="icons/hierarchyviewer-16.png"
+            id="org.eclipse.andmore.hierarchyviewer.TreeViewPerspective"
+            name="Hierarchy View"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <perspectiveShortcut id="org.eclipse.andmore.hierarchyviewer.PixelPerfectPespective"/>
+         <perspectiveShortcut id="org.eclipse.andmore.hierarchyviewer.TreeViewPerspective"/>
+      </perspectiveExtension>
+   </extension>
+</plugin>

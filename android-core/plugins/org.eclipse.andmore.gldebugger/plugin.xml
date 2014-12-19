@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.eclipse.andmore.gltrace"
+            name="Tracer for OpenGL ES">
+      </category>
+      <view
+            category="org.eclipse.andmore.gltrace"
+            class="org.eclipse.andmore.gltrace.views.FrameSummaryView"
+            icon="icons/opengl.png"
+            id="org.eclipse.andmore.gltrace.views.FrameBuffer"
+            name="Frame Summary"
+            restorable="true">
+      </view>
+      <view
+            category="org.eclipse.andmore.gltrace"
+            class="org.eclipse.andmore.gltrace.views.StateView"
+            icon="icons/opengl.png"
+            id="org.eclipse.andmore.gltrace.views.State"
+            name="GL State"
+            restorable="true">
+      </view>
+      <view
+            category="org.eclipse.andmore.gltrace"
+            class="org.eclipse.andmore.gltrace.views.detail.DetailsView"
+            icon="icons/opengl.png"
+            id="org.eclipse.andmore.gltrace.views.Details"
+            name="Details"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.andmore.gltrace.editors.GLFunctionTraceViewer"
+            default="true"
+            extensions="gltrace"
+            icon="icons/opengl.png"
+            id="org.eclipse.andmore.gltrace.GLFunctionTrace"
+            name="GL Function Trace">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="OpenGL Trace Actions"
+            id="org.eclipse.andmore.gltrace.actionset"
+            label="OpenGL Trace Actions"
+            visible="false">
+         <action
+               class="org.eclipse.andmore.gltrace.CollectTraceAction"
+               icon="icons/connect.png"
+               id="gltrace.action.connect"
+               label="Collects OpenGL trace from device"
+               style="push"
+               toolbarPath="Normal/additions"
+               tooltip="Connects to the device and collects OpenGL trace information">
+         </action>
+         <action
+               class="org.eclipse.andmore.gltrace.OpenGLTraceAction"
+               icon="icons/opengl.png"
+               id="gltrace.action.open"
+               label="Open GL Trace File"
+               style="push"
+               toolbarPath="Normal/additions"
+               tooltip="Open a saved OpenGL Trace File">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipse.andmore.gltrace.GLTracePerspective"
+            icon="icons/opengl.png"
+            id="org.eclipse.andmore.gltrace.perspective"
+            name="Tracer for OpenGL ES">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.andmore.gltrace.perspective">
+         <actionSet
+               id="org.eclipse.andmore.gltrace.actionset">
+         </actionSet>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.andmore.ddms.clientAction">
+      <clientAction
+            class="org.eclipse.andmore.gltrace.DeviceViewAction">
+      </clientAction>
+   </extension>
+
+</plugin>

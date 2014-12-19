@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="toolsLocator" name="%extension-point.name.Tools_Locator" schema="schema/toolsLocator.exsd"/>
+   <extension-point id="debuggerConnector" name="%extension-point.name.Debugger_Connector" schema="schema/debuggerConnector.exsd"/>
+   <extension-point id="sourceRevealer" name="%extension-point.name.Source_Revealer" schema="schema/sourceRevealer.exsd"/>
+   <extension-point id="traceviewLauncher" name="%extension-point.name.TreeView_Laucher" schema="schema/traceviewLauncher.exsd"/>
+   <extension-point id="clientAction" name="%extension-point.name.ClientAction" schema="schema/clientAction.exsd"/>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="%category.name"
+            id="org.eclipse.andmore.ddms.views.category">
+      </category>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.ddms.views.DeviceView"
+            icon="icons/device.png"
+            id="org.eclipse.andmore.ddms.views.DeviceView"
+            name="%view.name.Devices">
+      </view>
+      <!-- Deprecate the old logcat view. It should be removed entirely
+           after the preview release -->
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.ddms.views.OldLogCatView"
+            icon="icons/android.png"
+            id="org.eclipse.andmore.ddms.views.OldLogCatView"
+            name="LogCat (deprecated)"/>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.ddms.views.LogCatView"
+            icon="icons/logcat.png"
+            id="org.eclipse.andmore.ddms.views.LogCatView"
+            name="%view.name.LogCat"/>
+      <!-- Disabled for now due to AWT/SWT bridge issue on Leopard.
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.ddms.views.EventLogView"
+            icon="icons/android.png"
+            id="org.eclipse.andmore.ddms.views.EventLogView"
+            name="Event Log"/> -->
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.ddms.views.ThreadView"
+            icon="icons/thread.png"
+            id="org.eclipse.andmore.ddms.views.ThreadView"
+            name="%view.name.Threads"/>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.ddms.views.HeapView"
+            icon="icons/heap.png"
+            id="org.eclipse.andmore.ddms.views.HeapView"
+            name="%view.name.Heap"/>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.ddms.views.FileExplorerView"
+            icon="icons/android.png"
+            id="org.eclipse.andmore.ddms.views.FileExplorerView"
+            name="%view.name.File_Explorer"/>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.ddms.views.EmulatorControlView"
+            icon="icons/emulator-16.png"
+            id="org.eclipse.andmore.ddms.views.EmulatorControlView"
+            name="%view.name.Emulator_Control"/>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.ddms.views.AllocTrackerView"
+            icon="icons/heap.png"
+            id="org.eclipse.andmore.ddms.views.AllocTrackerView"
+            name="%view.name.Allocation_Tracker"/>
+      <view
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.ddms.views.NetworkStatisticsView"
+            icon="icons/networkstats.png"
+            id="org.eclipse.andmore.ddms.views.NetworkStatsView"
+            name="%view.name.Network_Stats"
+            restorable="true">
+      </view>
+      <view
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.ddms.views.SysInfoView"
+            id="org.eclipse.andmore.ddms.views.SysInfoView"
+            name="%view.name.SysInfo"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.andmore.ddms.editors.UiAutomatorViewer"
+            default="true"
+            extensions="uix"
+            icon="icons/uiautomator.png"
+            id="org.eclipse.andmore.ddms.editors.UiAutomatorViewer"
+            name="UI Automator Hierarchy Viewer">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipse.andmore.ddms.Perspective"
+            icon="icons/ddms-16.png"
+            id="org.eclipse.andmore.ddms.Perspective"
+            name="%perspective.name.DDMS"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.eclipse.andmore.ddms.preferences.PreferenceInitializer"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <perspectiveShortcut id="org.eclipse.andmore.ddms.Perspective"/>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+         <perspectiveShortcut id="org.eclipse.andmore.ddms.Perspective"/>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="org.eclipse.debug.ui.DebugPerspective">
+         <perspectiveShortcut id="org.eclipse.andmore.ddms.Perspective"/>
+         <view id="org.eclipse.andmore.ddms.views.LogCatView"
+           relative="org.eclipse.ui.views.ProblemView"
+           relationship="stack" />
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.andmore.preferences.main"
+            class="org.eclipse.andmore.ddms.preferences.PreferencePage"
+            id="org.eclipse.andmore.ddms.preferences.PreferencePage"
+            name="%page.name.DDMS"/>
+      <page
+            category="org.eclipse.andmore.preferences.main"
+            class="org.eclipse.andmore.ddms.preferences.LogCatPreferencePage"
+            id="org.eclipse.andmore.ddms.preferences.LogCatPreferencePage"
+            name="%page.name.LogCat"/>
+      <page
+            category="org.eclipse.andmore.ddms.preferences.LogCatPreferencePage"
+            class="org.eclipse.andmore.ddms.preferences.LogCatColorsPage"
+            id="org.eclipse.andmore.ddms.preferences.LogCatColorsPage"
+            name="Colors">
+      </page>
+   </extension>
+</plugin>

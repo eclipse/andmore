@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.andmore.package.feature"
+      label="Andmore Package"
+      version="0.5.0.qualifier"
+      provider-name="The Eclipse Foundation"
+      plugin="org.eclipse.andmore.package">
+
+   <description url="http://developer.android.com">
+      Android Developer Tools
+   </description>
+
+   <copyright>
+      Copyright (C) 2007-2014 The Android Open Source Project
+   </copyright>
+
+   <license url="http://www.eclipse.org/org/documents/epl-v10.php">
+      Note:  kxml2-2.3.0.jar is under the BSD license rather ...
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.andmore" version="0.0.0"/>
+      <import plugin="org.eclipse.andmore.base" version="0.0.0"/>
+      <import plugin="org.eclipse.andmore.ddms" version="0.0.0"/>
+      <import plugin="org.eclipse.andmore.gldebugger" version="0.0.0"/>
+      <import plugin="org.eclipse.andmore.hierarchyviewer" version="0.0.0"/>
+      <import plugin="org.eclipse.andmore.traceview" version="0.0.0"/>
+      <import plugin="org.eclipse.andmore.ndk" version="0.0.0"/>
+      <import plugin="overlay.org.eclipse.andmore.overlay" version="0.0.0"/>
+      <import feature="org.eclipse.equinox.p2.user.ui"/>
+      <import feature="org.eclipse.platform"/>
+      <import feature="org.eclipse.rcp"/>
+      <import feature="org.eclipse.egit"/>
+      <import feature="org.eclipse.cdt"/>
+      <import feature="org.eclipse.jdt"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.andmore.package"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>

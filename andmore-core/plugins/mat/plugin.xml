@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.mat.ui.editorPanes">
+      <pane
+            class="org.eclipse.andmore.android.mat.panes.MotodevPane"
+            id="org.eclipse.andmore.android.mat.MotodevPane">
+      </pane>
+   </extension>
+   <extension
+         point="org.eclipse.mat.ui.editorContributions">
+      <contribution
+            class="org.eclipse.andmore.android.mat.actions.HeapEditorContributions"
+            editorClass="org.eclipse.mat.ui.snapshot.editor.HeapEditor"
+            sequenceNr="2">
+      </contribution>
+   </extension>
+   <extension
+         id="dumpHprofService"
+         name="Dump HPROF"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="%copyright"
+            description="%service_dumpHPROF_description"
+            handler="org.eclipse.andmore.android.mat.services.DumpHPROFHandler"
+            icon="icons/motodev_pane.png"
+            id="org.eclipse.andmore.android.mat.dumpHprofService"
+            name="%service_dumpHPROF_name"
+            provider="%providerName"
+            version="0.1.0"
+            visible="true">
+      </service>
+   </extension>
+   <extension
+         id="org.eclipse.andmore.android.emulator.androidDevice"
+         name="Dump HPROF file"
+         point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service
+            id="org.eclipse.andmore.android.mat.dumpHprofService">
+         <status
+               endId="org.eclipse.andmore.android.emulator.status.online"
+               haltId="org.eclipse.andmore.android.emulator.status.online"
+               startId="org.eclipse.andmore.android.emulator.status.online">
+         </status>
+      </service>
+   </extension>
+   <extension
+         id="org.eclipse.andmore.android.handset.androidHandset"
+         name="Dump HPROF file"
+         point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service
+            id="org.eclipse.andmore.android.mat.dumpHprofService">
+         <status
+               endId="org.eclipse.andmore.android.handset.status.handsetonline"
+               haltId="org.eclipse.andmore.android.handset.status.handsetonline"
+               startId="org.eclipse.andmore.android.handset.status.handsetonline">
+         </status>
+      </service>
+   </extension>
+   <extension
+         id="org.eclipse.andmore.android.remote.androidRemoteDevice"
+         name="Dump HPROF file"
+         point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service
+            id="org.eclipse.andmore.android.mat.dumpHprofService">
+         <status
+               endId="org.eclipse.andmore.android.remote.status.connected"
+               haltId="org.eclipse.andmore.android.remote.status.connected"
+               startId="org.eclipse.andmore.android.remote.status.connected">
+         </status>
+      </service>
+   </extension>
+   <extension
+         id="commandDumpHprof"
+         name="Dump HPROF command"
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.andmore.android.mat.commands.DumpHPROFCommand"
+            id="org.eclipse.andmore.android.mat.commandDumpHprof"
+            name="%command_dumpHPROF_name">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.andmore.android.emulator.view.popup">
+         <command
+               commandId="org.eclipse.andmore.android.mat.commandDumpHprof"
+               icon="icons/motodev_pane.png"
+               id="dumpHPROF.command"
+               label="%command_dumpHPROF_name"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   
+
+</plugin>

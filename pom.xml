@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>us.nineworlds.proteus</groupId>
-	<artifactId>proteus-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>org.eclipse.andmore</groupId>
+	<artifactId>andmore-parent</artifactId>
+	<version>0.5.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -14,11 +14,7 @@
 		<eclipse-site>http://download.eclipse.org/releases/luna/</eclipse-site>
 		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository</orbit-site>
 		<sequoyah-site>http://download.eclipse.org/sequoyah/updates/2.1/</sequoyah-site>
-		<eclipse-theme-site>http://eclipse-color-theme.github.com/update</eclipse-theme-site>
-		<android-m2e-site>http://rgladwell.github.com/m2e-android/updates/master</android-m2e-site>
 		<m2e-update-site>http://download.eclipse.org/technology/m2e/releases/</m2e-update-site>
-		<gradle-tooling-site>http://dist.springsource.com/release/TOOLS/gradle</gradle-tooling-site>
-		<m2e-extras>http://ifedorenko.github.io/m2e-extras/</m2e-extras>
 	</properties>
 
 	<repositories>
@@ -38,35 +34,15 @@
 			<url>${orbit-site}</url>
 		</repository>
 		<repository>
-			<id>eclipse-theme</id>
-			<layout>p2</layout>
-			<url>${eclipse-theme-site}</url>
-		</repository>
-		<repository>
 			<id>m2e-site</id>
 			<url>${m2e-update-site}</url>
-			<layout>p2</layout>
-		</repository>
-		<repository>
-			<id>android-m2e-site</id>
-			<url>${android-m2e-site}</url>
-			<layout>p2</layout>
-		</repository>
-		<repository>
-			<id>gradle-tooling-site</id>
-			<layout>p2</layout>
-			<url>${gradle-tooling-site}</url>
-		</repository>
-		<repository>
-			<id>m2e-extras-site</id>
-			<url>${m2e-extras}</url>
 			<layout>p2</layout>
 		</repository>
 	</repositories>
 
 	<modules>
 		<module>android-core</module>
-		<module>proteus-core</module>
+		<module>andmore-core</module>
 	</modules>
 
 
@@ -97,11 +73,6 @@
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-source-feature-plugin</artifactId>
 			</plugin>
-<!--			<plugin>
-				<groupId>org.eclipse.tycho.extras</groupId>
-				<artifactId>tycho-document-bundle-plugin</artifactId>
-			</plugin>
--->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -142,15 +113,23 @@
 					</environments>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.0</version>
-				<configuration>
-					<findbugsXmlOutput>true</findbugsXmlOutput>
-					<failOnError>false</failOnError>
-				</configuration>
-				<executions>
+		</plugins>
+	</build>
+	
+	<profiles>
+		<profile>
+		     <id>findbugs</id>
+		     <build>
+		     	<plugins>
+		     		<plugin>
+				       <groupId>org.codehaus.mojo</groupId>
+				       <artifactId>findbugs-maven-plugin</artifactId>
+				       <version>3.0.0</version>
+				       <configuration>
+						<findbugsXmlOutput>true</findbugsXmlOutput>
+						<failOnError>false</failOnError>
+					    </configuration>
+					 <executions>
 					<execution>
 						<goals>
 							<goal>check</goal>
@@ -158,6 +137,8 @@
 					</execution>
 				</executions>
 			</plugin>
-		</plugins>
-	</build>
+		     	</plugins>
+		     </build>
+		</profile>
+	</profiles>
 </project>

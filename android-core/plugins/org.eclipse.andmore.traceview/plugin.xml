@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.andmore.traceview.editors.TraceviewEditor"
+            default="true"
+            extensions="trace"
+            icon="icons/android.png"
+            id="org.eclipse.andmore.traceview.editors.TraceviewEditor"
+            name="Traceview">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.andmore.ddms.traceviewLauncher">
+      <launcher
+            class="org.eclipse.andmore.traceview.TraceviewLauncher">
+      </launcher>
+   </extension>
+
+</plugin>

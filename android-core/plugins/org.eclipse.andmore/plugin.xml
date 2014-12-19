@@ -1,0 +1,1340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+    <extension
+        id="org.eclipse.andmore.common.xmlProblem"
+        name="Android XML Format Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <super type="org.eclipse.core.resources.textmarker" />
+        <persistent value="true" />
+    </extension>
+    <extension
+        id="org.eclipse.andmore.common.aaptProblem"
+        name="Android AAPT Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <super type="org.eclipse.core.resources.textmarker" />
+        <persistent value="true" />
+    </extension>
+    <extension
+        id="org.eclipse.andmore.common.aapt2Problem"
+        name="Android AAPT Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <super type="org.eclipse.core.resources.textmarker" />
+        <persistent value="true" />
+    </extension>
+    <extension
+        id="org.eclipse.andmore.common.aidlProblem"
+        name="Android AIDL Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <super type="org.eclipse.core.resources.textmarker" />
+        <persistent value="true" />
+    </extension>
+    <extension
+        id="org.eclipse.andmore.common.rsProblem"
+        name="Android RenderScript Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <super type="org.eclipse.core.resources.textmarker" />
+        <persistent value="true" />
+    </extension>
+    <extension
+        id="org.eclipse.andmore.common.androidProblem"
+        name="Android XML Content Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <super type="org.eclipse.core.resources.textmarker" />
+        <persistent value="true" />
+    </extension>
+    <extension
+        id="org.eclipse.andmore.lintProblem"
+        name="Android Lint Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <super type="org.eclipse.core.resources.textmarker" />
+        <persistent value="true" />
+    </extension>
+    <extension
+        id="org.eclipse.andmore.manifMergerProblem"
+        name="Android Manifest Merger Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <super type="org.eclipse.core.resources.textmarker" />
+        <persistent value="true" />
+    </extension>
+    <extension
+        id="org.eclipse.andmore.adtProblem"
+        name="Andmore Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <super type="org.eclipse.core.resources.textmarker" />
+        <persistent value="true" />
+    </extension>
+    <extension
+        id="org.eclipse.andmore.targetProblem"
+        name="Android Target Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <persistent value="false" />
+    </extension>
+    <extension
+        id="org.eclipse.andmore.buildToolsProblem"
+        name="Android Build Tools Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <persistent value="false" />
+    </extension>
+    <extension
+        id="org.eclipse.andmore.dependencyProblem"
+        name="Android Dependency Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <persistent value="false" />
+    </extension>
+    <extension
+        id="org.eclipse.andmore.packagingProblem"
+        name="Android Packaging Problem"
+        point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.core.resources.problemmarker" />
+        <persistent value="true" />
+    </extension>
+    <extension point="org.eclipse.ui.ide.markerResolution">
+        <markerResolutionGenerator
+            markerType="org.eclipse.andmore.lintProblem"
+            class="org.eclipse.andmore.internal.lint.LintFixGenerator" />
+        <markerResolutionGenerator
+            markerType="org.eclipse.andmore.common.aaptProblem"
+            class="org.eclipse.andmore.internal.build.AaptQuickFix" />
+    </extension>
+    <extension
+        id="ResourceManagerBuilder"
+        name="Android Resource Manager"
+        point="org.eclipse.core.resources.builders">
+        <builder hasNature="true">
+            <run class="org.eclipse.andmore.internal.build.builders.ResourceManagerBuilder" />
+        </builder>
+    </extension>
+    <extension
+        id="PreCompilerBuilder"
+        name="Android Pre Compiler"
+        point="org.eclipse.core.resources.builders">
+        <builder hasNature="true">
+            <run class="org.eclipse.andmore.internal.build.builders.PreCompilerBuilder" />
+        </builder>
+    </extension>
+    <extension
+        id="ApkBuilder"
+        name="Android Package Builder"
+        point="org.eclipse.core.resources.builders">
+        <builder hasNature="true">
+            <run class="org.eclipse.andmore.internal.build.builders.PostCompilerBuilder" />
+        </builder>
+    </extension>
+    <extension
+        id="AndroidNature"
+        name="Android Project Nature"
+        point="org.eclipse.core.resources.natures">
+        <runtime>
+            <run class="org.eclipse.andmore.internal.project.AndroidNature" />
+        </runtime>
+        <builder id="org.eclipse.andmore.ResourceManagerBuilder" />
+        <builder id="org.eclipse.andmore.PreCompilerBuilder" />
+        <builder id="org.eclipse.andmore.ApkBuilder" />
+    </extension>
+    <extension
+        id="ExportNature"
+        name="Android Export Project Nature"
+        point="org.eclipse.core.resources.natures">
+        <runtime>
+            <run class="org.eclipse.andmore.internal.project.ExportNature" />
+        </runtime>
+    </extension>
+    <extension
+        point="org.eclipse.ui.importWizards">
+        <category
+            id="org.eclispe.andmore.wizards.category"
+            name="Android" />
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.newproject.ImportProjectWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/new_adt_project.png"
+            id="org.eclipse.andmore.project.ImportProjectWizard"
+            name="Existing Android Code Into Workspace"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="true">
+        </wizard>
+    </extension>
+    <extension point="org.eclipse.ui.newWizards">
+        <category
+            id="org.eclipse.andmore.wizards.category"
+            name="Android" />
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.templates.NewProjectWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/new_adt_project.png"
+            id="org.eclipse.andmore.project.NewProjectWizard"
+            name="Android Application Project"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="true" >
+            <description>
+               Create an Android Application Project
+            </description>
+        </wizard>
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.newproject.NewTestProjectWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/newJunit.png"
+            id="org.eclipse.andmore.project.NewTestProjectWizard"
+            name="Android Test Project"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="true">
+            <description>
+               Create an Android Test Project
+            </description>
+        </wizard>
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.newproject.NewSampleProjectWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/new_adt_project.png"
+            id="org.eclipse.andmore.project.NewSampleProjectWizard"
+            name="Android Sample Project"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="true">
+            <description>
+               Create an Android Sample Project
+            </description>
+        </wizard>
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.newproject.ImportProjectWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/new_adt_project.png"
+            id="org.eclipse.andmore.project.ImportProjectWizard.NewPrj"
+            name="Android Project from Existing Code"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="true">
+            <description>
+               Create one or more Android projects from existing code
+            </description>
+        </wizard>
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.newxmlfile.NewXmlFileWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/new_xml.png"
+            id="org.eclipse.andmore.editors.wizards.NewXmlFileWizard"
+            name="Android XML File"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="false">
+            <description>
+               Create an Android resource XML file
+            </description>
+        </wizard>
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.newxmlfile.NewXmlFileWizard$NewLayoutWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/new_xml.png"
+            id="org.eclipse.andmore.editors.wizards.NewXmlFileWizard.Layout"
+            name="Android XML Layout File"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="false">
+            <description>
+               Create an Android layout XML file
+            </description>
+        </wizard>
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.newxmlfile.NewXmlFileWizard$NewValuesWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/new_xml.png"
+            id="org.eclipse.andmore.editors.wizards.NewXmlFileWizard.Values"
+            name="Android XML Values File"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="false">
+            <description>
+               Create an Android XML values file such as strings.xml
+            </description>
+        </wizard>
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.templates.NewActivityWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/new_adt_project.png"
+            id="org.eclipse.andmore.editors.wizards.NewActivityWizard"
+            name="Android Activity"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="false" >
+            <description>
+               Create an Android Activity
+            </description>
+        </wizard>
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.templates.NewActivityWizard$OtherWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/newCustomView.png"
+            id="org.eclipse.andmore.editors.wizards.NewActivityWizard.OtherWizard"
+            name="Android Object"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="false" >
+            <description>
+               Create an Android object such as a Service, an Activity, a Broadcast Receiver, a Notification, etc.
+            </description>
+        </wizard>
+        <!-- Available through generic object list above
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.templates.NewTemplateWizard$NewCustomViewWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/newCustomView.png"
+            id="org.eclipse.andmore.editors.wizards.NewTemplateWizard.CustomView"
+            name="Android Custom View"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="false" >
+            <description>
+               Create an Android custom view
+            </description>
+        </wizard>
+        -->
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.assetstudio.CreateAssetSetWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/new_asset_set.png"
+            id="org.eclipse.andmore.internal.assetstudio.CreateAssetSetWizard"
+            name="Android Icon Set"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="false" >
+            <description>
+               Create an Android icon set
+            </description>
+        </wizard>
+
+        <!-- During development only: Support for testing templates -->
+        <wizard
+            canFinishEarly="false"
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.templates.TemplateTestWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            hasPages="true"
+            icon="icons/androidjunit.png"
+            id="org.eclipse.andmore.editors.wizards.TemplateTestWizard"
+            name="Template Development Wizard"
+            preferredPerspectives="org.eclipse.jdt.ui.JavaPerspective"
+            project="false" />
+    </extension>
+    <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+        <launchConfigurationType
+            delegate="org.eclipse.andmore.internal.launch.LaunchConfigDelegate"
+            delegateDescription="The Android Application Launcher supports running and debugging remote Android applications on devices or emulators."
+            delegateName="Android Launcher"
+            id="org.eclipse.andmore.debug.LaunchConfigType"
+            modes="debug, run"
+            name="Android Application"
+            public="true"
+            sourceLocatorId="org.eclipse.andmore.internal.sourcelookup.AdtSourceLookupDirector"
+            sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer">
+        </launchConfigurationType>
+    </extension>
+    <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+        <launchConfigurationTypeImage
+            configTypeID="org.eclipse.andmore.debug.LaunchConfigType"
+            icon="icons/android_app.png"
+            id="org.eclipse.andmore.debug.LaunchConfigTypeImage" />
+    </extension>
+    <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+        <launchConfigurationTabGroup
+            class="org.eclipse.andmore.internal.launch.LaunchConfigTabGroup"
+            description="Android Application"
+            id="org.eclipse.andmore.debug.LaunchConfigTabGroup"
+            type="org.eclipse.andmore.debug.LaunchConfigType" />
+    </extension>
+    <extension point="org.eclipse.debug.ui.launchShortcuts">
+        <shortcut
+            class="org.eclipse.andmore.internal.launch.LaunchShortcut"
+            icon="icons/android_app.png"
+            id="org.eclipse.andmore.debug.launching.LaunchShortcut"
+            label="Android Application"
+            modes="run, debug">
+            <contextualLaunch>
+                <enablement>
+                    <with variable="selection">
+                        <count value="1" />
+                        <iterate>
+                            <or>
+                                <adapt type="org.eclipse.core.resources.IFile">
+                                    <and>
+                                        <test
+                                            property="org.eclipse.core.resources.contentTypeId"
+                                            value="org.eclipse.core.runtime.xml" />
+                                        <test
+                                            property="org.eclipse.core.resources.projectNature"
+                                            value="org.eclipse.andmore.AndroidNature" />
+                                    </and>
+                                </adapt>
+                                <and>
+                                    <test property="org.eclipse.jdt.launching.isContainer" />
+                                    <test
+                                        property="org.eclipse.jdt.launching.hasProjectNature"
+                                        args="org.eclipse.andmore.AndroidNature" />
+                                </and>
+                            </or>
+                        </iterate>
+                    </with>
+                </enablement>
+            </contextualLaunch>
+            <perspective id="org.eclipse.jdt.ui.JavaPerspective" />
+            <perspective id="org.eclipse.debug.ui.DebugPerspective" />
+            <configurationType id="org.eclipse.andmore.debug.LaunchConfigType">
+            </configurationType>
+            <description
+                description="Runs an Android Application"
+                mode="run">
+            </description>
+            <description
+                description="Debugs an Android Application"
+                mode="debug">
+            </description>
+        </shortcut>
+    </extension>
+    <extension point="org.eclipse.ui.popupMenus">
+        <objectContribution
+            id="org.eclipse.andmore.contribution2"
+            nameFilter="*"
+            objectClass="org.eclipse.core.resources.IProject"
+            adaptable="true">
+            <menu
+                id="org.eclipse.andmore.AndroidTools"
+                label="Android Tools"
+                path="additions">
+                <separator name="group1" />
+                <separator name="group2" />
+                <separator name="group3" />
+                <separator name="group4" />
+            </menu>
+            <filter
+                name="projectNature"
+                value="org.eclipse.andmore.AndroidNature">
+            </filter>
+            <action
+                class="org.eclipse.andmore.internal.wizards.actions.NewXmlFileAction"
+                enablesFor="1"
+                icon="icons/new_xml.png"
+                id="org.eclipse.andmore.wizards.actions.NewXmlFileAction"
+                label="New Resource File..."
+                menubarPath="org.eclipse.andmore.AndroidTools/group1"
+                tooltip="Opens a wizard to help create a new Android XML Resource file">
+            </action>
+            <action
+                class="org.eclipse.andmore.internal.wizards.actions.NewTestProjectAction"
+                enablesFor="1"
+                icon="icons/androidjunit.png"
+                id="org.eclipse.andmore.wizards.actions.NewTestProjectAction"
+                label="New Test Project..."
+                menubarPath="org.eclipse.andmore.AndroidTools/group1"
+                tooltip="Opens a wizard to help create a new Android Test Project">
+            </action>
+            <action
+                class="org.eclipse.andmore.internal.wizards.actions.ExportAction"
+                enablesFor="1"
+                id="org.eclipse.andmore.project.ExportAction"
+                label="Export Unsigned Application Package..."
+                menubarPath="org.eclipse.andmore.AndroidTools/group2" />
+            <action
+                class="org.eclipse.andmore.internal.wizards.actions.ExportWizardAction"
+                enablesFor="1"
+                id="org.eclipse.andmore.project.ExportWizardAction"
+                label="Export Signed Application Package..."
+                menubarPath="org.eclipse.andmore.AndroidTools/group2" />
+            <action
+                class="org.eclipse.andmore.internal.actions.FixProjectAction"
+                enablesFor="1"
+                id="org.eclipse.andmore.project.FixProjectAction"
+                label="Fix Project Properties"
+                menubarPath="org.eclipse.andmore.AndroidTools/group3" />
+            <action
+                class="org.eclipse.andmore.internal.actions.AddSupportJarAction"
+                enablesFor="1"
+                icon="icons/android.png"
+                id="org.eclipse.andmore.wizards.actions.AddCompatibilityJarAction"
+                label="Add Support Library..."
+                menubarPath="org.eclipse.andmore.AndroidTools/group3"
+                tooltip="Add the Compatibility Library to the project">
+            </action>
+            <action
+                class="org.eclipse.andmore.internal.refactorings.renamepackage.RenamePackageAction"
+                enablesFor="1"
+                id="org.eclipse.andmore.project.RenamePackageAction"
+                label="Rename Application Package"
+                menubarPath="org.eclipse.andmore.AndroidTools/group3" />
+            <action
+                class="org.eclipse.andmore.internal.actions.DexDumpAction"
+                enablesFor="1"
+                id="org.eclipse.andmore.DexDumpAction"
+                label="Display dex bytecode"
+                menubarPath="org.eclipse.andmore.AndroidTools/group3" />
+            <action
+                class="org.eclipse.andmore.internal.lint.ClearLintMarkersAction"
+                enablesFor="1"
+                id="org.eclipse.andmore.internal.lint.ClearLintMarkersAction"
+                label="Clear Lint Markers"
+                menubarPath="org.eclipse.andmore.AndroidTools/group4" />
+            <action
+                class="org.eclipse.andmore.internal.lint.RunLintAction"
+                enablesFor="1"
+                id="org.eclipse.andmore.internal.lint.RunLintAction"
+                label="Run Lint: Check for Common Errors"
+                icon="icons/lintrun.png"
+                menubarPath="org.eclipse.andmore.AndroidTools/group4" />
+        </objectContribution>
+    </extension>
+    <extension point="org.eclipse.ui.preferencePages">
+        <page
+            class="org.eclipse.andmore.internal.preferences.AndroidPreferencePage"
+            id="org.eclipse.andmore.preferences.main"
+            name="Android" />
+        <page
+            category="org.eclipse.andmore.preferences.main"
+            class="org.eclipse.andmore.internal.preferences.BuildPreferencePage"
+            id="org.eclipse.andmore.preferences.BuildPreferencePage"
+            name="Build" />
+        <page
+            category="org.eclipse.andmore.preferences.main"
+            class="org.eclipse.andmore.internal.preferences.LaunchPreferencePage"
+            id="org.eclipse.andmore.preferences.LaunchPreferencePage"
+            name="Launch" />
+        <page
+            category="org.eclipse.andmore.preferences.main"
+            class="org.eclipse.andmore.internal.preferences.EditorsPage"
+            id="org.eclipse.andmore.preferences.EditorsPage"
+            name="Editors">
+        </page>
+        <page
+            category="org.eclipse.andmore.preferences.main"
+            class="org.eclipse.andmore.internal.preferences.LintPreferencePage"
+            id="org.eclipse.andmore.common.preferences.LintPreferencePage"
+            name="Lint Error Checking">
+        </page>
+    </extension>
+    <extension point="org.eclipse.core.runtime.preferences">
+        <initializer class="org.eclipse.andmore.internal.preferences.AdtPrefs" />
+    </extension>
+    <extension point="org.eclipse.ui.perspectiveExtensions">
+        <perspectiveExtension targetID="org.eclipse.jdt.ui.JavaPerspective">
+            <newWizardShortcut id="org.eclipse.andmore.project.NewProjectWizard" />
+            <newWizardShortcut id="org.eclipse.andmore.editors.wizards.NewXmlFileWizard" />
+            <actionSet id="adt.actionSet.wizards" />
+            <actionSet id="adt.actionSet.avdManager" />
+            <actionSet id="adt.actionSet.lint" />
+            <actionSet id="adt.actionSet.refactorings" />
+        </perspectiveExtension>
+        <perspectiveExtension targetID="org.eclipse.debug.ui.DebugPerspective">
+            <viewShortcut id="org.eclipse.andmore.ddms.views.LogCatView" />
+            <viewShortcut id="org.eclipse.andmore.ddms.views.DeviceView" />
+        </perspectiveExtension>
+    </extension>
+    <extension point="org.eclipse.ui.ide.projectNatureImages">
+        <image
+            icon="icons/android_project.png"
+            id="org.eclipse.andmore.AndroidNature.image"
+            natureId="org.eclipse.andmore.AndroidNature">
+        </image>
+    </extension>
+    <extension point="org.eclipse.jdt.core.classpathContainerInitializer">
+        <classpathContainerInitializer
+            class="org.eclipse.andmore.internal.project.AndroidClasspathContainerInitializer"
+            id="org.eclipse.andmore.ANDROID_FRAMEWORK">
+        </classpathContainerInitializer>
+        <classpathContainerInitializer
+            class="org.eclipse.andmore.internal.project.LibraryClasspathContainerInitializer"
+            id="org.eclipse.andmore.LIBRARIES">
+        </classpathContainerInitializer>
+        <classpathContainerInitializer
+            class="org.eclipse.andmore.internal.project.LibraryClasspathContainerInitializer"
+            id="org.eclipse.andmore.DEPENDENCIES">
+        </classpathContainerInitializer>
+    </extension>
+    <extension point="org.eclipse.jdt.ui.classpathContainerPage">
+        <classpathContainerPage
+            name="Android Classpath Container"
+            class="org.eclipse.andmore.internal.project.AndroidClasspathContainerPage"
+            id="org.eclipse.andmore.ANDROID_FRAMEWORK">
+        </classpathContainerPage>
+    </extension>
+    <extension point="org.eclipse.ui.exportWizards">
+        <category
+            id="org.eclipse.andmore.wizards.category"
+            name="Android">
+        </category>
+        <wizard
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.export.ExportWizard"
+            icon="icons/android.png"
+            id="org.eclipse.andmore.project.ExportWizard"
+            name="Export Android Application">
+        </wizard>
+    </extension>
+    <extension point="org.eclipse.ui.exportWizards">
+        <category
+            id="org.eclipse.andmore.wizards.category"
+            name="Android">
+        </category>
+        <wizard
+            category="org.eclipse.andmore.wizards.category"
+            class="org.eclipse.andmore.internal.wizards.exportgradle.GradleExportWizard"
+            icon="icons/gradle.png"
+            id="org.eclipse.andmore.project.ExportGradleWizard"
+            name="Generate Gradle build files">
+            <selection
+                class="org.eclipse.jdt.core.IJavaProject">
+            </selection>
+        </wizard>
+    </extension>
+    <extension point="org.eclipse.ui.commands">
+        <command
+            name="Debug Android Application"
+            description="Debug Android Application"
+            categoryId="org.eclipse.debug.ui.category.run"
+            id="org.eclipse.andmore.launch.LaunchShortcut.debug">
+        </command>
+        <command
+            name="Run Android Application"
+            description="Run Android Application"
+            categoryId="org.eclipse.debug.ui.category.run"
+            id="org.eclipse.andmore.launch.LaunchShortcut.run">
+        </command>
+    </extension>
+    <extension point="org.eclipse.ui.decorators">
+        <decorator
+            adaptable="true"
+            class="org.eclipse.andmore.internal.project.FolderDecorator"
+            id="org.eclipse.andmore.project.FolderDecorator"
+            label="Android Decorator"
+            lightweight="true"
+            location="TOP_RIGHT"
+            objectClass="org.eclipse.core.resources.IFolder"
+            state="true">
+        </decorator>
+    </extension>
+    <extension point="org.eclipse.ui.editors">
+        <editor
+            class="org.eclipse.andmore.internal.editors.export.ExportEditor"
+            default="true"
+            filenames="export.properties"
+            icon="icons/android_file.png"
+            id="org.eclipse.andmore.editors.export.ExportEditor"
+            name="Android Export Editor">
+        </editor>
+
+        <editor
+            class="org.eclipse.andmore.internal.editors.manifest.ManifestEditor"
+            default="true"
+            filenames="AndroidManifest.xml"
+            icon="icons/android_file.png"
+            id="org.eclipse.andmore.editors.manifest.ManifestEditor"
+            name="Android Manifest Editor">
+        </editor>
+
+        <!--
+        This is the new generic multi-purpose single XML editor used by ADT.
+        It is designed to replace all the other XML editors (layout, manifest, drawable,
+        animation, color, values, xml) and does so by using a single common Editor class
+        that defers to multiple delegate handlers.
+        -->
+        <editor
+              class="org.eclipse.andmore.internal.editors.common.CommonXmlEditor"
+              contributorClass="org.eclipse.andmore.internal.editors.common.CommonActionContributor"
+              default="true"
+              extensions="xml"
+              icon="icons/android_file.png"
+              id="org.eclipse.andmore.editors.CommonXmlEditor"
+              matchingStrategy="org.eclipse.andmore.internal.editors.common.CommonMatchingStrategy"
+              name="Android Common XML Editor">
+        </editor>
+
+        <!--
+        For compatibilit with existing ADT installs, we still need to keep the editor
+        IDs of the previously defined editors. E.g. for the color editor note that the
+        id remains the same but class name changes to the new class. This will make
+        Eclipse not complain upon startup of an existing workspace.
+        -->
+        <editor
+            class="org.eclipse.andmore.internal.editors.common.CommonXmlEditor"
+            contributorClass="org.eclipse.andmore.internal.editors.common.CommonActionContributor"
+            default="false"
+            icon="icons/android_file.png"
+            id="org.eclipse.andmore.editors.layout.LayoutEditor"
+            matchingStrategy="org.eclipse.andmore.internal.editors.common.CommonMatchingStrategy"
+            name="Legacy Android Layout Editor">
+        </editor>
+       <editor
+            class="org.eclipse.andmore.internal.editors.common.CommonXmlEditor"
+            default="false"
+            icon="icons/android_file.png"
+            id="org.eclipse.andmore.editors.resources.ResourcesEditor"
+            name="Legacy Android Resource Editor">
+        </editor>
+        <editor
+            class="org.eclipse.andmore.internal.editors.common.CommonXmlEditor"
+            default="false"
+            icon="icons/android_file.png"
+            id="org.eclipse.andmore.editors.menu.MenuEditor"
+            name="Legacy Android Menu Editor">
+        </editor>
+        <editor
+            class="org.eclipse.andmore.internal.editors.common.CommonXmlEditor"
+            default="false"
+            icon="icons/android_file.png"
+            id="org.eclipse.andmore.editors.xml.XmlEditor"
+            name="Legacy Android Xml Resources Editor">
+        </editor>
+        <editor
+            class="org.eclipse.andmore.internal.editors.common.CommonXmlEditor"
+            default="false"
+            icon="icons/android_file.png"
+            id="org.eclipse.andmore.editors.animator.AnimationEditor"
+            name="Legacy Android Animation Editor">
+        </editor>
+        <editor
+            class="org.eclipse.andmore.internal.editors.common.CommonXmlEditor"
+            default="false"
+            icon="icons/android_file.png"
+            id="org.eclipse.andmore.editors.drawable.DrawableEditor"
+            name="Legacy Android Drawable Editor">
+        </editor>
+        <editor
+            class="org.eclipse.andmore.internal.editors.common.CommonXmlEditor"
+            default="false"
+            icon="icons/android_file.png"
+            id="org.eclipse.andmore.editors.color.ColorEditor"
+            name="Legacy Android Color Editor">
+        </editor>
+
+        <editor
+            class="org.eclipse.andmore.internal.editors.binaryxml.BinaryXMLMultiPageEditorPart"
+            contributorClass="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorActionBarContributor"
+            icon="$nl$/icons/android_file.png"
+            id="org.eclipse.andmore.binedit.BinaryXMLMultiPageEditorPart"
+            name="Android Binary XML editor"
+            symbolicFontName="org.eclipse.wst.sse.ui.textfont">
+            <contentTypeBinding contentTypeId="org.eclipse.andmore.binaryXml">
+            </contentTypeBinding>
+        </editor>
+        <editor
+            class="org.eclipse.andmore.internal.editors.draw9patch.Draw9PatchEditor"
+            contributorClass="org.eclipse.andmore.internal.editors.common.CommonActionContributor"
+            icon="icons/android_file.png"
+            id="draw9patchplugin.editors.Draw9PatchEditor"
+            name="Android Draw 9-patch Editor"
+            extensions="9.png">
+        </editor>
+    </extension>
+    <extension point="org.eclipse.ui.views">
+        <view
+            allowMultiple="false"
+            category="org.eclipse.andmore.ddms.views.category"
+            class="org.eclipse.andmore.internal.ui.ResourceExplorerView"
+            icon="icons/draw9patch-16.png"
+            id="org.eclipse.andmore.editors.resources.explorer.ResourceExplorerView"
+            name="Resource Explorer">
+        </view>
+        <view
+              class="org.eclipse.andmore.internal.lint.LintViewPart"
+              category="org.eclipse.andmore.ddms.views.category"
+              id="org.eclipse.andmore.internal.lint.LintViewPart"
+              icon="icons/lintview.png"
+              name="Lint Warnings">
+        </view>
+    </extension>
+    <extension point="org.eclipse.wst.sse.ui.editorConfiguration">
+        <sourceViewerConfiguration
+            class="org.eclipse.andmore.internal.editors.manifest.ManifestSourceViewerConfig"
+            target="org.eclipse.andmore.editors.manifest.ManifestEditor">
+        </sourceViewerConfiguration>
+        <sourceViewerConfiguration
+            class="org.eclipse.andmore.internal.editors.common.CommonSourceViewerConfig"
+            target="org.eclipse.andmore.editors.CommonXmlEditor">
+        </sourceViewerConfiguration>
+        <quickOutlineConfiguration
+            class="org.eclipse.andmore.internal.editors.AndroidQuickOutlineConfiguration"
+            target="org.eclipse.core.runtime.xml" />
+        <contentOutlineConfiguration
+            class="org.eclipse.andmore.internal.editors.AndroidOutlineConfiguration"
+            target="org.eclipse.core.runtime.xml" />
+        <doubleClickStrategy
+            class="org.eclipse.andmore.internal.editors.AndroidDoubleClickStrategy"
+            target="org.eclipse.wst.xml.XML_DEFAULT" />
+        <provisionalConfiguration
+            type="org.eclipse.jface.text.quickassist.IQuickAssistProcessor"
+            class="org.eclipse.andmore.internal.editors.formatting.XmlQuickAssistManager"
+            target="org.eclipse.wst.xml.XML_DEFAULT" />
+        <provisionalConfiguration
+            type="characterpairmatcher"
+            class="org.eclipse.andmore.internal.editors.AndroidXmlCharacterMatcher"
+            target="org.eclipse.core.runtime.xml" />
+    </extension>
+    <extension point="org.eclipse.jdt.ui.quickAssistProcessors">
+        <quickAssistProcessor
+            id="AndroidJavaAssistant"
+            name="Android Java Quick Assistant"
+            requiredSourceLevel="1.5"
+            class="org.eclipse.andmore.internal.editors.layout.refactoring.JavaQuickAssistant">
+        </quickAssistProcessor>
+    </extension>
+    <extension
+        point="org.eclipse.jdt.ui.quickFixProcessors">
+        <quickFixProcessor
+            name="Android Convert Switch Quickfix Processor"
+            class="org.eclipse.andmore.internal.build.ConvertSwitchQuickFixProcessor"
+            id="org.eclipse.andmore.internal.build.ConvertSwitchQuickFixProcessor">
+            <handledMarkerTypes>
+                <markerType id="org.eclipse.jdt.core.problem"/>
+            </handledMarkerTypes>
+        </quickFixProcessor>
+    </extension>
+    <extension point="org.eclipse.ui.propertyPages">
+        <page
+            adaptable="true"
+            class="org.eclipse.andmore.internal.properties.AndroidPropertyPage"
+            id="org.eclipse.andmore.project.properties.AndroidPropertyPage"
+            name="Android"
+            nameFilter="*"
+            objectClass="org.eclipse.core.resources.IProject">
+            <enabledWhen>
+                <test
+                    property="org.eclipse.jdt.launching.hasProjectNature"
+                    args="org.eclipse.andmore.AndroidNature" />
+            </enabledWhen>
+        </page>
+        <page
+            class="org.eclipse.andmore.internal.preferences.LintPreferencePage"
+            id="org.eclipse.andmore.internal.preferences.LintPreferencePage"
+            name="Android Lint Preferences">
+            <filter
+                name="nature"
+                value="org.eclipse.andmore.AndroidNature">
+            </filter>
+            <enabledWhen>
+                <adapt type="org.eclipse.core.resources.IProject" />
+            </enabledWhen>
+        </page>
+    </extension>
+    <extension point="org.eclipse.ui.actionSets">
+        <actionSet
+            description="Android Wizards"
+            id="adt.actionSet.wizards"
+            label="Android Wizards"
+            visible="false">
+            <action
+                class="org.eclipse.andmore.internal.wizards.actions.NewXmlFileAction"
+                icon="icons/new_xml.png"
+                id="org.eclipse.andmore.wizards.actions.NewXmlFileAction"
+                label="New Android XML File"
+                style="push"
+                toolbarPath="android_project">
+            </action>
+        </actionSet>
+        <actionSet
+            description="Refactorings for Android"
+            id="adt.actionSet.refactorings"
+            label="Android Refactorings"
+            visible="false">
+
+         <!-- This duplicates the Refactoring Menu definition from the jdt.ui plugin.xml,
+              which allows us to insert our contribution even if the JDT is not loaded.
+              We overload the definition with our new group.-->
+            <menu
+                label="Refactor"
+                path="edit"
+                id="org.eclipse.jdt.ui.refactoring.menu">
+                <separator name="undoRedoGroup" />
+                <separator name="reorgGroup" />
+                <separator name="androidGroup" />
+                <separator name="codingGroup" />
+                <separator name="reorgGroup2" />
+                <separator name="typeGroup" />
+                <separator name="typeGroup2" />
+                <separator name="codingGroup2" />
+                <separator name="typeGroup3" />
+                <separator name="scriptGroup" />
+            </menu>
+            <menu
+                label="Android"
+                path="org.eclipse.jdt.ui.refactoring.menu/androidGroup"
+                id="org.eclipse.andmore.refactoring.menu">
+                <separator name="android" />
+            </menu>
+            <action
+                class="org.eclipse.andmore.internal.refactorings.extractstring.ExtractStringAction"
+                definitionId="org.eclipse.andmore.refactoring.extract.string"
+                id="org.eclipse.andmore.actions.ExtractString"
+                label="Extract Android String..."
+                menubarPath="org.eclipse.jdt.ui.refactoring.menu/org.eclipse.andmore.refactoring.menu/android"
+                style="push"
+                tooltip="Extracts a string into Android resource string">
+            </action>
+            <action
+                class="org.eclipse.andmore.internal.editors.layout.refactoring.ExtractIncludeAction"
+                definitionId="org.eclipse.andmore.refactoring.extract.include"
+                id="org.eclipse.andmore.actions.ExtractInclude"
+                label="Extract as Include..."
+                menubarPath="org.eclipse.jdt.ui.refactoring.menu/org.eclipse.andmore.refactoring.menu/android"
+                style="push"
+                tooltip="Extracts Views as Included Layout">
+            </action>
+            <action
+                class="org.eclipse.andmore.internal.editors.layout.refactoring.ExtractStyleAction"
+                definitionId="org.eclipse.andmore.refactoring.extract.style"
+                id="org.eclipse.andmore.actions.ExtractStyle"
+                label="Extract Style..."
+                menubarPath="org.eclipse.jdt.ui.refactoring.menu/org.eclipse.andmore.refactoring.menu/android"
+                style="push"
+                tooltip="Extracts Styles">
+            </action>
+            <action
+                class="org.eclipse.andmore.internal.editors.layout.refactoring.WrapInAction"
+                definitionId="org.eclipse.andmore.refactoring.wrapin"
+                id="org.eclipse.andmore.actions.WrapIn"
+                label="Wrap In Container..."
+                menubarPath="org.eclipse.jdt.ui.refactoring.menu/org.eclipse.andmore.refactoring.menu/android"
+                style="push"
+                tooltip="Wraps Views in a new container">
+            </action>
+            <action
+                class="org.eclipse.andmore.internal.editors.layout.refactoring.UnwrapAction"
+                definitionId="org.eclipse.andmore.refactoring.unwrap"
+                id="org.eclipse.andmore.actions.Unwrap"
+                label="Remove Container..."
+                menubarPath="org.eclipse.jdt.ui.refactoring.menu/org.eclipse.andmore.refactoring.menu/android"
+                style="push"
+                tooltip="Unwraps Views by Removing their container">
+            </action>
+            <action
+                class="org.eclipse.andmore.internal.editors.layout.refactoring.ChangeLayoutAction"
+                definitionId="org.eclipse.andmore.refactoring.convert"
+                id="org.eclipse.andmore.actions.ChangeLayout"
+                label="Change Layout..."
+                menubarPath="org.eclipse.jdt.ui.refactoring.menu/org.eclipse.andmore.refactoring.menu/android"
+                style="push"
+                tooltip="Changes layouts from one type to another">
+            </action>
+            <action
+                class="org.eclipse.andmore.internal.editors.layout.refactoring.ChangeViewAction"
+                definitionId="org.eclipse.andmore.refactoring.changeview"
+                id="org.eclipse.andmore.actions.ChangeView"
+                label="Change Widget Type..."
+                menubarPath="org.eclipse.jdt.ui.refactoring.menu/org.eclipse.andmore.refactoring.menu/android"
+                style="push"
+                tooltip="Changes the type of the selected widgets">
+            </action>
+            <menu
+                id="org.eclipse.jdt.ui.refactoring.menu"
+                label="Refactor">
+            </menu>
+        </actionSet>
+        <actionSet
+            description="Android AVD and SDK Manager"
+            id="adt.actionSet.avdManager"
+            label="Android SDK and AVD Manager"
+            visible="false">
+            <action
+                class="org.eclipse.andmore.internal.actions.AvdManagerAction"
+                icon="icons/avd_manager.png"
+                id="org.eclipse.andmore.ui.avdmanager"
+                label="Android Virtual Device Manager"
+                menubarPath="Window/additions"
+                style="push"
+                toolbarPath="android_project">
+            </action>
+            <action
+                class="org.eclipse.andmore.internal.actions.SdkManagerAction"
+                icon="icons/sdk_manager.png"
+                id="org.eclipse.andmore.ui.sdkmanager"
+                label="Android SDK Manager"
+                menubarPath="Window/additions"
+                style="push"
+                toolbarPath="android_project">
+            </action>
+        </actionSet>
+        <actionSet
+            description="Android Lint"
+            id="adt.actionSet.lint"
+            label="Android Lint"
+            visible="false">
+            <action
+                class="org.eclipse.andmore.internal.lint.RunLintAction"
+                style="pulldown"
+                icon="icons/lintrun.png"
+                id="org.eclipse.andmore.ui.lintrunner"
+                label="Run Android Lint"
+                menubarPath="Window/additions"
+                toolbarPath="android_project">
+            </action>
+        </actionSet>
+    </extension>
+    <extension point="org.eclipse.debug.core.launchDelegates">
+        <launchDelegate
+            delegate="org.eclipse.andmore.internal.launch.JUnitLaunchConfigDelegate"
+            delegateDescription="Removes the Android JAR from the Bootstrap Classpath"
+            id="org.eclipse.andmore.launch.JUnitLaunchConfigDelegate.launchAndroidJunit"
+            modes="run,debug"
+            name="Android JUnit Test"
+            type="org.eclipse.jdt.junit.launchconfig">
+        </launchDelegate>
+    </extension>
+    <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+        <launchConfigurationType
+            delegate="org.eclipse.andmore.internal.launch.junit.AndroidJUnitLaunchConfigDelegate"
+            id="org.eclipse.andmore.junit.launchConfigurationType"
+            modes="run,debug"
+            name="Android JUnit Test"
+            public="true"
+            sourceLocatorId="org.eclipse.andmore.internal.sourcelookup.AdtSourceLookupDirector"
+            sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer">
+        </launchConfigurationType>
+    </extension>
+    <extension point="org.eclipse.debug.core.sourceLocators">
+        <sourceLocator
+            id="org.eclipse.andmore.internal.sourcelookup.AdtSourceLookupDirector"
+            class="org.eclipse.andmore.internal.sourcelookup.AdtSourceLookupDirector"
+            name="%sourceLocator.name">
+        </sourceLocator>
+    </extension>
+    <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+        <launchConfigurationTypeImage
+            configTypeID="org.eclipse.andmore.junit.launchConfigurationType"
+            icon="icons/androidjunit.png"
+            id="org.eclipse.andmore.junit.launchConfigurationTypeImage">
+        </launchConfigurationTypeImage>
+    </extension>
+    <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+        <launchConfigurationTabGroup
+            class="org.eclipse.andmore.internal.launch.junit.AndroidJUnitTabGroup"
+            description="Android JUnit Test"
+            id="org.eclipse.andmore.junit.AndroidJUnitLaunchConfigTabGroup"
+            type="org.eclipse.andmore.junit.launchConfigurationType" />
+    </extension>
+    <extension point="org.eclipse.debug.ui.launchShortcuts">
+        <shortcut
+            class="org.eclipse.andmore.internal.launch.junit.AndroidJUnitLaunchShortcut"
+            icon="icons/androidjunit.png"
+            id="org.eclipse.andmore.junit.launchShortcut"
+            label="Android JUnit Test"
+            modes="run,debug">
+            <contextualLaunch>
+                <enablement>
+                    <with variable="selection">
+                        <count value="1" />
+                        <iterate>
+                            <adapt type="org.eclipse.jdt.core.IJavaElement">
+                                <test
+                                    property="org.eclipse.jdt.core.isInJavaProjectWithNature"
+                                    value="org.eclipse.andmore.AndroidNature" />
+                                <test
+                                    property="org.eclipse.jdt.core.hasTypeOnClasspath"
+                                    value="junit.framework.Test" />
+                                <test property="org.eclipse.andmore.canLaunchAsJUnit" />
+                            </adapt>
+                        </iterate>
+                    </with>
+                </enablement>
+            </contextualLaunch>
+            <configurationType id="org.eclipse.andmore.junit.launchConfigurationType">
+            </configurationType>
+        </shortcut>
+    </extension>
+    <extension point="org.eclipse.ui.commands">
+        <category
+            description="Refactorings for Android Projects"
+            id="org.eclipse.andmore.refactoring.category"
+            name="Android Refactorings">
+        </category>
+        <command
+            categoryId="org.eclipse.andmore.refactoring.category"
+            description="Extract Strings into Android String Resources"
+            id="org.eclipse.andmore.refactoring.extract.string"
+            name="Extract Android String">
+        </command>
+        <command
+            categoryId="org.eclipse.andmore.refactoring.category"
+            description="Extract Views as Included Layout"
+            id="org.eclipse.andmore.refactoring.extract.include"
+            name="Extract as Include">
+        </command>
+        <command
+            categoryId="org.eclipse.andmore.refactoring.category"
+            description="Extract Styles"
+            id="org.eclipse.andmore.refactoring.extract.style"
+            name="Extract Styles">
+        </command>
+        <command
+            categoryId="org.eclipse.andmore.refactoring.category"
+            description="Wraps Views in a New Container"
+            id="org.eclipse.andmore.refactoring.wrapin"
+            name="Wrap in Container">
+        </command>
+        <command
+            categoryId="org.eclipse.andmore.refactoring.category"
+            description="Unwraps Views From Their Container"
+            id="org.eclipse.andmore.refactoring.unwrap"
+            name="Remove Container">
+        </command>
+        <command
+            categoryId="org.eclipse.andmore.refactoring.category"
+            description="Converts Layouts from One Type to Another"
+            id="org.eclipse.andmore.refactoring.convert"
+            name="Change Layout">
+        </command>
+        <command
+            categoryId="org.eclipse.andmore.refactoring.category"
+            description="Changes the widget type for the selection"
+            id="org.eclipse.andmore.refactoring.changeview"
+            name="Change Widget Type">
+        </command>
+    </extension>
+    <extension point="org.eclipse.ltk.core.refactoring.refactoringContributions">
+        <contribution
+            class="org.eclipse.andmore.internal.refactorings.extractstring.ExtractStringContribution"
+            id="org.eclipse.andmore.refactoring.extract.string">
+        </contribution>
+        <contribution
+            class="org.eclipse.andmore.internal.editors.layout.refactoring.ExtractIncludeContribution"
+            id="org.eclipse.andmore.refactoring.extract.include">
+        </contribution>
+        <contribution
+            class="org.eclipse.andmore.internal.editors.layout.refactoring.ExtractStyleContribution"
+            id="org.eclipse.andmore.refactoring.extract.style">
+        </contribution>
+        <contribution
+            class="org.eclipse.andmore.internal.editors.layout.refactoring.WrapInContribution"
+            id="org.eclipse.andmore.refactoring.wrapin">
+        </contribution>
+        <contribution
+            class="org.eclipse.andmore.internal.editors.layout.refactoring.UnwrapContribution"
+            id="org.eclipse.andmore.refactoring.unwrap">
+        </contribution>
+        <contribution
+            class="org.eclipse.andmore.internal.editors.layout.refactoring.ChangeLayoutContribution"
+            id="org.eclipse.andmore.refactoring.convert">
+        </contribution>
+        <contribution
+            class="org.eclipse.andmore.internal.editors.layout.refactoring.ChangeViewContribution"
+            id="org.eclipse.andmore.refactoring.changeview">
+        </contribution>
+    </extension>
+    <extension point="org.eclipse.core.expressions.propertyTesters">
+        <propertyTester
+            properties="isTest,canLaunchAsJUnit"
+            namespace="org.eclipse.andmore"
+            type="org.eclipse.core.runtime.IAdaptable"
+            class="org.eclipse.andmore.internal.launch.junit.AndroidJUnitPropertyTester"
+            id="org.eclipse.andmore.AndroidJUnitPropertyTester">
+        </propertyTester>
+    </extension>
+    <extension point="org.eclipse.andmore.ddms.toolsLocator">
+        <locator class="org.eclipse.andmore.ToolsLocator">
+        </locator>
+    </extension>
+    <extension point="org.eclipse.andmore.ddms.debuggerConnector">
+        <connector class="org.eclipse.andmore.DebuggerConnector">
+        </connector>
+    </extension>
+    <extension point="org.eclipse.andmore.ddms.sourceRevealer">
+        <revealer class="org.eclipse.andmore.SourceRevealer">
+        </revealer>
+    </extension>
+    <extension point="org.eclipse.ltk.core.refactoring.renameParticipants">
+        <renameParticipant
+            class="org.eclipse.andmore.internal.refactorings.core.AndroidTypeRenameParticipant"
+            id="org.eclipse.andmore.internal.refactoring.core.AndroidTypeRenameParticipant"
+            name="Android Rename Type Participant">
+            <enablement>
+                <with variable="element">
+                    <instanceof value="org.eclipse.jdt.core.IType">
+                    </instanceof>
+                </with>
+                <with variable="affectedNatures">
+                    <iterate operator="or">
+                        <equals value="org.eclipse.andmore.AndroidNature" />
+                    </iterate>
+                </with>
+            </enablement>
+        </renameParticipant>
+        <renameParticipant
+            class="org.eclipse.andmore.internal.refactorings.core.RenameResourceParticipant"
+            id="org.eclipse.andmore.internal.refactorings.core.RenameResourceParticipant"
+            name="Android Rename Resource Participant">
+            <enablement>
+                <with variable="element">
+                    <or>
+                        <instanceof value="org.eclipse.jdt.core.IField"/>
+                        <instanceof value="org.eclipse.core.resources.IResource" />
+                        <instanceof value="java.lang.String" />
+                    </or>
+                </with>
+                <with variable="affectedNatures">
+                    <iterate operator="or">
+                        <equals value="org.eclipse.andmore.AndroidNature" />
+                    </iterate>
+                </with>
+            </enablement>
+        </renameParticipant>
+        <renameParticipant
+            class="org.eclipse.andmore.internal.refactorings.core.AndroidPackageRenameParticipant"
+            id="org.eclipse.andmore.internal.refactoring.core.AndroidPackageRenameParticipant"
+            name="Android Rename Package Participant">
+            <enablement>
+                <with variable="element">
+                    <instanceof value="org.eclipse.jdt.core.IPackageFragment">
+                    </instanceof>
+                </with>
+                <with variable="affectedNatures">
+                    <iterate operator="or">
+                        <equals value="org.eclipse.andmore.AndroidNature" />
+                    </iterate>
+                </with>
+            </enablement>
+        </renameParticipant>
+    </extension>
+    <extension point="org.eclipse.ltk.core.refactoring.moveParticipants">
+        <moveParticipant
+            class="org.eclipse.andmore.internal.refactorings.core.AndroidTypeMoveParticipant"
+            id="org.eclipse.andmore.internal.refactoring.core.androidTypeMoveParticipant"
+            name="Android Move Type Participant">
+            <enablement>
+                <with variable="element">
+                    <instanceof value="org.eclipse.jdt.core.IType">
+                    </instanceof>
+                </with>
+                <with variable="affectedNatures">
+                    <iterate operator="or">
+                        <equals value="org.eclipse.andmore.AndroidNature" />
+                    </iterate>
+                </with>
+            </enablement>
+        </moveParticipant>
+    </extension>
+    <extension point="org.eclipse.ui.workbench.texteditor.hyperlinkDetectorTargets">
+        <target
+            id="org.eclipse.andmore.xmlCode"
+            name="XML Editor">
+            <context type="org.eclipse.ui.texteditor.ITextEditor" />
+        </target>
+    </extension>
+    <extension point="org.eclipse.ui.workbench.texteditor.hyperlinkDetectors">
+        <hyperlinkDetector
+            class="org.eclipse.andmore.internal.editors.Hyperlinks$XmlResolver"
+            id="org.eclipse.andmore.xmlCodeResolver"
+            name="Android XML Hyperlink Detector"
+            targetId="org.eclipse.andmore.xmlCode">
+        </hyperlinkDetector>
+        <hyperlinkDetector
+            class="org.eclipse.andmore.internal.editors.Hyperlinks$JavaResolver"
+            id="org.eclipse.andmore.javaCodeResolver"
+            name="Android Java Hyperlink Detector"
+            targetId="org.eclipse.jdt.ui.javaCode">
+        </hyperlinkDetector>
+      <!--
+      Register this hyperlink provider TWICE, once without any modifier keys, and
+      once with Modifier1+Modifier2. The one without (which will pick up the default
+      of M1) will typically duel with the builtin Java hyperlink resolver, so the
+      user gets a popup and must choose our resolver with the arrow key or mouse
+      action. The second registration adds a quick bypass for that.
+      -->
+        <hyperlinkDetector
+            class="org.eclipse.andmore.internal.editors.Hyperlinks$JavaResolver"
+            id="org.eclipse.andmore.javaCodeResolver2"
+            modifierKeys="M1+M2+M3"
+            name="Android Java Hyperlink Detector (Extra Modifier Key)"
+            targetId="org.eclipse.jdt.ui.javaCode">
+        </hyperlinkDetector>
+    </extension>
+    <extension point="org.eclipse.ui.bindings">
+        <key
+            sequence="M3+M2+A S"
+            contextId="org.eclipse.ui.contexts.window"
+            commandId="org.eclipse.andmore.refactoring.extract.string"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" />
+        <key
+            sequence="M3+M2+A D"
+            contextId="org.eclipse.ui.contexts.window"
+            commandId="org.eclipse.andmore.launch.LaunchShortcut.debug"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" />
+        <key
+            sequence="M3+M2+A R"
+            contextId="org.eclipse.ui.contexts.window"
+            commandId="org.eclipse.andmore.launch.LaunchShortcut.run"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" />
+     <!-- Rebind the select-enclosing actions from WTP's M2+M3 to M2+M4 to be
+          consistent with Java files. The contextId is org.eclipse.core.runtime.xml
+          instead of org.eclipse.wst.sse.ui.structuredTextEditorScope to avoid
+          keyboard conflict warnings (and an action selection dialog.)
+     -->
+        <key
+            platform="carbon"
+            sequence="CTRL+SHIFT+ARROW_UP"
+            contextId="org.eclipse.core.runtime.xml"
+            commandId="org.eclipse.wst.sse.ui.structure.select.enclosing"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" />
+        <key
+            platform="carbon"
+            sequence="CTRL+SHIFT+ARROW_DOWN"
+            contextId="org.eclipse.core.runtime.xml"
+            commandId="org.eclipse.wst.sse.ui.structure.select.last"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" />
+    </extension>
+    <extension point="org.eclipse.core.contenttype.contentTypes">
+        <content-type
+            describer="org.eclipse.andmore.internal.editors.binaryxml.BinaryXMLDescriber"
+            file-extensions="xml"
+            id="org.eclipse.andmore.binaryXml"
+            name="Android Binary XML"
+            priority="high">
+        </content-type>
+    </extension>
+    <extension point="org.eclipse.ui.startup">
+        <startup class="org.eclipse.andmore.internal.welcome.AdtStartup"/>
+    </extension>
+
+    <!-- workaround for bug 15003. -->
+    <extension
+        point="org.eclipse.core.filebuffers.documentCreation"
+        id="binaryXmlfactories"
+        name="Binary XML Document Factory Extension">
+        <factory
+            contentTypeId="org.eclipse.andmore.binaryXml"
+            class="org.eclipse.wst.sse.core.internal.filebuffers.BasicStructuredDocumentFactory" />
+    </extension>
+</plugin>

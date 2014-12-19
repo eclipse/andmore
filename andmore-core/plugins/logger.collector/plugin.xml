@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>   
+   <extension-point id="org.eclipse.andmore.android.logger.collector.log" name="Logger Collector Log File" schema="schema/log.exsd"/>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:help?before=about">
+         <command
+               commandId="org.eclipse.andmore.android.logger.collector.commands.collectorCommand"
+               id="org.eclipse.andmore.android.logger.collector.commands.logger.menus.collectorCommand"
+               mnemonic="L">
+         </command>
+         <separator
+               name="org.eclipse.andmore.android.logger.collector.separator"
+               visible="true">
+         </separator>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.andmore.android.logger.collector.ui.handler.LoggerCollectorHandler"
+            id="org.eclipse.andmore.android.logger.collector.commands.collectorCommand"
+            name="%collect_log_files_command">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.andmore.android.logger.collector.log">
+      <logContribution
+            logFileImpl="org.eclipse.andmore.android.logger.collector.core.internal.EclipseLogFile">
+      </logContribution>
+      <logContribution
+            logFileImpl="org.eclipse.andmore.android.logger.collector.core.internal.StudioLogFile">
+      </logContribution>
+      <logContribution
+            logFileImpl="org.eclipse.andmore.android.logger.collector.core.internal.EnvironmentLogFile">
+      </logContribution>
+   </extension>
+
+
+</plugin>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description>
+	Andmore for Android
+   </description>
+   <feature id="org.eclipse.andmore.android.basic.feature" version="0.0.0" patch="false">
+      <category name="Andmore"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.android.basic.feature.source" version="0.0.0">
+       <category name="Andmore Core SDK"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.android.feature" version="0.0.0">
+      <category name="Andmore"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.android.feature.source" version="0.0.0">
+       <category name="Andmore Core SDK"/>
+   </feature>
+   
+  
+   <feature id="org.eclipse.andmore.feature" version="0.0.0">
+       <category name="Andmore Android Core"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.feature.source" version="0.0.0">
+       <category name="Andmore Android Core SDK"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.ddms.feature" version="0.0.0">
+       <category name="Andmore Android Core"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.ddms.feature.source" version="0.0.0">
+       <category name="Andmore Android Core SDK"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.gldebugger.feature" version="0.0.0">
+       <category name="Andmore Android Core"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.gldebugger.feature.source" version="0.0.0">
+       <category name="Andmore Android Core SDK"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.hierarchyviewer.feature" version="0.0.0">
+       <category name="Andmore Android Core"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.hierarchyviewer.feature.source" version="0.0.0">
+       <category name="Andmore Android Core SDK"/>
+   </feature>
+   
+   
+   <feature id="org.eclipse.andmore.ndk.feature">
+       <category name="Andmore Android Core"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.ndk.feature.source" version="0.0.0">
+       <category name="Andmore Android Core SDK"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.traceview.feature" version="0.0.0">
+       <category name="Andmore Android Core"/>
+   </feature>
+   
+   <feature id="org.eclipse.andmore.traceview.feature.source" version="0.0.0">
+       <category name="Andmore Android Core SDK"/>
+   </feature>
+
+   <category-def name="MotoDev Studio Plugin" label="MotoDev Plugins">
+      <description>
+         P2 update site for Andmore
+      </description>
+   </category-def>
+   <category-def name="MotoDev Studio" label="MotoDev Studio">
+      <description>
+         All of Andmore
+      </description>
+   </category-def>
+   
+   <category-def name="Andmore Android Core" label="Andmore Android Core">
+       <description>
+           Android Core Tools and Native Tools Frameworks.
+       </description>
+   </category-def>
+   
+   <category-def name="Andmore Android Core SDK" label="Andmore Android Core SDK">
+       <description>
+           Android Core Tools and Native Tools SDK
+       </description>
+   </category-def>
+   
+   <category-def name="Andmore Core SDK" label="Andmore Core SDK">
+       <description>
+           Andmore Core Tools SDK
+       </description>
+   </category-def>
+</site>

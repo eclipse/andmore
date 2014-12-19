@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+
+<!--
+  Copyright (C) 2012 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<plugin>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            id="androidLaunchConfigurationType"
+            modes="run"
+            name="%launchConfigurationType.name"
+            public="true">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.launchDelegates">
+      <launchDelegate
+            delegate="org.eclipse.andmore.android.launch.StudioAndroidConfigurationDelegate"
+            delegateDescription="%launchDelegate.description"
+            id="androidLaunchDelegate"
+            modes="run, debug"
+            name="%launchDelegate.name"
+            sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
+            sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer"
+            type="androidLaunchConfigurationType">
+      </launchDelegate>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="org.eclipse.andmore.android.launch.ui.LaunchConfigurationTabGroup"
+            description="%launchTabGroup.description"
+            id="androidLaunchConfigurationTabGroup"
+            type="androidLaunchConfigurationType">
+      </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="androidLaunchConfigurationType"
+            icon="icons/category.gif"
+            id="androidLaunchConfigurationTypeImage">
+      </launchConfigurationTypeImage>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            class="org.eclipse.andmore.android.launch.LaunchConfigurationShortcut"
+            icon="icons/motodevapp.gif"
+            id="org.eclipse.andmore.android.launch.android.app"
+            label="%launchConfigurationType.name"
+            modes="run, debug">
+<contextualLaunch>
+           <enablement>
+             <with variable="selection">
+               <count value="1"/>
+               <iterate>
+                  <and>
+                     <test property="org.eclipse.jdt.launching.hasProjectNature" args="org.eclipse.andmore.AndroidNature"/>
+                  </and>
+               </iterate>
+               </with>
+           </enablement>
+         </contextualLaunch>
+<description
+      description="%launchShortuctRun.description"
+      mode="run, debug">
+</description>
+      </shortcut>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.debug.ui.category.run"
+            description="%command.launchshortcut.run.desc"
+            id="org.eclipse.andmore.android.launch.android.app.run"
+            name="%command.launchshortcut.run.name">
+      </command>
+      <command
+            categoryId="org.eclipse.debug.ui.category.run"
+            description="%command.launchshortcut.debug.desc"
+            id="org.eclipse.andmore.android.launch.android.app.debug"
+            name="%command.launchshortcut.debug.name">
+      </command>
+   </extension>
+
+
+</plugin>

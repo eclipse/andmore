@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+
+<!--
+  Copyright (C) 2012 The Android Open Source Project
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+       http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<plugin>
+   <extension
+         id="androidRemoteDevice"
+         name="androidRemoteDevice"
+         point="org.eclipse.sequoyah.device.framework.deviceTypes">
+      <deviceType
+            dropSupportHandler="org.eclipse.andmore.android.remote.RemoteDeviceDropSupportHandler"
+            handler="org.eclipse.andmore.android.remote.handlers.RemoteDeviceHandler"
+            icon="icons/plate16.gif"
+            id="org.eclipse.andmore.android.remote.androidRemoteDevice"
+            isAbstract="false"
+            isPersistent="true"
+            label="%remoteDeviceType"
+            name="%remoteDeviceType">
+      </deviceType>
+   </extension>
+   <extension
+         id="status.connected"
+         point="org.eclipse.sequoyah.device.framework.status">
+      <status
+            canDeleteInstance="false"
+            canEditProperties="false"
+            id="org.eclipse.andmore.android.remote.status.connected"
+            image="icons/started-icon-16x16.png"
+            name="%connectedStatus">
+      </status>
+   </extension>
+   <extension
+         id="status.disconnected"
+         point="org.eclipse.sequoyah.device.framework.status">
+      <status
+            canDeleteInstance="true"
+            canEditProperties="true"
+            id="org.eclipse.andmore.android.remote.status.disconnected"
+            image="icons/stopped-icon-16x16.png"
+            name="%disconnectedStatus">
+      </status>
+   </extension>
+   <extension
+         id="connectRemoteService"
+         name="connectRemoteService"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="%copyright"
+            description="%connectServiceDescription"
+            handler="org.eclipse.andmore.android.remote.handlers.ConnectToRemoteHandler"
+            icon="icons/start.png"
+            id="org.eclipse.andmore.android.remote.connectRemoteService"
+            name="%connectServiceName"
+            provider="%providerName"
+            version="1.0.0"
+            visible="true">
+      </service>
+   </extension>
+   <extension
+         id="disconnectRemoteService"
+         name="disconnectRemoteService"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="%copyright"
+            description="%disconnectServiceDescription"
+            handler="org.eclipse.andmore.android.remote.handlers.DisconnectFromRemoteHandler"
+            icon="icons/stop.png"
+            id="org.eclipse.andmore.android.remote.disconnectRemoteService"
+            name="%disconnectServiceName"
+            provider="%providerName"
+            version="1.0.0"
+            visible="true">
+      </service>
+   </extension>
+   <extension
+         id="initRemoteService"
+         name="initRemoteService"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="%copyright"
+            description="%initServiceDescription"
+            handler="org.eclipse.andmore.android.remote.handlers.InitRemoteHandler"
+            icon="icons/start.png"
+            id="org.eclipse.andmore.android.remote.initRemoteService"
+            name="%initServiceName"
+            provider="%providerName"
+            version="1.0.0"
+            visible="false">
+      </service>
+   </extension>
+   <extension
+         id="org.eclipse.andmore.android.remote.androidRemoteDevice"
+         point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service
+            id="org.eclipse.andmore.android.remote.connectRemoteService">
+         <status
+               endId="org.eclipse.andmore.android.remote.status.connected"
+               haltId="org.eclipse.andmore.android.remote.status.disconnected"
+               startId="org.eclipse.andmore.android.remote.status.disconnected">
+         </status></service>
+   </extension>
+   <extension
+         id="org.eclipse.andmore.android.remote.androidRemoteDevice"
+         point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service
+            id="org.eclipse.andmore.android.remote.disconnectRemoteService">
+         <status
+               endId="org.eclipse.andmore.android.remote.status.disconnected"
+               haltId="org.eclipse.andmore.android.remote.status.connected"
+               startId="org.eclipse.andmore.android.remote.status.connected">
+         </status></service>
+   </extension>
+   <extension
+         id="org.eclipse.andmore.android.remote.androidRemoteDevice"
+         point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service
+            id="org.eclipse.andmore.android.remote.initRemoteService">
+         <status
+               endId="org.eclipse.andmore.android.remote.status.disconnected"
+               haltId="org.eclipse.andmore.android.remote.status.disconnected"
+               startId="OFF">
+         </status></service>
+   </extension>
+   <extension
+         point="org.eclipse.sequoyah.device.framework.ui.newDeviceWizardPages">
+      <wizardPage
+            id="org.eclipse.andmore.android.remote.ipPortPage"
+            pageClass="org.eclipse.andmore.android.remote.ui.RemoteDeviceWizardPage">
+         <deviceType
+               deviceTypeId="org.eclipse.andmore.android.remote.androidRemoteDevice">
+         </deviceType>
+      </wizardPage>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.eclipse.andmore.android.remote.ui.RemoteDevicePropertiesPage"
+            id="org.eclipse.andmore.android.remote.remoteDevice"
+            name="%remoteDevicePropertyPage">
+         <enabledWhen>
+            <instanceof
+                  value="org.eclipse.andmore.android.remote.instance.RemoteDeviceInstance">
+            </instanceof>
+         </enabledWhen>
+      </page>
+   </extension>
+   <extension point="org.eclipse.ui.menus">
+   <menuContribution locationURI="menu:motorolaMenu?after=otherNewWizardsSeparator">
+       <command commandId="org.eclipse.andmore.android.device.new.remote.device.wizard" icon="icons/remote_device.png" label="%newRemoteDeviceWizardName" style="push">
+       </command>
+    </menuContribution>
+   </extension>
+     <extension point="org.eclipse.ui.commands">
+      <command defaultHandler="org.eclipse.andmore.android.remote.handlers.OpenNewRemoteDeviceWizardHandler" id="org.eclipse.andmore.android.device.new.remote.device.wizard" name="%newRemoteDeviceWizardName">
+      </command>
+  </extension>
+  <!--START WiFi service -->
+   	<extension
+         id="wireless"
+         name="%wirelessServiceName"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="%copyright"
+            description="%wirelessDescription"
+            handler="org.eclipse.andmore.android.remote.handlers.WirelessServiceHandler"
+            icon="icons/wireless-16x16.png"
+            id="org.eclipse.andmore.android.remote.wifi"
+            name="%wirelessServiceName"
+            parallelized="false"
+            provider="%providerName"
+            version="0.1.0"
+            visible="true">
+      </service>
+   </extension>
+    <extension
+          id="org.eclipse.andmore.android.handset.androidHandset"
+          name="switchtowireless"
+          point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+       <service
+             id="org.eclipse.andmore.android.remote.wifi">
+          <status
+                endId="org.eclipse.andmore.android.handset.status.handsetonline"
+                haltId="org.eclipse.andmore.android.handset.status.handsetonline"
+                startId="org.eclipse.andmore.android.handset.status.handsetonline">
+          </status>
+       </service>
+    </extension>
+   <!--END WiFi services END-->
+   
+   <!--START back to USB service -->
+   <extension
+         id="usbmode"
+         name="%usbModeServiceName"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="%copyright"
+            description="%usbModeDescription"
+            handler="org.eclipse.andmore.android.remote.handlers.USBModeServiceHandler"
+            icon="icons/switch2usb_cable.png"
+            id="org.eclipse.andmore.android.remote.usbmode"
+            name="%usbModeServiceName"
+            parallelized="false"
+            provider="%providerName"
+            version="0.1.0"
+            visible="true">
+      </service>
+    </extension>
+    <extension
+          id="org.eclipse.andmore.android.remote.androidRemoteDevice"
+          name="switchtousbmode"
+          point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+       <service
+             id="org.eclipse.andmore.android.remote.usbmode">
+          <status
+                endId="org.eclipse.andmore.android.remote.status.disconnected"
+                haltId="org.eclipse.andmore.android.remote.status.disconnected"
+                startId="org.eclipse.andmore.android.remote.status.connected">
+          </status>
+       </service>
+    </extension>
+    <!--END back to USB services END-->
+
+</plugin>

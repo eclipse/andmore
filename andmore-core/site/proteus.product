@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Andmore" uid="andmore-ide.product" id="org.eclipse.platform.ide" version="0.5.0.qualifier" useFeatures="true" includeLaunchers="true">
+
+   <aboutInfo>
+      <image path="eclipse_lg.png"/>
+      <text>
+         Andmore IDE is licensed under an Eclipse Public License 1.0 and Apache Public License 2.0.
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-perspective org.eclipse.andmore.android.perspective</programArgs>
+      <vmArgs>-Xms512m -Xmx1024m -XX:MaxPermSize=256m</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i16="eclipse16.png" i32="eclipse32.png" i48="eclipse48.png"/>
+
+   <splash
+      location="org.eclipse.platform"
+      startupProgressRect="2,290,448,10"
+      startupMessageRect="7,265,320,20"
+      startupForegroundColor="9c9696" />
+   <launcher>
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="org.eclipse.platform"/>
+      <feature id="org.eclipse.andmore.android.basic.feature"/>
+      <feature id="org.eclipse.andmore.feature" installMode="root"/>
+      <feature id="org.eclipse.andmore.ddms.feature" installMode="root"/>
+      <feature id="org.eclipse.andmore.hierarchyviewer.feature" installMode="root"/>
+      <feature id="org.eclipse.andmore.traceview.feature" installMode="root"/>
+      <feature id="org.eclipse.andmore.ndk.feature" installMode="root"/>
+      <feature id="org.eclipse.andmore.gldebugger.feature" installMode="root"/>
+      <feature id="org.eclipse.egit" installMode="root"/>
+      <feature id="org.eclipse.mat.feature" installMode="root"/>
+   </features>
+
+   <configurations>
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+   </configurations>
+
+</product>

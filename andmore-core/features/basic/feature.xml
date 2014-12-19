@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.andmore.android.basic.feature"
+      label="%feature.android.label"
+      version="0.5.0.qualifier"
+      provider-name="%feature.android.provider.name"
+      plugin="org.eclipse.andmore.android.common"
+      os="linux,macosx,win32"
+      ws="carbon,cocoa,gtk,win32"
+      arch="ppc,x86,x86_64">
+
+   <description>
+      %feature.android.description
+   </description>
+
+   <copyright>
+      %feature.android.copyright
+   </copyright>
+
+   <license url="">
+      %feature.android.license
+   </license>
+
+   <url>
+      <update label="%feature.android.update.site.name" url="https://studio-android.motodevupdate.com/android/4.0/basic/"/>
+   </url>
+
+   <requires>
+      <import feature="org.eclipse.andmore.feature" version="0.0.0"/>
+      <import feature="org.eclipse.datatools.enablement.sqlite.feature" version="1.8.0" match="greaterOrEqual"/>
+   </requires>
+
+   <includes
+         id="org.eclipse.sequoyah.device.common.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sequoyah.device.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sequoyah.localization.android.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sequoyah.localization.tools.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sequoyah.vnc.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sequoyah.vnc.protocol.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sequoyah.vnc.vncviewer.feature"
+         version="0.0.0"/>
+
+
+   <plugin
+         id="org.eclipse.andmore.android.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.codeutils"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.translation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.codesnippets"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.db.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.certmanager"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.logger"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+            
+   <plugin
+         id="org.eclipse.andmore.android"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>	
+
+   <plugin
+         id="org.eclipse.andmore.android.emulator"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.launch"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.packaging.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.handset"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.remote"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.macosx"
+         os="macosx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.linux.x86"
+         os="linux"
+         arch="x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.linux.x86_64"
+         os="linux"
+         arch="x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.win32.x86"
+         os="win32"
+         ws="win32"
+         arch="x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.win32.x86_64"
+         os="win32"
+         ws="win32"
+         arch="x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.mat"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.devices.services"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.videos"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.db.devices"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.installer"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.andmore.android.logger.collector"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

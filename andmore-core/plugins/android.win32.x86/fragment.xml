@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+
+         <extension
+               point="org.eclipse.ui.preferencePages">
+            <page
+                  category="org.eclipse.andmore.platform.ui.preference"
+                  class="org.eclipse.andmore.android.preferences.ui.EmulatorPreferencePage"
+                  id="org.eclipse.andmore.android.emulator.preferencepage"
+                  name="%preferencePageName">
+            </page>
+         </extension>
+
+</fragment>

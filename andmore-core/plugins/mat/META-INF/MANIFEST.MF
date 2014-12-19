@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.andmore.android.mat;singleton:=true
+Bundle-Version: 0.5.0.qualifier
+Bundle-Activator: org.eclipse.andmore.android.mat.Activator
+Bundle-Vendor: %providerName
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.mat.ui,
+ org.eclipse.sequoyah.device.framework,
+ org.eclipse.sequoyah.device.common.utilities,
+ org.eclipse.core.resources,
+ org.eclipse.andmore.android,
+ org.eclipse.andmore.android.emulator
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Localization: plugin
+Export-Package: org.eclipse.andmore.android.mat.i18n
+Import-Package: org.eclipse.andmore.android.common.log
+

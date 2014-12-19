@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: MOTODEV Studio Android Log Collector
+Bundle-SymbolicName: org.eclipse.andmore.android.logger.collector;singleton:=true
+Bundle-Version: 0.5.0.qualifier
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Motorola Mobility, Inc.
+Bundle-Localization: plugin
+Export-Package: org.eclipse.andmore.android.logger.collector.core
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.andmore.android.common.utilities,
+ org.eclipse.andmore.android.logger
