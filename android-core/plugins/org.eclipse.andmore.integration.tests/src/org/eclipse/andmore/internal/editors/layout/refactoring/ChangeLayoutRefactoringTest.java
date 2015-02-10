@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("javadoc")
-@Ignore
 public class ChangeLayoutRefactoringTest extends RefactoringTest {
 
 	@Test
@@ -89,6 +88,7 @@ public class ChangeLayoutRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore
 	public void testGridLayout2() throws Exception {
 		// Test code which analyzes an embedded RelativeLayout
 		checkRefactoring(FQCN_GRID_LAYOUT, "sample2.xml", true);
@@ -106,6 +106,7 @@ public class ChangeLayoutRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore
 	public void testConvertFromGrid() throws Exception {
 		checkRefactoring(FQCN_LINEAR_LAYOUT, "sample10.xml", true);
 	}
@@ -115,11 +116,13 @@ public class ChangeLayoutRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore
 	public void testInitialAttributes() throws Exception {
 		checkRefactoring(FQCN_LINEAR_LAYOUT, "sample10.xml", true, "android:orientation=vertical");
 	}
 
 	@Test
+	@Ignore
 	public void testInsertSpacer() throws Exception {
 		checkRefactoring(FQCN_GRID_LAYOUT, "sample11.xml", true);
 	}

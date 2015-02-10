@@ -15,7 +15,7 @@
  */
 package org.eclipse.andmore.integration.tests;
 
-import static org.junit.Assert.*;
+import static org.eclipse.andmore.test.utils.XMLAssert.*;
 
 import com.android.SdkConstants;
 import com.google.common.base.Charsets;
@@ -26,8 +26,11 @@ import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -37,8 +40,7 @@ import java.util.Set;
 
 import org.junit.Rule;
 import org.junit.rules.TestName;
-
-import junit.framework.TestCase;
+import org.xml.sax.SAXException;
 
 /**
  * Common test case for SDK unit tests. Contains a number of general utility
@@ -233,7 +235,17 @@ public abstract class SdkTestCase {
 					Files.write(actual, new File(getTargetDir(), expectedName), Charsets.UTF_8);
 				}
 				System.out.println("The files differ: diff " + expectedPath + " " + actualPath);
-				assertEquals("The files differ - see " + expectedPath + " versus " + actualPath, expected, actual);
+				Reader expectedReader = new InputStreamReader( new FileInputStream(expectedPath));
+				Reader actualReader = new InputStreamReader(new FileInputStream(actualPath));
+				
+				try {
+					assertXMLEqual(expectedReader, actualReader);
+				} catch (SAXException e) {
+					assertEquals("The files differ - see " + expectedPath + " versus " + actualPath, expected, actual);
+				} finally {
+					expectedReader.close();
+					actualReader.close();
+				}
 			}
 		}
 	}
