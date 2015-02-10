@@ -16,6 +16,7 @@
 package org.eclipse.andmore.integration.tests;
 
 import static org.eclipse.andmore.test.utils.XMLAssert.*;
+import org.custommonkey.xmlunit.*;
 
 import com.android.SdkConstants;
 import com.google.common.base.Charsets;
@@ -53,6 +54,8 @@ import org.xml.sax.SAXException;
 public abstract class SdkTestCase {
 	
 	@Rule public TestName name = new TestName();
+	
+	
 	
 	/** Update golden files if different from the actual results */
 	private static final boolean UPDATE_DIFFERENT_FILES = false;
@@ -239,6 +242,8 @@ public abstract class SdkTestCase {
 				Reader actualReader = new InputStreamReader(new FileInputStream(actualPath));
 				
 				try {
+					XMLUnit.setIgnoreAttributeOrder(true);
+					XMLUnit.setIgnoreWhitespace(true);
 					assertXMLEqual(expectedReader, actualReader);
 				} catch (SAXException e) {
 					assertEquals("The files differ - see " + expectedPath + " versus " + actualPath, expected, actual);
@@ -394,7 +399,7 @@ public abstract class SdkTestCase {
 		}
 		return makeTestFile(targetDir, name, relative, stream);
 	}
-
+ 
 	protected static void addCleanupDir(File dir) {
 		sCleanDirs.add(dir);
 		try {

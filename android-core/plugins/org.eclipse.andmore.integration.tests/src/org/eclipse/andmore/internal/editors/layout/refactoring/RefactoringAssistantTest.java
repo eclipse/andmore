@@ -34,7 +34,6 @@ import org.eclipse.ui.ide.IDE;
 import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
 public class RefactoringAssistantTest extends AdtProjectTest {
 	@Test
 	public void testAssistant1() throws Exception {

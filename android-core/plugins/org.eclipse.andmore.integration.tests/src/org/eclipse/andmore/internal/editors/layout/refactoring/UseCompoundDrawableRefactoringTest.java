@@ -30,7 +30,6 @@ import org.w3c.dom.Element;
 import java.util.List;
 
 @SuppressWarnings("javadoc")
-@Ignore
 public class UseCompoundDrawableRefactoringTest extends RefactoringTest {
 	@Test
 	public void testCombine() throws Exception {

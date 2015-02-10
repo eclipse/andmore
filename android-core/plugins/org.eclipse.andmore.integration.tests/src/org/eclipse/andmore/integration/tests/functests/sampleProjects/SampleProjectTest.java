@@ -56,7 +56,6 @@ import java.util.logging.Logger;
  * execution there
  *
  */
-@Ignore
 public class SampleProjectTest extends SdkLoadingTestCase {
 
 	private static final Logger sLogger = Logger.getLogger(SampleProjectTest.class.getName());

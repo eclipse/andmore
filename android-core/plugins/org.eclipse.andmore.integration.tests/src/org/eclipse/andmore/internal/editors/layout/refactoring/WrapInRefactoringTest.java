@@ -28,7 +28,6 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-@Ignore("XMLUnit")
 public class WrapInRefactoringTest extends RefactoringTest {
 
 	@Test
