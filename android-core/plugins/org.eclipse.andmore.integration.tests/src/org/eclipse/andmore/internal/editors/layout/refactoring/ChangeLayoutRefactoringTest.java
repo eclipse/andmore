@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("javadoc")
+@Ignore
 public class ChangeLayoutRefactoringTest extends RefactoringTest {
 
 	@Test

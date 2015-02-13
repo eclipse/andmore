@@ -22,22 +22,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({SampleProjectTest.class,
-	AaptParserTest.class,
-	AaptQuickFixTest.class,
-	EclipseXmlPrettyPrinterTest.class,
-	AndroidContentAssistTest.class,
-	AndroidXmlAutoEditStrategyTest.class,
-	AndroidXmlCharacterMatcherTest.class,
-	HyperlinksTest.class,
-	LayoutMetadataTest.class,
-	ManifestInfoTest.class,
-	JUnitLaunchConfigDelegateTest.class,
-	ProjectLintConfigurationTest.class,
-	AndroidPackageRenameParticipantTest.class,
-	RenameResourceParticipantTest.class,
-	ApplicationPackageNameRefactoringTest.class,
-	ExportGradleTest.class,
-	TemplateHandlerTest.class})
+	AaptParserTest.class})
 public class IntegrationTestSuite {
 
 }

@@ -1,7 +1,7 @@
 # Contributing
 
-Andmore based off the open source plugins from MotoDev Studio and Android Development Tools.  This is a fork of those plugins.   The
-goal is to enhance the Google ADT plugins to provide additional features and functionality that ADT currently
+[Andmore](https://www.eclipse.org/andmore) is a fork of the former MotoDev Studio and Android Development Tools plugins for eclipse.
+The goal is to enhance the Google ADT plugins to provide additional features and functionality that ADT currently
 does not provide.
 
 This is an open source community lead project, so contributions are encouraged.  All code contributions will
