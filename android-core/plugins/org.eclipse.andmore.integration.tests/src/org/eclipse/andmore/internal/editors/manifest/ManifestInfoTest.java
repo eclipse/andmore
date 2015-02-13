@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("javadoc")
+@Ignore
 public class ManifestInfoTest extends AdtProjectTest {
 	@Override
 	protected boolean testCaseNeedsUniqueProject() {
