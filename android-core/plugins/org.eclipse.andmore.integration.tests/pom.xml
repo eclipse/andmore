@@ -116,7 +116,9 @@
 					<skipTests>false</skipTests>
 					<testFailureIgnore>true</testFailureIgnore>
 					<useUIHarness>true</useUIHarness>
+					<useUIThread>false</useUIThread>
 					<forkedProcessTimeoutInSeconds>120</forkedProcessTimeoutInSeconds>
+					<appArgLine>--launcher.suppressErrors</appArgLine>
 					<argLine>${os-jvm-flags} ${tycho.testArgLine}</argLine>
 					<dependencies>
 						<dependency>
