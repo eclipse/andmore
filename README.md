@@ -1,6 +1,6 @@
 # Contributing
 
-[Andmore](https://www.eclipse.org/andmore) is a fork of the former MotoDev Studio and Android Development Tools plugins for eclipse.
+[Andmore](https://www.eclipse.org/andmore) is a fork of the former MOTODEV Studio and Android Development Tools plugins for eclipse.
 The goal is to enhance the Google ADT plugins to provide additional features and functionality that ADT currently
 does not provide.
 
@@ -27,7 +27,7 @@ Andmore contains a template that should be enabled on your forks to provide the 
 
 To configure git to use this template for all commit messages do the following:
 
-    git config commit.template ./template/commit.template
+    git config commit.template ./templates/commit.template
 
 This will provide the following information for you to fill out:
 
@@ -41,7 +41,7 @@ This will provide the following information for you to fill out:
 All commits need to reference an existing Bugzilla number.  Any pull request that does not reference a bugzilla number won't be merged until a bugzilla is filed.  You can file new bugs and feature requests at
 https://bugs.eclipse.org/bugs/enter_bug.cgi?product=andmore
 
-Please make sure that your CLA is signed in eclipse, and that your commits are authored by the same email address as you referenced in your CLA.
+Please make sure that your CLA is signed with the Eclipse Foundation, and that your commits are authored by the same email address as you referenced in your CLA.
 
 You can change your default user.email address for the git repository:
 
@@ -52,17 +52,13 @@ The following describes how to build Andmore and bring the source code into an e
 
 # Building from the Command Line
 
-To compile.  You need the following:
+To compile.  You need Maven 3.x installed. Once Maven has been installed, you are ready 
+to build.  Use the command:
 
-1. Maven 3.x installed.
-
-Onece Maven has been installed, you are ready to build.
-
-3. `mvn clean install`
+    mvn clean install
 
 Running the above will compile all features and plugins.  It will also generate a p2 update
-site that can be used to install the plugins.  Currently the Basic and MotoDev Studio features
-are generated in the p2 site.
+site that can be used to install the plugins into your own Eclipse installation.
 
 The site location is:
 
@@ -80,22 +76,23 @@ _andmore-core/site/target/products_
 
 Windows, MacOSX, and Linux builds are available.
 
-## Creating a Target Platform
+# Building from Eclipse
 
-A target platform file resides in the org.eclipse.andmore plugin source folder.
+To build from Eclipse, use the Eclipse SDK. You will need to add the m2e plugins after the
+SDK is installed.  Java 1.7 or 1.8 are supported.
 
-Then within Eclipse, under the Preferences->Plugin Development->Target Platform.  Select the Andmore target platform
-to enable the necessary plugins.
+1. Choose _File>Import>Maven>Existing Maven Projects_
+1. Choose the pom.xml in the root directory of Andmore project
+1. When the projects are imported, there will be some errors. Ignore them for now.
+1. Choose _Preferences>Plug-in Development>Target Platform_
+1. Choose the target that ends with andmore.target. If there are other Andmore targets with different names, ignore them.
+1. There will be some sub-projects that do not need to be in the workspace and they may have compile errors because they are for a different OS than you are using. It is alright to close them for now.
+1. Create a run configuration. You will probably need to add *-XX:MaxPermSize=256m* or higher.
 
-You are now ready to work on the plugins for Andmore.
+## Project set
 
-## Importing the Source Code
+There is a project set that can be imported as an alternative to using Maven. This file
+is in android-core/plugins/org.eclipse.andmore/projectSet.psf.  The project set file is
+not guaranteed to be always updated, so if dependency issues arise, use the Maven import.
 
-There are two ways to do this both involve checking out the source code from the git repository on the tycho branch.
-
-I'm assuming you are experienced with using git since you cloned the project from github or forked it from there.
-
-You can import the plugins as Existing Maven Projects or as Eclipse Projects.  Either way will work.   
-
-Make sure you have your target platform set as described above, and you should be able to work on the code.
 
