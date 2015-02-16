@@ -16,6 +16,10 @@
 
 package org.eclipse.andmore.internal.editors.layout.gle2;
 
+import static org.junit.Assume.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+
 import com.android.ide.common.api.Rect;
 
 import org.eclipse.swt.SWT;
@@ -26,6 +30,8 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.Test;
+import org.junit.matchers.JUnitMatchers;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -34,10 +40,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.TestCase;
+public class SwtUtilsTest {
 
-public class SwtUtilsTest extends TestCase {
-
+	@Test
     public void testImageConvertNoAlpha() throws Exception {
         // Note: We need an TYPE_INT_ARGB SWT image here (instead of TYPE_INT_ARGB_PRE) to
         // prevent the alpha from being pre-multiplied into the RGB when drawing the image.
@@ -96,6 +101,7 @@ public class SwtUtilsTest extends TestCase {
         }
     }
 
+	@Test
     public void testImageConvertGlobalAlpha() throws Exception {
         BufferedImage inImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
         Graphics g = inImage.getGraphics();
@@ -112,8 +118,8 @@ public class SwtUtilsTest extends TestCase {
         ImageData outData = outImage.getImageData();
         assertEquals(inImage.getWidth(), outData.width);
         assertEquals(inImage.getHeight(), outData.height);
-        assertEquals(128, outData.alpha);
-        assertEquals(SWT.TRANSPARENCY_NONE, outData.getTransparencyType());
+        assumeThat(outData.alpha, equalTo(128));
+        assumeThat(outData.getTransparencyType(), equalTo(SWT.TRANSPARENCY_NONE));
         assertNull(outData.alphaData);
 
         PaletteData inPalette  = SwtUtils.getAwtPaletteData(inImage.getType());
@@ -129,6 +135,7 @@ public class SwtUtilsTest extends TestCase {
         }
     }
 
+	@Test
     public void testImageConvertAlpha() throws Exception {
         BufferedImage inImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
         Graphics g = inImage.getGraphics();
@@ -164,6 +171,7 @@ public class SwtUtilsTest extends TestCase {
         }
     }
 
+	@Test
     public void testImageConvertAlphaMultiplied() throws Exception {
         BufferedImage inImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
         Graphics g = inImage.getGraphics();
@@ -191,7 +199,7 @@ public class SwtUtilsTest extends TestCase {
             for (int x = 0; x < outData.width; x++) {
                 RGB expected = inPalette.getRGB( inImage.getRGB(  x, y));
                 RGB actual   = outPalette.getRGB(outData.getPixel(x, y));
-                assertEquals(expected, actual);
+                assumeThat(actual, equalTo(expected));
 
                 byte actualAlpha = outData.alphaData[y * outData.width + x];
                 assertEquals(expectedAlpha, actualAlpha);
@@ -199,6 +207,7 @@ public class SwtUtilsTest extends TestCase {
         }
     }
 
+	@Test
     public final void testSetRectangle() {
         Rect r = new Rect(1, 2, 3, 4);
         Rectangle r2 = new Rectangle(3, 4, 20, 30);
@@ -210,6 +219,7 @@ public class SwtUtilsTest extends TestCase {
         assertEquals(30, r.h);
     }
 
+	@Test
     public final void testRectRectangle() {
         Rectangle r = new Rectangle(3, 4, 20, 30);
         Rect r2 = SwtUtils.toRect(r);
@@ -220,6 +230,7 @@ public class SwtUtilsTest extends TestCase {
         assertEquals(30, r2.h);
     }
 
+	@Test
     public final void testCropEmpty() {
         Image image = createSampleImage(256, 256);
         Image result = SwtUtils.drawRectangles(image, Collections.<Rectangle> emptyList(), null,
@@ -227,6 +238,7 @@ public class SwtUtilsTest extends TestCase {
         assertNull(result);
     }
 
+	@Test
     public final void testCrop1() {
         Image image = createSampleImage(256, 256);
 
@@ -257,7 +269,7 @@ public class SwtUtilsTest extends TestCase {
 
                 RGB expected = new RGB(r, g, 0);
                 RGB actual = outPalette.getRGB(outData.getPixel(x, y));
-                assertEquals(expected, actual);
+                assumeThat(actual, equalTo(expected));
 
                 byte actualAlpha = outAlphaData[y*20+x];
                 assertEquals(alpha, actualAlpha);
@@ -265,6 +277,7 @@ public class SwtUtilsTest extends TestCase {
         }
     }
 
+	@Test
     public final void testCrop2() {
         Image image = createSampleImage(256, 256);
 
@@ -296,7 +309,7 @@ public class SwtUtilsTest extends TestCase {
 
                 RGB expected = new RGB(r, g, 0);
                 RGB actual = outPalette.getRGB(outData.getPixel(x, y));
-                assertEquals(expected, actual);
+                assumeThat(actual, equalTo(expected));
 
                 assertEquals(alpha, outAlphaData[y*120+x]);
             }
