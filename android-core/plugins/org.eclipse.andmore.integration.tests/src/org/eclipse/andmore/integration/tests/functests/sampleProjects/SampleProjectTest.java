@@ -69,6 +69,7 @@ public class SampleProjectTest extends SdkLoadingTestCase {
 	 * @throws CoreException
 	 */
 	@Test
+	@Ignore
 	public void testSamples() throws CoreException {
 		// TODO: For reporting purposes, it would be better if a separate test
 		// success or failure

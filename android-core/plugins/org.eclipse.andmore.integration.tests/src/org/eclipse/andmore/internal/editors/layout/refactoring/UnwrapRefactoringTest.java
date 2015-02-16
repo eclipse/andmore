@@ -27,7 +27,6 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-@Ignore
 public class UnwrapRefactoringTest extends RefactoringTest {
 
 	@Test

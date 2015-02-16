@@ -15,6 +15,8 @@
  */
 package org.eclipse.andmore.internal.editors.formatting;
 
+import static org.junit.Assert.*;
+
 import com.android.ide.common.xml.XmlFormatStyle;
 
 import org.eclipse.andmore.internal.editors.formatting.EclipseXmlFormatPreferences;
@@ -24,16 +26,16 @@ import org.eclipse.andmore.internal.preferences.AdtPrefs;
 import org.eclipse.jface.preference.PreferenceStore;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
+import org.junit.Before;
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import junit.framework.TestCase;
 
 @SuppressWarnings({ "javadoc", "restriction" })
-public class EclipseXmlPrettyPrinterTest extends TestCase {
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+public class EclipseXmlPrettyPrinterTest {
+	@Before
+	public void setUp() throws Exception {
 		PreferenceStore store = new PreferenceStore();
 		AdtPrefs.init(store);
 		AdtPrefs prefs = AdtPrefs.getPrefs();
@@ -124,18 +126,21 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 		checkFormat(prefs, baseLocation, xml, expected);
 	}
 
+	@Test
 	public void testLayout1() throws Exception {
 		checkFormat("res/layout-port/layout1.xml", "<LinearLayout><Button></Button></LinearLayout>",
 
 		"<LinearLayout>\n" + "\n" + "    <Button>\n" + "    </Button>\n" + "\n" + "</LinearLayout>");
 	}
 
+	@Test
 	public void testLayout2() throws Exception {
 		checkFormat("res/layout-port/layout2.xml", "<LinearLayout><Button foo=\"bar\"></Button></LinearLayout>",
 
 		"<LinearLayout>\n" + "\n" + "    <Button foo=\"bar\" >\n" + "    </Button>\n" + "\n" + "</LinearLayout>");
 	}
 
+	@Test
 	public void testLayout3() throws Exception {
 		EclipseXmlFormatPreferences prefs = EclipseXmlFormatPreferences.create();
 		prefs.oneAttributeOnFirstLine = true;
@@ -144,6 +149,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 		"<LinearLayout>\n" + "\n" + "    <Button foo=\"bar\" >\n" + "    </Button>\n" + "\n" + "</LinearLayout>");
 	}
 
+	@Test
 	public void testClosedElements() throws Exception {
 		checkFormat("res/values/strings.xml", "<resources>\n" + "<item   name=\"title_container\"  type=\"id\"   />\n"
 				+ "<item name=\"title_logo\" type=\"id\"/>\n" + "</resources>\n",
@@ -152,11 +158,13 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    <item name=\"title_logo\" type=\"id\"/>\n" + "\n" + "</resources>\n");
 	}
 
+	@Test
 	public void testResources() throws Exception {
 		checkFormat("res/values-us/strings.xml", "<resources><item name=\"foo\">Text value here </item></resources>",
 				"<resources>\n\n" + "    <item name=\"foo\">Text value here </item>\n" + "\n</resources>");
 	}
 
+	@Test
 	public void testNodeTypes() throws Exception {
 		// Ensures that a document with all kinds of node types is serialized
 		// correctly
@@ -183,6 +191,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "<!-- Type <key>less-than</key> (&#x3C;) -->\n" + "\n" + "</LinearLayout>");
 	}
 
+	@Test
 	public void testWindowsDelimiters() throws Exception {
 		checkFormat(EclipseXmlFormatPreferences.create(), "res/layout-xlarge/layout.xml",
 				"<LinearLayout><Button foo=\"bar\"></Button></LinearLayout>",
@@ -191,6 +200,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 						+ "</LinearLayout>", "\r\n");
 	}
 
+	@Test
 	public void testRemoveBlanklines() throws Exception {
 		EclipseXmlFormatPreferences prefs = EclipseXmlFormatPreferences.create();
 		prefs.removeEmptyLines = true;
@@ -202,6 +212,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 						+ "        <baz12>\n" + "        </baz12>\n" + "    </bar3>\n" + "</foo>");
 	}
 
+	@Test
 	public void testRange() throws Exception {
 		checkFormat(EclipseXmlFormatPreferences.create(), "res/layout-xlarge/layout.xml",
 				"<LinearLayout><Button foo=\"bar\"></Button><CheckBox/></LinearLayout>", "\n"
@@ -209,6 +220,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				"Button", false, "CheckBox");
 	}
 
+	@Test
 	public void testOpenTagOnly() throws Exception {
 		checkFormat(EclipseXmlFormatPreferences.create(), "res/layout-xlarge/layout.xml",
 				"<LinearLayout><Button foo=\"bar\"></Button><CheckBox/></LinearLayout>", "\n"
@@ -217,6 +229,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				"Button", true, "Button");
 	}
 
+	@Test
 	public void testRange2() throws Exception {
 		EclipseXmlFormatPreferences prefs = EclipseXmlFormatPreferences.create();
 		prefs.removeEmptyLines = true;
@@ -228,6 +241,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 						+ "        </baz12>\n", "\n", "baz1", false, "baz12");
 	}
 
+	@Test
 	public void testEOLcomments() throws Exception {
 		checkFormat("res/drawable-mdpi/states.xml",
 				"<selector xmlns:android=\"http://schemas.android.com/apk/res/android\">\n"
@@ -242,6 +256,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 						+ "    <item android:color=\"#ff000000\"/> <!-- default -->\n" + "\n" + "</selector>");
 	}
 
+	@Test
 	public void testFormatColorList() throws Exception {
 		checkFormat("res/drawable-hdpi/states.xml",
 				"<selector xmlns:android=\"http://schemas.android.com/apk/res/android\">\n"
@@ -252,6 +267,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 						+ "    <item android:color=\"#777777\"/> <!-- not selected -->\n" + "\n" + "</selector>");
 	}
 
+	@Test
 	public void testPreserveNewlineAfterComment() throws Exception {
 		checkFormat("res/values/dimen.xml", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
 				+ "<resources><dimen name=\"colorstrip_height\">6dip</dimen>\n"
@@ -270,6 +286,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    <dimen name=\"text_size_large\">22sp</dimen>\n" + "\n" + "</resources>");
 	}
 
+	@Test
 	public void testPlurals() throws Exception {
 		checkFormat(
 				"res/values-us/strings.xml",
@@ -293,6 +310,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 						+ "    </plurals>\n" + "\n" + "</resources>");
 	}
 
+	@Test
 	public void testMultiAttributeResource() throws Exception {
 		checkFormat(
 				"res/values-us/strings.xml",
@@ -303,6 +321,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 						+ "\n" + "</resources>");
 	}
 
+	@Test
 	public void testMultilineCommentAlignment() throws Exception {
 		checkFormat("res/values-us/strings.xml", "<resources>"
 				+ "    <!-- Deprecated strings - Move the identifiers to this section, mark as DO NOT TRANSLATE,\n"
@@ -316,6 +335,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    <string name=\"meeting_invitation\"></string>\n" + "\n" + "</resources>");
 	}
 
+	@Test
 	public void testLineCommentSpacing() throws Exception {
 		checkFormat("res/values-us/strings.xml", "<resources>\n" + "\n"
 				+ "    <dimen name=\"colorstrip_height\">6dip</dimen>\n" + "    <!-- comment1 -->\n"
@@ -335,6 +355,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    <dimen name=\"text_size_large\">22sp</dimen>\n" + "\n" + "</resources>");
 	}
 
+	@Test
 	public void testCommentHandling() throws Exception {
 		checkFormat(EclipseXmlFormatPreferences.create(), "res/layout/layout1.xml", "<foo >\n" + "\n"
 				+ "    <!-- abc\n" + "         def\n" + "         ghi -->\n" + "\n" + "    <!-- abc\n" + "    def\n"
@@ -345,6 +366,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    <!--\n" + "abc\n" + "def\n" + "ghi\n" + "    -->\n" + "\n" + "</foo>");
 	}
 
+	@Test
 	public void testCommentHandling2() throws Exception {
 		checkFormat(EclipseXmlFormatPreferences.create(), "res/layout-xlarge/layout.xml", "<foo >\n"
 				+ "    <!-- multi -->\n" + "\n" + "    <bar />\n" + "</foo>",
@@ -352,6 +374,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 		"<foo>\n" + "\n" + "    <!-- multi -->\n" + "\n" + "    <bar />\n" + "\n" + "</foo>");
 	}
 
+	@Test
 	public void testMenus1() throws Exception {
 		checkFormat(EclipseXmlFormatPreferences.create(), "res/menu/menu1.xml",
 		// http://code.google.com/p/android/issues/detail?id=21383
@@ -390,6 +413,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 						+ "        </menu>\n" + "    </item>\n" + "\n" + "</menu>");
 	}
 
+	@Test
 	public void testMenus2() throws Exception {
 		EclipseXmlFormatPreferences prefs = EclipseXmlFormatPreferences.create();
 		prefs.removeEmptyLines = true;
@@ -421,6 +445,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 						+ "    </item>\n" + "</layer-list>");
 	}
 
+	@Test
 	public void testMenus3() throws Exception {
 		checkFormat(EclipseXmlFormatPreferences.create(), "res/menu/menu1.xml",
 		// http://code.google.com/p/android/issues/detail?id=21227
@@ -446,6 +471,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 
 	}
 
+	@Test
 	public void testColors1() throws Exception {
 		checkFormat(EclipseXmlFormatPreferences.create(), "res/values/colors.xml", "<resources>\n"
 				+ "  <color name=\"enrollment_error\">#99e21f14</color>\n" + "\n"
@@ -455,6 +481,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    <color name=\"service_starting_up\">#99000000</color>\n" + "\n" + "</resources>");
 	}
 
+	@Test
 	public void testEclipseFormatStyle1() throws Exception {
 		EclipseXmlFormatPreferences prefs = new EclipseXmlFormatPreferences() {
 			@Override
@@ -475,6 +502,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "\t<color name=\"service_starting_up\">#99000000</color>\n" + "\n" + "</resources>");
 	}
 
+	@Test
 	public void testEclipseFormatStyle2() throws Exception {
 		EclipseXmlFormatPreferences prefs = new EclipseXmlFormatPreferences() {
 			@Override
@@ -496,6 +524,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "  <color name=\"service_starting_up\">#99000000</color>\n" + "\n" + "</resources>");
 	}
 
+	@Test
 	public void testNameSorting() throws Exception {
 		checkFormat("res/values/dimen.xml", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<resources>\n"
 				+ "    <attr format=\"integer\" name=\"no\" />\n" + "</resources>",
@@ -504,6 +533,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    <attr name=\"no\" format=\"integer\" />\n" + "\n" + "</resources>");
 	}
 
+	@Test
 	public void testStableText() throws Exception {
 		checkFormat("res/layout/stable.xml", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
 				+ "<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n"
@@ -516,6 +546,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    android:orientation=\"vertical\" >\n" + "    Hello World\n" + "\n" + "</LinearLayout>");
 	}
 
+	@Test
 	public void testResources1() throws Exception {
 		checkFormat("res/values/strings.xml", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<resources>\n" + "\n"
 				+ "        <string name=\"test_string\">a\n" + "                </string>\n" + "\n" + "</resources>",
@@ -524,6 +555,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    <string name=\"test_string\">a</string>\n" + "\n" + "</resources>");
 	}
 
+	@Test
 	public void testMarkup() throws Exception {
 		checkFormat("res/values/strings.xml", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<resources>\n" + "\n"
 				+ "<string name=\"welcome\">Welcome to <b>Android</b>!</string>"
@@ -538,6 +570,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "\n" + "</resources>");
 	}
 
+	@Test
 	public void testPreserveEntities() throws Exception {
 		// Ensure that entities such as &gt; in the input string are preserved
 		// in the output
@@ -553,6 +586,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    <string name=\"untitled3\">&apos;untitled3&quot;</string>\n" + "\n" + "</resources>\n");
 	}
 
+	@Test
 	public void testCData1() throws Exception {
 		checkFormat("res/values/strings.xml", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<resources>\n"
 				+ "    <string name=\"foo\"><![CDATA[bar]]></string>\n" + "</resources>",
@@ -561,6 +595,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    <string name=\"foo\"><![CDATA[bar]]></string>\n" + "\n" + "</resources>");
 	}
 
+	@Test
 	public void testCData2() throws Exception {
 		checkFormat("res/values/strings.xml", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<resources>\n"
 				+ "    <string name=\"foo1\"><![CDATA[bar1\n" + "bar2\n" + "bar3]]></string>\n"
@@ -571,6 +606,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    <string name=\"foo2\"><![CDATA[bar]]></string>\n" + "\n" + "</resources>");
 	}
 
+	@Test
 	public void testComplexString() throws Exception {
 		checkFormat("res/values/strings.xml", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<resources>\n"
 				+ "<string name=\"progress_completed_export_all\">The database has "
@@ -583,6 +619,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "\\\"<i>%s</i>\\\"</font></string>\n" + "\n" + "</resources>");
 	}
 
+	@Test
 	public void test52887() throws Exception {
 		// https://code.google.com/p/android/issues/detail?id=52887
 		checkFormat("res/layout/relative.xml",
@@ -594,6 +631,7 @@ public class EclipseXmlPrettyPrinterTest extends TestCase {
 				+ "    android:layout_width=\"match_parent\"\n" + "    android:layout_height=\"match_parent\" />\n");
 	}
 
+	@Test
 	public void testPreserveLastNewline() throws Exception {
 		checkFormat("res/values/strings.xml", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<resources>\n"
 				+ "<string name=\"progress_completed_export_all\">The database has "

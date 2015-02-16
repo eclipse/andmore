@@ -32,8 +32,13 @@ import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("javadoc")
-@Ignore
+
 public class ChangeLayoutRefactoringTest extends RefactoringTest {
+	
+	@Override
+	protected boolean testCaseNeedsUniqueProject() {
+		return true;
+	}
 
 	@Test
 	public void testChangeLayout1a() throws Exception {
@@ -102,6 +107,7 @@ public class ChangeLayoutRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore
 	public void testConvertToGrid() throws Exception {
 		checkRefactoring(FQCN_GRID_LAYOUT, "sample9.xml", true);
 	}

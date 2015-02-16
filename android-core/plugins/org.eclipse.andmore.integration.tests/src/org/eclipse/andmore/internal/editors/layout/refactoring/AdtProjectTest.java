@@ -118,6 +118,7 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 		LoadStatus sdkStatus = AdtPlugin.getDefault().getSdkLoadStatus();
 		assertSame(LoadStatus.LOADED, sdkStatus);
 		IAndroidTarget target = current.getTarget(getProject());
+		
 		IJavaProject javaProject = BaseProjectHelper.getJavaProject(getProject());
 		assertNotNull(javaProject);
 		int iterations = 0;

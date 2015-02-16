@@ -32,7 +32,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 @SuppressWarnings("restriction")
-@Ignore
 public class AndroidXmlCharacterMatcherTest extends AdtProjectTest {
 	@Test
 	public void testGotoMatchingFwd1() throws Exception {

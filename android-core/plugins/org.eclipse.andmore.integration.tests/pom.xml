@@ -118,7 +118,7 @@
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
 					<runOrder>alphabetical</runOrder>
-					<forkedProcessTimeoutInSeconds>120</forkedProcessTimeoutInSeconds>
+<!--					<forkedProcessTimeoutInSeconds>120</forkedProcessTimeoutInSeconds> -->
 					<appArgLine>--launcher.suppressErrors</appArgLine>
 					<argLine>${os-jvm-flags} ${tycho.testArgLine}</argLine>
 					<dependencies>

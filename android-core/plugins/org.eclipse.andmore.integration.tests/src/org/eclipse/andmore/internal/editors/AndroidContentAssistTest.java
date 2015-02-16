@@ -54,7 +54,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 @SuppressWarnings("javadoc")
-@Ignore
 public class AndroidContentAssistTest extends AdtProjectTest {
 	private static final String CARET = "^"; //$NON-NLS-1$
 
@@ -199,6 +198,7 @@ public class AndroidContentAssistTest extends AdtProjectTest {
 	}
 
 	@Test
+	@Ignore("Dialog")
 	public void testCompletion13a() throws Exception {
 		checkLayoutCompletion("completion2.xml", "gravity=\"left|bottom|^cen");
 	}

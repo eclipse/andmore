@@ -97,7 +97,6 @@ import java.util.Set;
  * multiple instances of the templates (to look for resource conflicts)
  */
 @SuppressWarnings("javadoc")
-@Ignore
 public class TemplateHandlerTest extends SdkLoadingTestCase {
 	/**
 	 * Flag used to quickly check each template once (for one version), to get
@@ -245,6 +244,7 @@ public class TemplateHandlerTest extends SdkLoadingTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testCreateRemainingTemplates() throws Exception {
 		sCount = 0;
 		long begin = System.currentTimeMillis();

@@ -28,8 +28,16 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 @SuppressWarnings("javadoc")
-@Ignore
+@Ignore("Does not play well with entire suite.")
 public class ApplicationPackageNameRefactoringTest extends RefactoringTestBase {
+
+	@Override
+	protected boolean testCaseNeedsUniqueProject() {
+		// Because some of these tests look at ALL layouts in the project
+		// to identify matches
+		return true;
+	}
+
 	@Test
 	public void testRefactor1() throws Exception {
 		renamePackage(TEST_PROJECT, "my.pkg.name",

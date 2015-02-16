@@ -16,19 +16,23 @@
 
 package org.eclipse.andmore.internal.launch;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.util.Arrays;
 
 import org.eclipse.andmore.internal.launch.JUnitLaunchConfigDelegate;
+import org.junit.Test;
 
-import junit.framework.TestCase;
 
-public class JUnitLaunchConfigDelegateTest extends TestCase {
+public class JUnitLaunchConfigDelegateTest {
 
+	@Test
 	public void testAbleToFetchJunitJar() throws IOException {
 		assertTrue(JUnitLaunchConfigDelegate.getJunitJarLocation().endsWith("junit.jar"));
 	}
 
+	@Test
 	public void testFixBootpathExtWithAndroidJar() {
 		String[][] testArray = { null, {}, { "android.jar" }, null, { "some_other_jar.jar" }, };
 
@@ -37,6 +41,7 @@ public class JUnitLaunchConfigDelegateTest extends TestCase {
 		assertEqualsArrays(expectedArray, JUnitLaunchConfigDelegate.fixBootpathExt(testArray));
 	}
 
+	@Test
 	public void testFixBootpathExtWithNoAndroidJar() {
 		String[][] testArray = { null, { "somejar.jar" }, null, };
 
@@ -45,6 +50,7 @@ public class JUnitLaunchConfigDelegateTest extends TestCase {
 		assertEqualsArrays(expectedArray, JUnitLaunchConfigDelegate.fixBootpathExt(testArray));
 	}
 
+	@Test
 	public void testFixClasspathWithJunitJar() throws IOException {
 		String[] testArray = { JUnitLaunchConfigDelegate.getJunitJarLocation(), };
 
@@ -53,6 +59,7 @@ public class JUnitLaunchConfigDelegateTest extends TestCase {
 		assertEqualsArrays(expectedArray, JUnitLaunchConfigDelegate.fixClasspath(testArray, "test"));
 	}
 
+	@Test
 	public void testFixClasspathWithoutJunitJar() throws IOException {
 		String[] testArray = { "random.jar", };
 
@@ -61,6 +68,7 @@ public class JUnitLaunchConfigDelegateTest extends TestCase {
 		assertEqualsArrays(expectedArray, JUnitLaunchConfigDelegate.fixClasspath(testArray, "test"));
 	}
 
+	@Test
 	public void testFixClasspathWithNoJars() throws IOException {
 		String[] testArray = {};
 

@@ -50,7 +50,6 @@ import org.w3c.dom.Node;
  */
 @SuppressWarnings({ "restriction", "javadoc", "deprecation" })
 // XML DOM model
-@Ignore
 public class LayoutMetadataTest extends AdtProjectTest {
 
 	@Test

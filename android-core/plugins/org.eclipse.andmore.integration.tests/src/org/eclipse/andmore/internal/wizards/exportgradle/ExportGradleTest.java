@@ -53,7 +53,6 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 
-@Ignore
 public class ExportGradleTest extends AdtProjectTest {
 	private QualifiedName ERROR_KEY = new QualifiedName(AdtPlugin.PLUGIN_ID, "JobErrorKey");
 	private Throwable mLastThrown;

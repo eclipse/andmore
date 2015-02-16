@@ -37,7 +37,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 @SuppressWarnings({ "javadoc", "restriction" })
-@Ignore
 public class RenameResourceParticipantTest extends RefactoringTestBase {
 	@Test
 	public void testRefactor1() throws Exception {

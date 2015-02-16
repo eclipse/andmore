@@ -45,7 +45,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@Ignore
 public class ExtractStyleRefactoringTest extends RefactoringTest {
 	@Override
 	protected boolean testCaseNeedsUniqueProject() {
@@ -81,6 +80,7 @@ public class ExtractStyleRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore("Dialog screen pops up")
 	public void testExtract2() throws Exception {
 		getTestDataFile(getProject(), "navigationstyles.xml", "res/values/navigationstyles.xml");
 
@@ -127,6 +127,7 @@ public class ExtractStyleRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore
 	public void testExtract7() throws Exception {
 		// Verify that even with a different namespace prefix we end up with
 		// android:

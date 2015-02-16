@@ -39,7 +39,6 @@ import org.junit.Test;
 import java.io.File;
 
 @SuppressWarnings("javadoc")
-@Ignore
 public class ProjectLintConfigurationTest extends AdtProjectTest {
 
 	@Test
