@@ -59,6 +59,7 @@ import org.eclipse.wst.sse.core.StructuredModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.IModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.core.internal.provisional.text.IStructuredDocument;
+import org.junit.After;
 import org.junit.Before;
 
 import java.io.ByteArrayInputStream;
@@ -83,6 +84,7 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	 * sharing scheme.
 	 */
 	private static Map<String, IProject> sProjectMap = new HashMap<String, IProject>();
+
 
 	@Override
 	protected String getTestDataRelPath() {
@@ -148,23 +150,14 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 		assertTrue(layoutParamDescriptors.size() > 0);
 	}
 
-	/**
-	 * Set to true if the subclass test case should use a per-instance project
-	 * rather than a shared project. This is needed by projects which modify the
-	 * project in such a way that it affects what other tests see (for example,
-	 * the quickfix resource creation tests will add in new resources, which the
-	 * code completion tests will then list as possible matches if the code
-	 * completion test is run after the quickfix test.)
-	 * 
-	 * @return true to create a per-instance project instead of the default
-	 *         shared project
-	 */
-	protected boolean testCaseNeedsUniqueProject() {
-		return false;
-	}
-
 	protected boolean testNeedsUniqueProject() {
-		return false;
+		return true;
+	}
+	
+	@After
+	public void tearDownProjects() throws Exception {
+		IProject project = getProject();
+		project.delete(true, new NullProgressMonitor());
 	}
 
 	@Override
@@ -189,8 +182,6 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	private String getProjectName() {
 		if (testNeedsUniqueProject()) {
 			return PROJECTNAME_PREFIX + getClass().getSimpleName() + "-" + name.getMethodName();
-		} else if (testCaseNeedsUniqueProject()) {
-			return PROJECTNAME_PREFIX + getClass().getSimpleName();
 		} else {
 			return PROJECTNAME_PREFIX + TESTS_START_TIME;
 		}
@@ -204,7 +195,7 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 			assertNotNull(project);
 			sProjectMap.put(projectName, project);
 		}
-		if (!testCaseNeedsUniqueProject() && !testNeedsUniqueProject()) {
+		if (!testNeedsUniqueProject()) {
 			addCleanupDir(AdtUtils.getAbsolutePath(project).toFile());
 		}
 		addCleanupDir(project.getFullPath().toFile());

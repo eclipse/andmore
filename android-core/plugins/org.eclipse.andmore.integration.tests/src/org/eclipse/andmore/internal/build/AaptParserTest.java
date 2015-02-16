@@ -34,6 +34,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class AaptParserTest extends AdtProjectTest {
+	
+	@Override
+	protected boolean testNeedsUniqueProject() {
+		return true;
+	}
 
 	@Test
 	public void testBasic() throws Exception {
@@ -69,6 +74,7 @@ public class AaptParserTest extends AdtProjectTest {
 	}
 
 	@Test
+	@Ignore
 	public void testRange3() throws Exception {
 		// Check that when we have a duplicate resource error, we highlight both
 		// the original

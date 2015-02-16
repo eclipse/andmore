@@ -16,6 +16,7 @@
 package org.eclipse.andmore.integration.tests;
 
 import static org.eclipse.andmore.test.utils.XMLAssert.*;
+
 import org.custommonkey.xmlunit.*;
 
 import com.android.SdkConstants;
@@ -38,8 +39,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 import org.junit.rules.TestName;
 import org.xml.sax.SAXException;
 
@@ -53,22 +58,38 @@ import org.xml.sax.SAXException;
 
 public abstract class SdkTestCase {
 	
-	@Rule public TestName name = new TestName();
+	@Rule
+	public TestName name = new TestName();
 	
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder(); 
 	
 	
 	/** Update golden files if different from the actual results */
 	private static final boolean UPDATE_DIFFERENT_FILES = false;
 	/** Create golden files if missing */
 	private static final boolean UPDATE_MISSING_FILES = true;
-	private static File sTempDir = null;
-	protected static Set<File> sCleanDirs = Sets.newHashSet();
+	protected static List<File> sCleanDirs;
 
 	protected String getTestDataRelPath() {
 		fail("Must be overridden");
 		return null;
 	}
-
+	
+	@BeforeClass
+	public static void setupClass() {
+		sCleanDirs = new CopyOnWriteArrayList<File>();
+	}
+	
+	@AfterClass
+	public synchronized static void tearDown() {
+		for (File file : sCleanDirs) {
+			deleteFile(file);
+			
+			sCleanDirs.remove(file);
+		}
+	}
+	
 	public static int getCaretOffset(String fileContent, String caretLocation) {
 		assertTrue(caretLocation, caretLocation.contains("^")); //$NON-NLS-1$
 		int caretDelta = caretLocation.indexOf("^"); //$NON-NLS-1$
@@ -143,27 +164,8 @@ public abstract class SdkTestCase {
 		return getTempDir();
 	}
 
-	public static File getTempDir() {
-		if (sTempDir == null) {
-			File base = new File(System.getProperty("java.io.tmpdir")); //$NON-NLS-1$
-			if (SdkConstants.CURRENT_PLATFORM == SdkConstants.PLATFORM_DARWIN) {
-				base = new File("/tmp"); //$NON-NLS-1$
-			}
-			// On Windows, we don't want to pollute the temp folder (which is
-			// generally
-			// already incredibly busy). So let's create a temp folder for the
-			// results.
-			Calendar c = Calendar.getInstance();
-			String name = String.format("sdkTests_%1$tF_%1$tT", c).replace(':', '-'); //$NON-NLS-1$
-			File tmpDir = new File(base, name);
-			if (!tmpDir.exists() && tmpDir.mkdir()) {
-				sTempDir = tmpDir;
-			} else {
-				sTempDir = base;
-			}
-			addCleanupDir(sTempDir);
-		}
-		return sTempDir;
+	public File getTempDir() {		
+		return temporaryFolder.getRoot();
 	}
 
 	protected String removeSessionData(String data) {
@@ -337,7 +339,7 @@ public abstract class SdkTestCase {
 		return sb.toString();
 	}
 
-	protected void deleteFile(File dir) {
+	public static void deleteFile(File dir) {
 		if (dir.isDirectory()) {
 			for (File f : dir.listFiles()) {
 				deleteFile(f);
@@ -410,33 +412,5 @@ public abstract class SdkTestCase {
 		sCleanDirs.add(dir.getAbsoluteFile());
 	}
 
-	protected String cleanup(String result) {
-		List<File> sorted = new ArrayList<File>(sCleanDirs);
-		// Process dirs in order such that we match longest substrings first
-		Collections.sort(sorted, new Comparator<File>() {
-			@Override
-			public int compare(File file1, File file2) {
-				String path1 = file1.getPath();
-				String path2 = file2.getPath();
-				int delta = path2.length() - path1.length();
-				if (delta != 0) {
-					return delta;
-				} else {
-					return path1.compareTo(path2);
-				}
-			}
-		});
-		for (File dir : sorted) {
-			if (result.contains(dir.getPath())) {
-				result = result.replace(dir.getPath(), "/TESTROOT");
-			}
-		}
-		// The output typically contains a few directory/filenames.
-		// On Windows we need to change the separators to the unix-style
-		// forward slash to make the test as OS-agnostic as possible.
-		if (File.separatorChar != '/') {
-			result = result.replace(File.separatorChar, '/');
-		}
-		return result;
-	}
+
 }

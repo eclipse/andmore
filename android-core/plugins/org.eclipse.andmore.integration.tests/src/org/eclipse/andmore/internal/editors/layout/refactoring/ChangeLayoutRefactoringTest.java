@@ -35,11 +35,6 @@ import java.util.List;
 
 public class ChangeLayoutRefactoringTest extends RefactoringTest {
 	
-	@Override
-	protected boolean testCaseNeedsUniqueProject() {
-		return true;
-	}
-
 	@Test
 	public void testChangeLayout1a() throws Exception {
 		// Test a basic layout which performs some nesting -- tests basic grid

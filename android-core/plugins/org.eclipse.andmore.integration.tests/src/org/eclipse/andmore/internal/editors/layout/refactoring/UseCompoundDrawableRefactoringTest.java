@@ -32,13 +32,6 @@ import java.util.List;
 @SuppressWarnings("javadoc")
 public class UseCompoundDrawableRefactoringTest extends RefactoringTest {
 	
-	@Override
-	protected boolean testCaseNeedsUniqueProject() {
-		// Because some of these tests look at ALL layouts in the project
-		// to identify matches
-		return true;
-	}
-
 	@Test
 	public void testCombine() throws Exception {
 		assertNull(combine(null, null));

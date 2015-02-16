@@ -56,6 +56,7 @@ import java.util.logging.Logger;
  * execution there
  *
  */
+@Ignore
 public class SampleProjectTest extends SdkLoadingTestCase {
 
 	private static final Logger sLogger = Logger.getLogger(SampleProjectTest.class.getName());
@@ -69,7 +70,6 @@ public class SampleProjectTest extends SdkLoadingTestCase {
 	 * @throws CoreException
 	 */
 	@Test
-	@Ignore
 	public void testSamples() throws CoreException {
 		// TODO: For reporting purposes, it would be better if a separate test
 		// success or failure

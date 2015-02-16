@@ -47,10 +47,6 @@ import java.util.Map;
 
 @SuppressWarnings("javadoc")
 public class ManifestInfoTest extends AdtProjectTest {
-	@Override
-	protected boolean testCaseNeedsUniqueProject() {
-		return true;
-	}
 
 	@Test
 	public void testGetActivityThemes1() throws Exception {

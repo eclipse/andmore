@@ -46,10 +46,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class ExtractStyleRefactoringTest extends RefactoringTest {
-	@Override
-	protected boolean testCaseNeedsUniqueProject() {
-		return true;
-	}
 
 	@Test
 	public void testExtract1() throws Exception {
@@ -100,6 +96,7 @@ public class ExtractStyleRefactoringTest extends RefactoringTest {
 	// manually)
 	// but the DOM model returns null when run in a test context.
 	@Test
+	@Ignore
 	public void testExtract4() throws Exception {
 		// Test extracting on a single caret position over an attribute: Should
 		// extract
@@ -109,6 +106,7 @@ public class ExtractStyleRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore
 	public void testExtract5() throws Exception {
 		// Test extracting on a range selection inside an element: should
 		// extract just

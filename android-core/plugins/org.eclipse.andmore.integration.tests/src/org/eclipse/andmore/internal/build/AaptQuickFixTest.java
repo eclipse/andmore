@@ -54,11 +54,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AaptQuickFixTest extends AdtProjectTest {
+	
 	@Override
-	protected boolean testCaseNeedsUniqueProject() {
-		// Make a separate test project for this test such that we don't pollute
-		// code assist
-		// tests with our new resources
+	protected boolean testNeedsUniqueProject() {
 		return true;
 	}
 

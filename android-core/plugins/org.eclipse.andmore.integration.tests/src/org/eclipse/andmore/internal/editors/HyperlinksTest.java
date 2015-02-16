@@ -52,10 +52,6 @@ import java.lang.reflect.Method;
 @SuppressWarnings({ "restriction", "javadoc" })
 @Ignore
 public class HyperlinksTest extends AdtProjectTest {
-	@Override
-	protected boolean testCaseNeedsUniqueProject() {
-		return true;
-	}
 
 	@Test
 	public void testFqnRegexp() throws Exception {

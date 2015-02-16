@@ -26,8 +26,10 @@ import org.eclipse.andmore.internal.sdk.Sdk;
 
 import com.android.sdklib.IAndroidTarget;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.After;
 
 /**
  * A test case which uses the SDK loaded by the ADT plugin.
@@ -35,9 +37,6 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 public abstract class SdkLoadingTestCase extends SdkTestCase {
 
 	private Sdk mSdk;
-
-	protected SdkLoadingTestCase() {
-	}
 
 	/**
 	 * Retrieve the {@link Sdk} under test.
