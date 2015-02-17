@@ -107,7 +107,7 @@ public abstract class RefactoringTestBase extends AdtProjectTest {
 	}
 
 	protected IProject createProject(Object[] testData) throws Exception {
-		String name = super.name.getMethodName();
+		String name = super.testName.getMethodName();
 		IProject project = createProject(name);
 		mProject = project;
 		File projectDir = AdtUtils.getAbsolutePath(project).toFile();

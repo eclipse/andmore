@@ -17,9 +17,12 @@ package org.eclipse.andmore.integration.tests;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
 import com.android.ide.common.sdk.LoadStatus;
 
 import org.eclipse.andmore.AdtPlugin;
+import org.eclipse.andmore.AdtPlugin.CheckSdkErrorHandler;
 import org.eclipse.andmore.internal.preferences.AdtPrefs;
 import org.eclipse.andmore.internal.sdk.AndroidTargetParser;
 import org.eclipse.andmore.internal.sdk.Sdk;
@@ -30,6 +33,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.After;
+import org.junit.BeforeClass;
 
 /**
  * A test case which uses the SDK loaded by the ADT plugin.
@@ -37,11 +41,13 @@ import org.junit.After;
 public abstract class SdkLoadingTestCase extends SdkTestCase {
 
 	private Sdk mSdk;
+		
 
 	/**
 	 * Retrieve the {@link Sdk} under test.
 	 */
 	protected Sdk getSdk() {
+		System.out.println("getSdk");
 		if (mSdk == null) {
 			mSdk = loadSdk();
 			assertNotNull(mSdk);
@@ -61,6 +67,8 @@ public abstract class SdkLoadingTestCase extends SdkTestCase {
 		if (adt == null) {
 			return null;
 		}
+		
+		
 
 		// We'll never break out of the SDK load-wait-loop if the AdtPlugin
 		// doesn't
@@ -71,32 +79,55 @@ public abstract class SdkLoadingTestCase extends SdkTestCase {
 		if (sdkLocation == null || sdkLocation.length() == 0) {
 			sdkLocation = System.getenv("ADT_TEST_SDK_PATH");
 		}
+		System.out.println("sdkLocation: " + sdkLocation);
+		AdtPrefs.getPrefs().setSdkLocation(new File(sdkLocation));
+		AdtPlugin.getDefault().refreshSdk();
+
 		assertTrue("No valid SDK installation is set; for tests you typically need to set the"
 				+ " environment variable ADT_TEST_SDK_PATH to point to an SDK folder", sdkLocation != null
 				&& sdkLocation.length() > 0);
+		Sdk sdk = Sdk.loadSdk(sdkLocation);
+		assertNotNull("Failed to load sdk from " + sdkLocation);
+		boolean result = adt.checkSdkLocationAndId(sdkLocation, new CheckSdkErrorHandler() {
 
-		Object sdkLock = Sdk.getLock();
-		LoadStatus loadStatus = LoadStatus.LOADING;
-		// wait for ADT to load the SDK on a separate thread
-		// loop max of 600 times * 200 ms = 2 minutes
-		final int maxWait = 600;
-		for (int i = 0; i < maxWait && loadStatus == LoadStatus.LOADING; i++) {
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				// ignore
+			@Override
+			public boolean handleError(Solution solution, String message) {
+				System.out.println("handleError: " + solution.name() + ": " + message);
+				return false;
 			}
-			synchronized (sdkLock) {
-				loadStatus = adt.getSdkLoadStatus();
+
+			@Override
+			public boolean handleWarning(Solution solution, String message) {
+				System.out.println("handleError: " + solution.name() + ": " + message);
+				return true;
 			}
-		}
-		Sdk sdk = null;
-		synchronized (sdkLock) {
-			assertEquals(LoadStatus.LOADED, loadStatus);
-			sdk = Sdk.getCurrent();
-		}
-		assertNotNull(sdk);
+			
+		});
+		assertTrue("SDK Location check failed. ", result);
 		return sdk;
+
+//		Object sdkLock = Sdk.getLock();
+//		LoadStatus loadStatus = LoadStatus.LOADING;
+//		// wait for ADT to load the SDK on a separate thread
+//		// loop max of 600 times * 200 ms = 2 minutes
+//		final int maxWait = 50;
+//		for (int i = 0; i < maxWait && loadStatus == LoadStatus.LOADING; i++) {
+//			try {
+//				Thread.sleep(200);
+//			} catch (InterruptedException e) {
+//				// ignore
+//			}
+//			synchronized (sdkLock) {
+//				loadStatus = adt.getSdkLoadStatus();
+//			}
+//		}
+//		Sdk sdk = null;
+//		synchronized (sdkLock) {
+//			assertEquals(LoadStatus.LOADED, loadStatus);
+//			sdk = Sdk.getCurrent();
+//		}
+//		assertNotNull(sdk);
+//		return sdk;
 	}
 
 	protected boolean validateSdk(IAndroidTarget target) {

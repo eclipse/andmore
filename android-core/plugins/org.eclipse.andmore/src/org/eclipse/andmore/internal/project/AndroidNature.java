@@ -123,6 +123,7 @@ public class AndroidNature implements IProjectNature {
      */
     public static synchronized void setupProjectNatures(IProject project,
             IProgressMonitor monitor, boolean addAndroidNature) throws CoreException {
+    	System.out.println("Adding androind natures, setupProjectNatures");
         if (project == null || !project.isOpen()) return;
         if (monitor == null) monitor = new NullProgressMonitor();
 

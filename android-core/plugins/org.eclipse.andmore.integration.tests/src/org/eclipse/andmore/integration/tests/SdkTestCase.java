@@ -18,6 +18,7 @@ package org.eclipse.andmore.integration.tests;
 import static org.eclipse.andmore.test.utils.XMLAssert.*;
 
 import org.custommonkey.xmlunit.*;
+import org.eclipse.andmore.AdtPlugin;
 
 import com.android.SdkConstants;
 import com.google.common.base.Charsets;
@@ -41,6 +42,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -59,7 +61,7 @@ import org.xml.sax.SAXException;
 public abstract class SdkTestCase {
 	
 	@Rule
-	public TestName name = new TestName();
+	public TestName testName = new TestName();
 	
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder(); 
@@ -78,6 +80,7 @@ public abstract class SdkTestCase {
 	
 	@BeforeClass
 	public static void setupClass() {
+		AdtPlugin.getDefault().workbenchStarted();
 		sCleanDirs = new CopyOnWriteArrayList<File>();
 	}
 	
@@ -88,6 +91,11 @@ public abstract class SdkTestCase {
 			
 			sCleanDirs.remove(file);
 		}
+	}
+	
+	@After
+	public void tearDownProjects() throws Exception {
+		System.out.println("Test Completed: " + testName.getMethodName());
 	}
 	
 	public static int getCaretOffset(String fileContent, String caretLocation) {
@@ -209,7 +217,7 @@ public abstract class SdkTestCase {
 	}
 
 	protected void assertEqualsGolden(String basename, String actual, String newExtension) throws IOException {
-		String testName = name.getMethodName();
+		String testName = this.testName.getMethodName();
 		if (testName.startsWith("test")) {
 			testName = testName.substring(4);
 			if (Character.isUpperCase(testName.charAt(0))) {

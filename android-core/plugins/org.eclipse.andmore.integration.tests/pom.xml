@@ -111,17 +111,25 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-<!-- 					<testSuite>org.eclipse.andmore.integration.tests</testSuite> -->
-<!-- 					<testClass>org.eclipse.andmore.integration.tests.IntegrationTestSuite</testClass> -->
 					<skipTests>false</skipTests>
 					<testFailureIgnore>true</testFailureIgnore>
 					<useUIHarness>true</useUIHarness>
-					<useUIThread>false</useUIThread>
-					<runOrder>alphabetical</runOrder>
-<!--					<forkedProcessTimeoutInSeconds>120</forkedProcessTimeoutInSeconds> -->
-					<appArgLine>--launcher.suppressErrors</appArgLine>
 					<argLine>${os-jvm-flags} ${tycho.testArgLine}</argLine>
+					<dependency-resolution>
+						<extraRequirements>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.andmore.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+						</extraRequirements>
+					</dependency-resolution>
 					<dependencies>
+					    <dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.andmore</artifactId>
+							<version>0.0.0</version>
+						</dependency>
 						<dependency>
 							<type>p2-installable-unit</type>
 							<artifactId>org.eclipse.sdk.ide</artifactId>

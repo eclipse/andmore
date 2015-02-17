@@ -298,6 +298,7 @@ public class AdtPlugin extends AbstractUIPlugin implements ILogger {
         // This is deferred in separate jobs to avoid blocking the bundle start.
         final boolean isSdkLocationValid = checkSdkLocationAndId();
         if (isSdkLocationValid) {
+        	System.out.println("Parsing sdk content.");
             // parse the SDK resources.
             // Wait 2 seconds before starting the job. This leaves some time to the
             // other bundles to initialize.
@@ -1146,7 +1147,8 @@ public class AdtPlugin extends AbstractUIPlugin implements ILogger {
              */
             @Override
             public boolean handleError(Solution solution, String message) {
-                displayMessage(solution, message, MessageDialog.ERROR);
+            	System.out.println("Message: " + message);
+                //displayMessage(solution, message, MessageDialog.ERROR);
                 return false;
             }
 
@@ -1158,7 +1160,8 @@ public class AdtPlugin extends AbstractUIPlugin implements ILogger {
              */
             @Override
             public boolean handleWarning(Solution solution, String message) {
-                displayMessage(solution, message, MessageDialog.WARNING);
+            	System.out.println("Message: " + message);
+                //displayMessage(solution, message, MessageDialog.WARNING);
                 return true;
             }
 

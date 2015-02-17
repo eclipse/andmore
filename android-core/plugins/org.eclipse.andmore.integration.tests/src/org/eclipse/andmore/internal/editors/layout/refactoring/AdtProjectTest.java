@@ -76,6 +76,74 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	public static final String TEST_PROJECT_PACKAGE = "com.android.eclipse.tests"; //$NON-NLS-1$
 	private static final long TESTS_START_TIME = System.currentTimeMillis();
 	private static final String PROJECTNAME_PREFIX = "testproject-";
+	
+	
+	@Before
+	public void setUp() throws Exception {
+		System.out.println("AdtProject: setup");
+		System.out.println("Starting Test: " + testName.getMethodName());
+		// Prevent preview icon computation during plugin test to make test
+		// faster
+		
+		if (AdtPlugin.getDefault() == null) {
+			fail("This test must be run as an Eclipse plugin test, not a plain JUnit test!");
+		}
+				
+		AdtPrefs.getPrefs().setPaletteModes("ICON_TEXT"); //$NON-NLS-1$
+
+		IProject project = getProject();
+		System.out.println("Fetched project " + project.getName());
+
+		Sdk current = Sdk.getCurrent();
+		System.out.println("Sdk location: " + current.getSdkFileLocation().toString());
+		assertNotNull(current);
+		LoadStatus sdkStatus = AdtPlugin.getDefault().getSdkLoadStatus();
+		System.out.println("SDK Tools location: " + AdtPlugin.getOsSdkToolsFolder());
+		assertSame(LoadStatus.LOADED, sdkStatus);
+		IAndroidTarget target = current.getTarget(getProject());
+		
+		IJavaProject javaProject = BaseProjectHelper.getJavaProject(getProject());
+		assertNotNull(javaProject);
+		int iterations = 0;
+		
+		System.out.println("Trying to load target. " + target.getFullName());
+		while (true) {
+			if (iterations == 100) {
+				fail("Couldn't load target; ran out of time");
+			}
+			LoadStatus status = current.checkAndLoadTargetData(target, javaProject);
+			if (status == LoadStatus.FAILED) {
+				fail("Couldn't load target " + target);
+			}
+			if (status != LoadStatus.LOADING) {
+				break;
+			}
+			Thread.sleep(250);
+			iterations++;
+		}
+		System.out.println("Target loaded.");
+		
+		AndroidTargetData targetData = current.getTargetData(target);
+		assertNotNull(targetData);
+		LayoutDescriptors layoutDescriptors = targetData.getLayoutDescriptors();
+		assertNotNull(layoutDescriptors);
+		List<ViewElementDescriptor> viewDescriptors = layoutDescriptors.getViewDescriptors();
+		assertNotNull(viewDescriptors);
+		assertTrue(viewDescriptors.size() > 0);
+		List<ViewElementDescriptor> layoutParamDescriptors = layoutDescriptors.getLayoutDescriptors();
+		assertNotNull(layoutParamDescriptors);
+		assertTrue(layoutParamDescriptors.size() > 0);
+		System.out.println("ADTProject setup complete");
+	}
+	
+	@Override
+	@After
+	public void tearDownProjects() throws Exception {
+		IProject project = getProject();
+		project.delete(true, new NullProgressMonitor());
+		System.out.println("Deleting projet " + project.getName());
+		super.tearDownProjects();
+	}
 
 	/**
 	 * We don't stash the project used by each test case as a field such that
@@ -102,63 +170,11 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 		return stream;
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		// Prevent preview icon computation during plugin test to make test
-		// faster
-		
-		if (AdtPlugin.getDefault() == null) {
-			fail("This test must be run as an Eclipse plugin test, not a plain JUnit test!");
-		}
-				
-		AdtPrefs.getPrefs().setPaletteModes("ICON_TEXT"); //$NON-NLS-1$
-
-		getProject();
-
-		Sdk current = Sdk.getCurrent();
-		assertNotNull(current);
-		LoadStatus sdkStatus = AdtPlugin.getDefault().getSdkLoadStatus();
-		assertSame(LoadStatus.LOADED, sdkStatus);
-		IAndroidTarget target = current.getTarget(getProject());
-		
-		IJavaProject javaProject = BaseProjectHelper.getJavaProject(getProject());
-		assertNotNull(javaProject);
-		int iterations = 0;
-		while (true) {
-			if (iterations == 100) {
-				fail("Couldn't load target; ran out of time");
-			}
-			LoadStatus status = current.checkAndLoadTargetData(target, javaProject);
-			if (status == LoadStatus.FAILED) {
-				fail("Couldn't load target " + target);
-			}
-			if (status != LoadStatus.LOADING) {
-				break;
-			}
-			Thread.sleep(250);
-			iterations++;
-		}
-		AndroidTargetData targetData = current.getTargetData(target);
-		assertNotNull(targetData);
-		LayoutDescriptors layoutDescriptors = targetData.getLayoutDescriptors();
-		assertNotNull(layoutDescriptors);
-		List<ViewElementDescriptor> viewDescriptors = layoutDescriptors.getViewDescriptors();
-		assertNotNull(viewDescriptors);
-		assertTrue(viewDescriptors.size() > 0);
-		List<ViewElementDescriptor> layoutParamDescriptors = layoutDescriptors.getLayoutDescriptors();
-		assertNotNull(layoutParamDescriptors);
-		assertTrue(layoutParamDescriptors.size() > 0);
-	}
 
 	protected boolean testNeedsUniqueProject() {
 		return true;
 	}
 	
-	@After
-	public void tearDownProjects() throws Exception {
-		IProject project = getProject();
-		project.delete(true, new NullProgressMonitor());
-	}
 
 	@Override
 	protected boolean validateSdk(IAndroidTarget target) {
@@ -181,16 +197,19 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	 */
 	private String getProjectName() {
 		if (testNeedsUniqueProject()) {
-			return PROJECTNAME_PREFIX + getClass().getSimpleName() + "-" + name.getMethodName();
+			return PROJECTNAME_PREFIX + getClass().getSimpleName() + "-" + testName.getMethodName();
 		} else {
 			return PROJECTNAME_PREFIX + TESTS_START_TIME;
 		}
 	}
 
 	protected IProject getProject() {
+		System.out.println("Getting project");
 		String projectName = getProjectName();
+		System.out.println("Getting project.");
 		IProject project = sProjectMap.get(projectName);
 		if (project == null) {
+			System.out.println("Creating Project");
 			project = createProject(projectName);
 			assertNotNull(project);
 			sProjectMap.put(projectName, project);
@@ -263,19 +282,26 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	}
 
 	protected IProject createProject(String name) {
+		System.out.println("createProject");
 		IAndroidTarget target = null;
 
+		System.out.println("Fretching SDK targets");
 		IAndroidTarget[] targets = getSdk().getTargets();
 		for (IAndroidTarget t : targets) {
+			System.out.println("Found targets: " + t.getFullName());
 			if (!t.isPlatform()) {
 				continue;
 			}
+			System.out.println("Target API Level restraint: " + TARGET_API_LEVEL);
+			System.out.println("Api Level: " + t.getVersion().getApiLevel());
 			if (t.getVersion().getApiLevel() >= TARGET_API_LEVEL) {
 				target = t;
 				break;
 			}
 		}
 		assertNotNull(target);
+		
+		System.out.println("Found valid target. ");
 
 		IRunnableContext context = new IRunnableContext() {
 			@Override
@@ -284,6 +310,8 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 				runnable.run(new NullProgressMonitor());
 			}
 		};
+		
+		System.out.println("Creating new project using NewProjectWizardState");
 		NewProjectWizardState state = new NewProjectWizardState(Mode.ANY);
 		state.projectName = name;
 		state.target = target;
@@ -292,6 +320,8 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 		state.applicationName = name;
 		state.createActivity = false;
 		state.useDefaultLocation = true;
+		int minSdk = getMinSdk();
+		System.out.println("minSdk value: " + minSdk);
 		if (getMinSdk() != -1) {
 			state.minSdk = Integer.toString(getMinSdk());
 		}

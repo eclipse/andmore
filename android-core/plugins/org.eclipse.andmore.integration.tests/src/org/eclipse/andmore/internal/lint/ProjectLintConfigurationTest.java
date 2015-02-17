@@ -191,7 +191,7 @@ public class ProjectLintConfigurationTest extends AdtProjectTest {
 
 	@Override
 	protected File getTargetDir() {
-		File targetDir = new File(getTempDir(), getClass().getSimpleName() + "_" + name.getMethodName());
+		File targetDir = new File(getTempDir(), getClass().getSimpleName() + "_" + testName.getMethodName());
 		addCleanupDir(targetDir);
 		return targetDir;
 	}
