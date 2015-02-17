@@ -15,7 +15,7 @@
 	</parent>
 
 	<properties>
-		<os-jvm-flags>-Xms256m -Xmx512m -XX:MaxPermSize=256M</os-jvm-flags>
+		<os-jvm-flags>-Xms256m -Xmx1024m -XX:MaxPermSize=256M</os-jvm-flags>
 	</properties>
 
 

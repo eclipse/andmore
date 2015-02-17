@@ -288,7 +288,6 @@ public class NewProjectCreator  {
      * @return True if the project could be created.
      */
     public boolean createAndroidProjects() {
-    	System.out.println("NewProjectCreator.createAndroidProjects");
         if (mValues.importProjects != null && !mValues.importProjects.isEmpty()) {
             return importProjects();
         }
@@ -719,26 +718,21 @@ public class NewProjectCreator  {
             boolean isAndroidProject)
                 throws CoreException, IOException, StreamException {
 
-    	System.out.println("createEclipseProject");
     	
         // get the project target
         IAndroidTarget target = (IAndroidTarget) parameters.get(PARAM_SDK_TARGET);
-        System.out.println("SDK Target: " + target.getFullName());
         boolean legacy = isAndroidProject && target.getVersion().getApiLevel() < 4;
 
         // Create project and open it
-        System.out.println("Creating project.");
         project.create(description, new SubProgressMonitor(monitor, 10));
         if (monitor.isCanceled()) throw new OperationCanceledException();
 
-        System.out.println("Opening Project");
         project.open(IResource.BACKGROUND_REFRESH, new SubProgressMonitor(monitor, 10));
 
         // Add the Java and android nature to the project
         AndroidNature.setupProjectNatures(project, monitor, isAndroidProject);
 
         // Create folders in the project if they don't already exist
-        System.out.println("Adding default folders.");
         addDefaultDirectories(project, AdtConstants.WS_ROOT, DEFAULT_DIRECTORIES, monitor);
         String[] sourceFolders;
         if (isAndroidProject) {
@@ -751,7 +745,6 @@ public class NewProjectCreator  {
                     (String) parameters.get(PARAM_SRC_FOLDER)
                 };
         }
-        System.out.println("Add Default Directories");
         addDefaultDirectories(project, AdtConstants.WS_ROOT, sourceFolders, monitor);
 
         // Create the resource folders in the project if they don't already exist.
@@ -769,40 +762,36 @@ public class NewProjectCreator  {
             }
         }
 
-        System.out.println("Mark source folders");
         // Setup class path: mark folders as source folders
         IJavaProject javaProject = JavaCore.create(project);
         setupSourceFolders(javaProject, sourceFolders, monitor);
 
         if (((Boolean) parameters.get(PARAM_IS_NEW_PROJECT)).booleanValue()) {
             // Create files in the project if they don't already exist
-        	System.out.println("Add Manifest.");
             addManifest(project, parameters, dictionary, monitor);
 
             // add the default app icon
-        	System.out.println("Add Icon.");
             addIcon(project, legacy, monitor);
 
             // Create the default package components
-        	System.out.println("Add Sample Code");
             addSampleCode(project, sourceFolders[0], parameters, dictionary, monitor);
 
             // add the string definition file if needed
-//            if (dictionary != null && dictionary.size() > 0) {
-//                addStringDictionaryFile(project, dictionary, monitor);
-//            }
+            if (dictionary != null && dictionary.size() > 0) {
+                addStringDictionaryFile(project, dictionary, monitor);
+            }
 
             // add the default proguard config
             File libFolder = new File((String) parameters.get(PARAM_SDK_TOOLS_DIR),
                     SdkConstants.FD_LIB);
         	System.out.println("Add Local File.");
 
-//            addLocalFile(project,
-//                    new File(libFolder, SdkConstants.FN_PROJECT_PROGUARD_FILE),
-//                    // Write ProGuard config files with the extension .pro which
-//                    // is what is used in the ProGuard documentation and samples
-//                    SdkConstants.FN_PROJECT_PROGUARD_FILE,
-//                    monitor);
+            addLocalFile(project,
+                    new File(libFolder, SdkConstants.FN_PROJECT_PROGUARD_FILE),
+                    // Write ProGuard config files with the extension .pro which
+                    // is what is used in the ProGuard documentation and samples
+                    SdkConstants.FN_PROJECT_PROGUARD_FILE,
+                    monitor);
 
             // Set output location
             javaProject.setOutputLocation(project.getFolder(BIN_CLASSES_DIRECTORY).getFullPath(),
@@ -810,14 +799,12 @@ public class NewProjectCreator  {
         }
 
         File sampleDir = (File) parameters.get(PARAM_SAMPLE_LOCATION);
-    	System.out.println("Sample Dir.");
 
         if (sampleDir != null) {
             // Copy project
             copySampleCode(project, sampleDir, parameters, dictionary, monitor);
         }
 
-    	System.out.println("Reference Project.");
         // Create the reference to the target project
         if (parameters.containsKey(PARAM_REFERENCE_PROJECT)) {
             IProject refProject = (IProject) parameters.get(PARAM_REFERENCE_PROJECT);
@@ -845,16 +832,12 @@ public class NewProjectCreator  {
         }
 
         if (isAndroidProject) {
-        	System.out.println("Inintialize project.");
             Sdk.getCurrent().initProject(project, target);
-            System.out.println("Project initialized");
         }
 
         // Fix the project to make sure all properties are as expected.
         // Necessary for existing projects and good for new ones to.
-        System.out.println("Fix project.");
         ProjectHelper.fixProject(project);
-        System.out.println("Fixed project");
 
         Boolean isLibraryProject = (Boolean) parameters.get(PARAM_IS_LIBRARY);
         if (isLibraryProject != null && isLibraryProject.booleanValue()

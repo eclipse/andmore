@@ -79,53 +79,33 @@ public abstract class SdkLoadingTestCase extends SdkTestCase {
 		}
 		System.out.println("sdkLocation: " + sdkLocation);
 		AdtPrefs.getPrefs().setSdkLocation(new File(sdkLocation));
-		AdtPlugin.getDefault().refreshSdk();
 
 		assertTrue("No valid SDK installation is set; for tests you typically need to set the"
 				+ " environment variable ADT_TEST_SDK_PATH to point to an SDK folder", sdkLocation != null
 				&& sdkLocation.length() > 0);
-		Sdk sdk = Sdk.loadSdk(sdkLocation);
-		assertNotNull("Failed to load sdk from " + sdkLocation);
-		boolean result = adt.checkSdkLocationAndId(sdkLocation, new CheckSdkErrorHandler() {
 
-			@Override
-			public boolean handleError(Solution solution, String message) {
-				System.out.println("handleError: " + solution.name() + ": " + message);
-				return false;
+		Object sdkLock = Sdk.getLock();
+		LoadStatus loadStatus = LoadStatus.LOADING;
+		// wait for ADT to load the SDK on a separate thread
+		// loop max of 600 times * 200 ms = 2 minutes
+		final int maxWait = 50;
+		for (int i = 0; i < maxWait && loadStatus == LoadStatus.LOADING; i++) {
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// ignore
 			}
-
-			@Override
-			public boolean handleWarning(Solution solution, String message) {
-				System.out.println("handleError: " + solution.name() + ": " + message);
-				return true;
+			synchronized (sdkLock) {
+				loadStatus = adt.getSdkLoadStatus();
 			}
-			
-		});
-		assertTrue("SDK Location check failed. ", result);
+		}
+		Sdk sdk = null;
+		synchronized (sdkLock) {
+			assertEquals(LoadStatus.LOADED, loadStatus);
+			sdk = Sdk.getCurrent();
+		}
+		assertNotNull(sdk);
 		return sdk;
-
-//		Object sdkLock = Sdk.getLock();
-//		LoadStatus loadStatus = LoadStatus.LOADING;
-//		// wait for ADT to load the SDK on a separate thread
-//		// loop max of 600 times * 200 ms = 2 minutes
-//		final int maxWait = 50;
-//		for (int i = 0; i < maxWait && loadStatus == LoadStatus.LOADING; i++) {
-//			try {
-//				Thread.sleep(200);
-//			} catch (InterruptedException e) {
-//				// ignore
-//			}
-//			synchronized (sdkLock) {
-//				loadStatus = adt.getSdkLoadStatus();
-//			}
-//		}
-//		Sdk sdk = null;
-//		synchronized (sdkLock) {
-//			assertEquals(LoadStatus.LOADED, loadStatus);
-//			sdk = Sdk.getCurrent();
-//		}
-//		assertNotNull(sdk);
-//		return sdk;
 	}
 
 	protected boolean validateSdk(IAndroidTarget target) {
