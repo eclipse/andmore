@@ -24,6 +24,7 @@ import com.android.ide.common.sdk.LoadStatus;
 
 import org.eclipse.andmore.AdtPlugin;
 import org.eclipse.andmore.AdtUtils;
+import org.eclipse.andmore.integration.tests.DialogMonitor;
 import org.eclipse.andmore.integration.tests.SdkLoadingTestCase;
 import org.eclipse.andmore.internal.editors.common.CommonXmlEditor;
 import org.eclipse.andmore.internal.editors.descriptors.AttributeDescriptor;
@@ -77,9 +78,14 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	private static final long TESTS_START_TIME = System.currentTimeMillis();
 	private static final String PROJECTNAME_PREFIX = "testproject-";
 	
+	DialogMonitor dialogMonitor;
+	
 	
 	@Before
 	public void setUp() throws Exception {
+		dialogMonitor = new DialogMonitor();
+		dialogMonitor.startMonitoring();
+		
 		System.out.println("AdtProject: setup");
 		System.out.println("Starting Test: " + testName.getMethodName());
 		// Prevent preview icon computation during plugin test to make test
@@ -142,6 +148,7 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 		IProject project = getProject();
 		project.delete(true, new NullProgressMonitor());
 		System.out.println("Deleting projet " + project.getName());
+		dialogMonitor.stopMonitoring();
 		super.tearDownProjects();
 	}
 

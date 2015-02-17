@@ -114,6 +114,7 @@
 					<skipTests>false</skipTests>
 					<testFailureIgnore>true</testFailureIgnore>
 					<useUIHarness>true</useUIHarness>
+					<appArgLine>-debug -console</appArgLine>
 					<argLine>${os-jvm-flags} ${tycho.testArgLine}</argLine>
 					<dependency-resolution>
 						<extraRequirements>

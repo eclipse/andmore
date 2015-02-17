@@ -788,9 +788,9 @@ public class NewProjectCreator  {
             addSampleCode(project, sourceFolders[0], parameters, dictionary, monitor);
 
             // add the string definition file if needed
-            if (dictionary != null && dictionary.size() > 0) {
-                addStringDictionaryFile(project, dictionary, monitor);
-            }
+//            if (dictionary != null && dictionary.size() > 0) {
+//                addStringDictionaryFile(project, dictionary, monitor);
+//            }
 
             // add the default proguard config
             File libFolder = new File((String) parameters.get(PARAM_SDK_TOOLS_DIR),
