@@ -68,8 +68,6 @@ public abstract class SdkLoadingTestCase extends SdkTestCase {
 			return null;
 		}
 		
-		
-
 		// We'll never break out of the SDK load-wait-loop if the AdtPlugin
 		// doesn't
 		// actually have a valid SDK location because it won't have started an

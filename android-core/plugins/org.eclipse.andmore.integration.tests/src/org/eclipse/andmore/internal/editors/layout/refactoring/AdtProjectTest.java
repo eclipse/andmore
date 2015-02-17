@@ -78,12 +78,11 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	private static final long TESTS_START_TIME = System.currentTimeMillis();
 	private static final String PROJECTNAME_PREFIX = "testproject-";
 	
-	DialogMonitor dialogMonitor;
+	DialogMonitor dialogMonitor = new DialogMonitor();
 	
 	
 	@Before
 	public void setUp() throws Exception {
-		dialogMonitor = new DialogMonitor();
 		dialogMonitor.startMonitoring();
 		
 		System.out.println("AdtProject: setup");
@@ -148,7 +147,9 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 		IProject project = getProject();
 		project.delete(true, new NullProgressMonitor());
 		System.out.println("Deleting projet " + project.getName());
-		dialogMonitor.stopMonitoring();
+		if (dialogMonitor != null) {
+			dialogMonitor.stopMonitoring();
+		}
 		super.tearDownProjects();
 	}
 

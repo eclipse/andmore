@@ -1,8 +1,8 @@
 package org.eclipse.andmore.integration.tests;
 
-import junit.framework.Assert;
 
 import org.eclipse.swt.widgets.Display;
+import org.junit.Assert;
 
 /**
  * 
