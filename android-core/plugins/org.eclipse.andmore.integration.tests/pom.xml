@@ -116,7 +116,7 @@
 					<skipTests>false</skipTests>
 					<testFailureIgnore>true</testFailureIgnore>
 					<useUIHarness>true</useUIHarness>
-					<useUIThread>true</useUIThread>
+					<useUIThread>false</useUIThread>
 					<runOrder>alphabetical</runOrder>
 <!--					<forkedProcessTimeoutInSeconds>120</forkedProcessTimeoutInSeconds> -->
 					<appArgLine>--launcher.suppressErrors</appArgLine>

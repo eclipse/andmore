@@ -35,11 +35,6 @@ import java.util.List;
 
 public class AaptParserTest extends AdtProjectTest {
 	
-	@Override
-	protected boolean testNeedsUniqueProject() {
-		return true;
-	}
-
 	@Test
 	public void testBasic() throws Exception {
 		// Test the "at 'property' with value 'value' range matching included
