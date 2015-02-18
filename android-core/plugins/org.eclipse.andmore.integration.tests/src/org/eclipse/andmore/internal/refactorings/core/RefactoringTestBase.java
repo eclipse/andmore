@@ -64,6 +64,7 @@ public abstract class RefactoringTestBase extends AdtProjectTest {
 	@Before
 	public void setUp() throws Exception {
 		// Not calling super.setUp
+		super.startMonitoringJob();
 	}
 
 	protected void checkRefactoring(Refactoring refactoring, String expected, @Nullable String expectedWarnings)

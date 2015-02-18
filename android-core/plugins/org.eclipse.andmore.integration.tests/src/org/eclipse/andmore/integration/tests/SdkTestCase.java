@@ -80,7 +80,6 @@ public abstract class SdkTestCase {
 	
 	@BeforeClass
 	public static void setupClass() {
-		AdtPlugin.getDefault().workbenchStarted();
 		sCleanDirs = new CopyOnWriteArrayList<File>();
 	}
 	

@@ -782,16 +782,17 @@ public class NewProjectCreator  {
             }
 
             // add the default proguard config
-            File libFolder = new File((String) parameters.get(PARAM_SDK_TOOLS_DIR),
-                    SdkConstants.FD_LIB);
-        	System.out.println("Add Local File.");
+//            File libFolder = new File((String) parameters.get(PARAM_SDK_TOOLS_DIR),
+//                    SdkConstants.FD_LIB);
+            File libFolder = new File(Sdk.getCurrent().getSdkFileLocation(),
+                    SdkConstants.FD_TOOLS + File.separator + SdkConstants.FD_PROGUARD);
 
-            addLocalFile(project,
-                    new File(libFolder, SdkConstants.FN_PROJECT_PROGUARD_FILE),
-                    // Write ProGuard config files with the extension .pro which
-                    // is what is used in the ProGuard documentation and samples
-                    SdkConstants.FN_PROJECT_PROGUARD_FILE,
-                    monitor);
+//            addLocalFile(project,
+//                    new File(libFolder, SdkConstants.FN_PROJECT_PROGUARD_FILE),
+//                    // Write ProGuard config files with the extension .pro which
+//                    // is what is used in the ProGuard documentation and samples
+//                    SdkConstants.FN_PROJECT_PROGUARD_FILE,
+//                    monitor);
 
             // Set output location
             javaProject.setOutputLocation(project.getFolder(BIN_CLASSES_DIRECTORY).getFullPath(),

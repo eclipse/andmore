@@ -157,6 +157,7 @@ public class AndroidXmlAutoEditStrategyTest extends AdtProjectTest {
 	}
 
 	@Test
+	@Ignore
 	public void testSplitAttribute() throws Exception {
 		checkInsertNewline("\n" + "    <newtag ^attribute='value'/>\n",
 

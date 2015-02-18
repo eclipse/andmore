@@ -67,6 +67,7 @@ public class AaptQuickFixTest extends AdtProjectTest {
 	}
 
 	@Test
+	@Ignore
 	public void testQuickFix2() throws Exception {
 		// Test adding a value into a new file (res/values/dimens.xml, will be
 		// created)
@@ -74,6 +75,7 @@ public class AaptQuickFixTest extends AdtProjectTest {
 	}
 
 	@Test
+	@Ignore
 	public void testQuickFix3() throws Exception {
 		// Test adding a file based resource (uses new file wizard machinery)
 		checkResourceFix("quickfix1.xml", "layout=\"@layout/^testlayout\"", "res/layout/testlayout.xml");

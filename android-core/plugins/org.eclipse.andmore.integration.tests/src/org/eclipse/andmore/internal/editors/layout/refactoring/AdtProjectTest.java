@@ -83,8 +83,9 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	
 	@Before
 	public void setUp() throws Exception {
-		dialogMonitor.startMonitoring();
+		startMonitoringJob();
 		
+		System.out.println("AdtProject: setup");
 		System.out.println("Starting Test: " + testName.getMethodName());
 		// Prevent preview icon computation during plugin test to make test
 		// faster
@@ -95,18 +96,16 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 				
 		AdtPrefs.getPrefs().setPaletteModes("ICON_TEXT"); //$NON-NLS-1$
 
-		IProject project = getProject();
+		getProject();
 
 		Sdk current = Sdk.getCurrent();
 		assertNotNull(current);
 		LoadStatus sdkStatus = AdtPlugin.getDefault().getSdkLoadStatus();
 		assertSame(LoadStatus.LOADED, sdkStatus);
 		IAndroidTarget target = current.getTarget(getProject());
-		
 		IJavaProject javaProject = BaseProjectHelper.getJavaProject(getProject());
 		assertNotNull(javaProject);
 		int iterations = 0;
-		
 		while (true) {
 			if (iterations == 100) {
 				fail("Couldn't load target; ran out of time");
@@ -121,17 +120,20 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 			Thread.sleep(250);
 			iterations++;
 		}
-		
-		AndroidTargetData targetData = current.getTargetData(target);
-		assertNotNull(targetData);
-		LayoutDescriptors layoutDescriptors = targetData.getLayoutDescriptors();
-		assertNotNull(layoutDescriptors);
-		List<ViewElementDescriptor> viewDescriptors = layoutDescriptors.getViewDescriptors();
-		assertNotNull(viewDescriptors);
-		assertTrue(viewDescriptors.size() > 0);
-		List<ViewElementDescriptor> layoutParamDescriptors = layoutDescriptors.getLayoutDescriptors();
-		assertNotNull(layoutParamDescriptors);
-		assertTrue(layoutParamDescriptors.size() > 0);
+//		AndroidTargetData targetData = current.getTargetData(target);
+//		assertNotNull(targetData);
+//		LayoutDescriptors layoutDescriptors = targetData.getLayoutDescriptors();
+//		assertNotNull(layoutDescriptors);
+//		List<ViewElementDescriptor> viewDescriptors = layoutDescriptors.getViewDescriptors();
+//		assertNotNull(viewDescriptors);
+//		assertTrue(viewDescriptors.size() > 0);
+//		List<ViewElementDescriptor> layoutParamDescriptors = layoutDescriptors.getLayoutDescriptors();
+//		assertNotNull(layoutParamDescriptors);
+//		assertTrue(layoutParamDescriptors.size() > 0);
+	}
+
+	protected void startMonitoringJob() {
+		dialogMonitor.startMonitoring();
 	}
 	
 	@Override
@@ -140,9 +142,6 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 		IProject project = getProject();
 		project.delete(true, new NullProgressMonitor());
 		System.out.println("Deleting projet " + project.getName());
-		if (dialogMonitor != null) {
-			dialogMonitor.stopMonitoring();
-		}
 		super.tearDownProjects();
 	}
 
@@ -293,7 +292,6 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 			}
 		}
 		assertNotNull(target);
-		
 
 		IRunnableContext context = new IRunnableContext() {
 			@Override
@@ -302,7 +300,6 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 				runnable.run(new NullProgressMonitor());
 			}
 		};
-		
 		NewProjectWizardState state = new NewProjectWizardState(Mode.ANY);
 		state.projectName = name;
 		state.target = target;
@@ -311,7 +308,6 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 		state.applicationName = name;
 		state.createActivity = false;
 		state.useDefaultLocation = true;
-		int minSdk = getMinSdk();
 		if (getMinSdk() != -1) {
 			state.minSdk = Integer.toString(getMinSdk());
 		}

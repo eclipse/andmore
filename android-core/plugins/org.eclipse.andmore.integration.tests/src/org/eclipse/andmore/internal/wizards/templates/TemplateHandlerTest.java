@@ -98,6 +98,7 @@ import java.util.Set;
  * multiple instances of the templates (to look for resource conflicts)
  */
 @SuppressWarnings("javadoc")
+@Ignore("Causing garbage collection issues in JVM.")
 public class TemplateHandlerTest extends SdkLoadingTestCase {
 	/**
 	 * Flag used to quickly check each template once (for one version), to get

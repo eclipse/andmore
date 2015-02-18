@@ -67,7 +67,7 @@ public abstract class SdkLoadingTestCase extends SdkTestCase {
 		if (adt == null) {
 			return null;
 		}
-		
+
 		// We'll never break out of the SDK load-wait-loop if the AdtPlugin
 		// doesn't
 		// actually have a valid SDK location because it won't have started an
@@ -77,18 +77,16 @@ public abstract class SdkLoadingTestCase extends SdkTestCase {
 		if (sdkLocation == null || sdkLocation.length() == 0) {
 			sdkLocation = System.getenv("ADT_TEST_SDK_PATH");
 		}
-		System.out.println("sdkLocation: " + sdkLocation);
-		AdtPrefs.getPrefs().setSdkLocation(new File(sdkLocation));
-
 		assertTrue("No valid SDK installation is set; for tests you typically need to set the"
 				+ " environment variable ADT_TEST_SDK_PATH to point to an SDK folder", sdkLocation != null
 				&& sdkLocation.length() > 0);
+		AdtPrefs.getPrefs().setSdkLocation(new File(sdkLocation));
 
 		Object sdkLock = Sdk.getLock();
 		LoadStatus loadStatus = LoadStatus.LOADING;
 		// wait for ADT to load the SDK on a separate thread
 		// loop max of 600 times * 200 ms = 2 minutes
-		final int maxWait = 50;
+		final int maxWait = 600;
 		for (int i = 0; i < maxWait && loadStatus == LoadStatus.LOADING; i++) {
 			try {
 				Thread.sleep(200);
@@ -104,9 +102,13 @@ public abstract class SdkLoadingTestCase extends SdkTestCase {
 			assertEquals(LoadStatus.LOADED, loadStatus);
 			sdk = Sdk.getCurrent();
 		}
+		
+		if (sdk.getTargets().length == 0) {
+			System.out.println("Did not find any valid targets. Reloading SDK from " + sdkLocation);
+			sdk = Sdk.loadSdk(sdkLocation);
+		}
 		assertNotNull(sdk);
-		return sdk;
-	}
+		return sdk;	}
 
 	protected boolean validateSdk(IAndroidTarget target) {
 		return true;
