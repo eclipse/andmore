@@ -54,12 +54,11 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 @SuppressWarnings("javadoc")
-@Ignore
 public class AndroidContentAssistTest extends AdtProjectTest {
 	private static final String CARET = "^"; //$NON-NLS-1$
 
 	@Override
-	protected boolean testCaseNeedsUniqueProject() {
+	protected boolean testNeedsUniqueProject() {
 		return true;
 	}
 
@@ -177,6 +176,7 @@ public class AndroidContentAssistTest extends AdtProjectTest {
 	}
 
 	@Test
+	@Ignore
 	public void testCompletion10() throws Exception {
 		// Test completion of element names
 		checkLayoutCompletion("completion1.xml", "<T^extView");
@@ -199,6 +199,7 @@ public class AndroidContentAssistTest extends AdtProjectTest {
 	}
 
 	@Test
+	@Ignore("Dialog")
 	public void testCompletion13a() throws Exception {
 		checkLayoutCompletion("completion2.xml", "gravity=\"left|bottom|^cen");
 	}
@@ -562,12 +563,14 @@ public class AndroidContentAssistTest extends AdtProjectTest {
 	}
 
 	@Test
+	@Ignore
 	public void testCompletion71() throws Exception {
 		checkResourceCompletion("completionvalues2.xml",
 				"<item name=\"main_layout5\" type=\"string\">@string/^app_name</item>");
 	}
 
 	@Test
+	@Ignore
 	public void testCompletion72() throws Exception {
 		// Test completion of theme attributes
 		checkLayoutCompletion("completion11.xml", "?^android:attr/Textapp");

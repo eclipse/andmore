@@ -33,9 +33,8 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
-@Ignore
 public class AaptParserTest extends AdtProjectTest {
-
+	
 	@Test
 	public void testBasic() throws Exception {
 		// Test the "at 'property' with value 'value' range matching included
@@ -70,6 +69,7 @@ public class AaptParserTest extends AdtProjectTest {
 	}
 
 	@Test
+	@Ignore
 	public void testRange3() throws Exception {
 		// Check that when we have a duplicate resource error, we highlight both
 		// the original

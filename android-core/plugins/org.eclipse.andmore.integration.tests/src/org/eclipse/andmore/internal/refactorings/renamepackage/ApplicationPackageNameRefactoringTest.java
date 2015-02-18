@@ -28,8 +28,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 @SuppressWarnings("javadoc")
-@Ignore
 public class ApplicationPackageNameRefactoringTest extends RefactoringTestBase {
+
 	@Test
 	public void testRefactor1() throws Exception {
 		renamePackage(TEST_PROJECT, "my.pkg.name",

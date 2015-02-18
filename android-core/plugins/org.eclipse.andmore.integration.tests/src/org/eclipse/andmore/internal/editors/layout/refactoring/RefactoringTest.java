@@ -58,7 +58,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("restriction")
-@Ignore
 public abstract class RefactoringTest extends AdtProjectTest {
 
 	protected boolean autoFormat() {

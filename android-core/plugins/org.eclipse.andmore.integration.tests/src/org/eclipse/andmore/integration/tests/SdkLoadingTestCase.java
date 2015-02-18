@@ -17,17 +17,23 @@ package org.eclipse.andmore.integration.tests;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
 import com.android.ide.common.sdk.LoadStatus;
 
 import org.eclipse.andmore.AdtPlugin;
+import org.eclipse.andmore.AdtPlugin.CheckSdkErrorHandler;
 import org.eclipse.andmore.internal.preferences.AdtPrefs;
 import org.eclipse.andmore.internal.sdk.AndroidTargetParser;
 import org.eclipse.andmore.internal.sdk.Sdk;
 
 import com.android.sdklib.IAndroidTarget;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.After;
+import org.junit.BeforeClass;
 
 /**
  * A test case which uses the SDK loaded by the ADT plugin.
@@ -35,14 +41,13 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 public abstract class SdkLoadingTestCase extends SdkTestCase {
 
 	private Sdk mSdk;
-
-	protected SdkLoadingTestCase() {
-	}
+		
 
 	/**
 	 * Retrieve the {@link Sdk} under test.
 	 */
 	protected Sdk getSdk() {
+		System.out.println("getSdk");
 		if (mSdk == null) {
 			mSdk = loadSdk();
 			assertNotNull(mSdk);
@@ -75,6 +80,7 @@ public abstract class SdkLoadingTestCase extends SdkTestCase {
 		assertTrue("No valid SDK installation is set; for tests you typically need to set the"
 				+ " environment variable ADT_TEST_SDK_PATH to point to an SDK folder", sdkLocation != null
 				&& sdkLocation.length() > 0);
+		AdtPrefs.getPrefs().setSdkLocation(new File(sdkLocation));
 
 		Object sdkLock = Sdk.getLock();
 		LoadStatus loadStatus = LoadStatus.LOADING;
@@ -96,9 +102,13 @@ public abstract class SdkLoadingTestCase extends SdkTestCase {
 			assertEquals(LoadStatus.LOADED, loadStatus);
 			sdk = Sdk.getCurrent();
 		}
+		
+		if (sdk.getTargets().length == 0) {
+			System.out.println("Did not find any valid targets. Reloading SDK from " + sdkLocation);
+			sdk = Sdk.loadSdk(sdkLocation);
+		}
 		assertNotNull(sdk);
-		return sdk;
-	}
+		return sdk;	}
 
 	protected boolean validateSdk(IAndroidTarget target) {
 		return true;

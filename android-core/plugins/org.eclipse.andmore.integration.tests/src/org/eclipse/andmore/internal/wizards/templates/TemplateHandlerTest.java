@@ -72,6 +72,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.CompositeChange;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -97,7 +98,7 @@ import java.util.Set;
  * multiple instances of the templates (to look for resource conflicts)
  */
 @SuppressWarnings("javadoc")
-@Ignore
+@Ignore("Causing garbage collection issues in JVM.")
 public class TemplateHandlerTest extends SdkLoadingTestCase {
 	/**
 	 * Flag used to quickly check each template once (for one version), to get
@@ -129,6 +130,13 @@ public class TemplateHandlerTest extends SdkLoadingTestCase {
 	@Before
 	public void setUp() throws Exception {
 		mApiSensitiveTemplate = true;
+	}
+	
+	@After
+	public void deleteProjects() throws Exception {
+		if (project != null) {
+			project.delete(true, true, new NullProgressMonitor());
+		}
 	}
 
 	/**
@@ -245,6 +253,7 @@ public class TemplateHandlerTest extends SdkLoadingTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void testCreateRemainingTemplates() throws Exception {
 		sCount = 0;
 		long begin = System.currentTimeMillis();
@@ -667,6 +676,8 @@ public class TemplateHandlerTest extends SdkLoadingTestCase {
 		}
 	}
 
+	IProject project;
+	
 	private void checkProject(@NonNull NewProjectWizardState projectValues,
 			@Nullable NewTemplateWizardState templateValues) throws Exception {
 		NewTemplateWizardState values = projectValues.createActivity ? projectValues.activityValues : templateValues;
@@ -687,7 +698,7 @@ public class TemplateHandlerTest extends SdkLoadingTestCase {
 		projectValues.projectLocation = projectLocation;
 
 		// Create project with the given parameter map
-		final IProject project = createProject(projectValues);
+		project = createProject(projectValues);
 		assertNotNull(project);
 
 		if (templateValues != null) {

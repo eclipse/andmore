@@ -35,10 +35,10 @@ import org.junit.Test;
  * TODO: Test renaming a DIFFERENT package than the application package!
  */
 @SuppressWarnings({ "javadoc", "restriction" })
-@Ignore
+@Ignore("Error Dialog when run as part of Test Suite.")
 public class AndroidPackageRenameParticipantTest extends RefactoringTestBase {
+
 	@Test
-	@Ignore
 	public void testRefactor1() throws Exception {
 		renamePackage(TEST_PROJECT, false /* renameSubpackages */, true /* updateReferences */, "my.pkg.name",
 

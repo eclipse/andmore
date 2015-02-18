@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 
 import com.android.ide.common.xml.XmlFormatPreferences;
 
-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+import static org.eclipse.andmore.test.utils.XMLAssert.assertXMLEqual;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -28,7 +28,6 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.ReplaceEdit;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 

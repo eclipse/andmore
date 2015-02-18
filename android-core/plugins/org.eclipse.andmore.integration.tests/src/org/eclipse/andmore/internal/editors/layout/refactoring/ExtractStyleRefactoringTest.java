@@ -47,10 +47,6 @@ import java.util.Set;
 
 @Ignore
 public class ExtractStyleRefactoringTest extends RefactoringTest {
-	@Override
-	protected boolean testCaseNeedsUniqueProject() {
-		return true;
-	}
 
 	@Test
 	public void testExtract1() throws Exception {
@@ -81,6 +77,7 @@ public class ExtractStyleRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore("Dialog screen pops up")
 	public void testExtract2() throws Exception {
 		getTestDataFile(getProject(), "navigationstyles.xml", "res/values/navigationstyles.xml");
 
@@ -100,6 +97,7 @@ public class ExtractStyleRefactoringTest extends RefactoringTest {
 	// manually)
 	// but the DOM model returns null when run in a test context.
 	@Test
+	@Ignore
 	public void testExtract4() throws Exception {
 		// Test extracting on a single caret position over an attribute: Should
 		// extract
@@ -109,6 +107,7 @@ public class ExtractStyleRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore
 	public void testExtract5() throws Exception {
 		// Test extracting on a range selection inside an element: should
 		// extract just
@@ -127,6 +126,7 @@ public class ExtractStyleRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore
 	public void testExtract7() throws Exception {
 		// Verify that even with a different namespace prefix we end up with
 		// android:

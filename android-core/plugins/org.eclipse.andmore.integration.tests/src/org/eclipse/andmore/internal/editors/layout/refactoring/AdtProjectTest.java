@@ -24,6 +24,7 @@ import com.android.ide.common.sdk.LoadStatus;
 
 import org.eclipse.andmore.AdtPlugin;
 import org.eclipse.andmore.AdtUtils;
+import org.eclipse.andmore.integration.tests.DialogMonitor;
 import org.eclipse.andmore.integration.tests.SdkLoadingTestCase;
 import org.eclipse.andmore.internal.editors.common.CommonXmlEditor;
 import org.eclipse.andmore.internal.editors.descriptors.AttributeDescriptor;
@@ -59,6 +60,7 @@ import org.eclipse.wst.sse.core.StructuredModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.IModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.core.internal.provisional.text.IStructuredDocument;
+import org.junit.After;
 import org.junit.Before;
 
 import java.io.ByteArrayInputStream;
@@ -75,33 +77,16 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	public static final String TEST_PROJECT_PACKAGE = "com.android.eclipse.tests"; //$NON-NLS-1$
 	private static final long TESTS_START_TIME = System.currentTimeMillis();
 	private static final String PROJECTNAME_PREFIX = "testproject-";
-
-	/**
-	 * We don't stash the project used by each test case as a field such that
-	 * test cases can share a single project instance (which is typically much
-	 * faster). However, see {@link #getProjectName()} for exceptions to this
-	 * sharing scheme.
-	 */
-	private static Map<String, IProject> sProjectMap = new HashMap<String, IProject>();
-
-	@Override
-	protected String getTestDataRelPath() {
-		return "eclipse/plugins/org.eclipse.andmore.integration.tests/src/org/eclipse/andmore/"
-				+ "internal/editors/layout/refactoring/testdata";
-	}
-
-	@Override
-	protected InputStream getTestResource(String relativePath, boolean expectExists) {
-		String path = "testdata" + File.separator + relativePath; //$NON-NLS-1$
-		InputStream stream = AdtProjectTest.class.getResourceAsStream(path);
-		if (!expectExists && stream == null) {
-			return null;
-		}
-		return stream;
-	}
-
+	
+	DialogMonitor dialogMonitor = new DialogMonitor();
+	
+	
 	@Before
 	public void setUp() throws Exception {
+		startMonitoringJob();
+		
+		System.out.println("AdtProject: setup");
+		System.out.println("Starting Test: " + testName.getMethodName());
 		// Prevent preview icon computation during plugin test to make test
 		// faster
 		
@@ -135,36 +120,61 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 			Thread.sleep(250);
 			iterations++;
 		}
-		AndroidTargetData targetData = current.getTargetData(target);
-		assertNotNull(targetData);
-		LayoutDescriptors layoutDescriptors = targetData.getLayoutDescriptors();
-		assertNotNull(layoutDescriptors);
-		List<ViewElementDescriptor> viewDescriptors = layoutDescriptors.getViewDescriptors();
-		assertNotNull(viewDescriptors);
-		assertTrue(viewDescriptors.size() > 0);
-		List<ViewElementDescriptor> layoutParamDescriptors = layoutDescriptors.getLayoutDescriptors();
-		assertNotNull(layoutParamDescriptors);
-		assertTrue(layoutParamDescriptors.size() > 0);
+//		AndroidTargetData targetData = current.getTargetData(target);
+//		assertNotNull(targetData);
+//		LayoutDescriptors layoutDescriptors = targetData.getLayoutDescriptors();
+//		assertNotNull(layoutDescriptors);
+//		List<ViewElementDescriptor> viewDescriptors = layoutDescriptors.getViewDescriptors();
+//		assertNotNull(viewDescriptors);
+//		assertTrue(viewDescriptors.size() > 0);
+//		List<ViewElementDescriptor> layoutParamDescriptors = layoutDescriptors.getLayoutDescriptors();
+//		assertNotNull(layoutParamDescriptors);
+//		assertTrue(layoutParamDescriptors.size() > 0);
+	}
+
+	protected void startMonitoringJob() {
+		dialogMonitor.startMonitoring();
+	}
+	
+	@Override
+	@After
+	public void tearDownProjects() throws Exception {
+		IProject project = getProject();
+		project.delete(true, new NullProgressMonitor());
+		System.out.println("Deleting projet " + project.getName());
+		super.tearDownProjects();
 	}
 
 	/**
-	 * Set to true if the subclass test case should use a per-instance project
-	 * rather than a shared project. This is needed by projects which modify the
-	 * project in such a way that it affects what other tests see (for example,
-	 * the quickfix resource creation tests will add in new resources, which the
-	 * code completion tests will then list as possible matches if the code
-	 * completion test is run after the quickfix test.)
-	 * 
-	 * @return true to create a per-instance project instead of the default
-	 *         shared project
+	 * We don't stash the project used by each test case as a field such that
+	 * test cases can share a single project instance (which is typically much
+	 * faster). However, see {@link #getProjectName()} for exceptions to this
+	 * sharing scheme.
 	 */
-	protected boolean testCaseNeedsUniqueProject() {
-		return false;
+	private static Map<String, IProject> sProjectMap = new HashMap<String, IProject>();
+
+
+	@Override
+	protected String getTestDataRelPath() {
+		return "eclipse/plugins/org.eclipse.andmore.integration.tests/src/org/eclipse/andmore/"
+				+ "internal/editors/layout/refactoring/testdata";
 	}
 
-	protected boolean testNeedsUniqueProject() {
-		return false;
+	@Override
+	protected InputStream getTestResource(String relativePath, boolean expectExists) {
+		String path = "testdata" + File.separator + relativePath; //$NON-NLS-1$
+		InputStream stream = AdtProjectTest.class.getResourceAsStream(path);
+		if (!expectExists && stream == null) {
+			return null;
+		}
+		return stream;
 	}
+
+
+	protected boolean testNeedsUniqueProject() {
+		return true;
+	}
+	
 
 	@Override
 	protected boolean validateSdk(IAndroidTarget target) {
@@ -187,9 +197,7 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	 */
 	private String getProjectName() {
 		if (testNeedsUniqueProject()) {
-			return PROJECTNAME_PREFIX + getClass().getSimpleName() + "-" + name.getMethodName();
-		} else if (testCaseNeedsUniqueProject()) {
-			return PROJECTNAME_PREFIX + getClass().getSimpleName();
+			return PROJECTNAME_PREFIX + getClass().getSimpleName() + "-" + testName.getMethodName();
 		} else {
 			return PROJECTNAME_PREFIX + TESTS_START_TIME;
 		}
@@ -203,7 +211,7 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 			assertNotNull(project);
 			sProjectMap.put(projectName, project);
 		}
-		if (!testCaseNeedsUniqueProject() && !testNeedsUniqueProject()) {
+		if (!testNeedsUniqueProject()) {
 			addCleanupDir(AdtUtils.getAbsolutePath(project).toFile());
 		}
 		addCleanupDir(project.getFullPath().toFile());

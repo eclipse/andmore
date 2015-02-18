@@ -15,7 +15,10 @@
  */
 package org.eclipse.andmore.integration.tests;
 
-import static org.junit.Assert.*;
+import static org.eclipse.andmore.test.utils.XMLAssert.*;
+
+import org.custommonkey.xmlunit.*;
+import org.eclipse.andmore.AdtPlugin;
 
 import com.android.SdkConstants;
 import com.google.common.base.Charsets;
@@ -26,19 +29,26 @@ import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 import org.junit.rules.TestName;
-
-import junit.framework.TestCase;
+import org.xml.sax.SAXException;
 
 /**
  * Common test case for SDK unit tests. Contains a number of general utility
@@ -50,20 +60,43 @@ import junit.framework.TestCase;
 
 public abstract class SdkTestCase {
 	
-	@Rule public TestName name = new TestName();
+	@Rule
+	public TestName testName = new TestName();
+	
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder(); 
+	
 	
 	/** Update golden files if different from the actual results */
 	private static final boolean UPDATE_DIFFERENT_FILES = false;
 	/** Create golden files if missing */
 	private static final boolean UPDATE_MISSING_FILES = true;
-	private static File sTempDir = null;
-	protected static Set<File> sCleanDirs = Sets.newHashSet();
+	protected static List<File> sCleanDirs;
 
 	protected String getTestDataRelPath() {
 		fail("Must be overridden");
 		return null;
 	}
-
+	
+	@BeforeClass
+	public static void setupClass() {
+		sCleanDirs = new CopyOnWriteArrayList<File>();
+	}
+	
+	@AfterClass
+	public synchronized static void tearDown() {
+		for (File file : sCleanDirs) {
+			deleteFile(file);
+			
+			sCleanDirs.remove(file);
+		}
+	}
+	
+	@After
+	public void tearDownProjects() throws Exception {
+		System.out.println("Test Completed: " + testName.getMethodName());
+	}
+	
 	public static int getCaretOffset(String fileContent, String caretLocation) {
 		assertTrue(caretLocation, caretLocation.contains("^")); //$NON-NLS-1$
 		int caretDelta = caretLocation.indexOf("^"); //$NON-NLS-1$
@@ -138,27 +171,8 @@ public abstract class SdkTestCase {
 		return getTempDir();
 	}
 
-	public static File getTempDir() {
-		if (sTempDir == null) {
-			File base = new File(System.getProperty("java.io.tmpdir")); //$NON-NLS-1$
-			if (SdkConstants.CURRENT_PLATFORM == SdkConstants.PLATFORM_DARWIN) {
-				base = new File("/tmp"); //$NON-NLS-1$
-			}
-			// On Windows, we don't want to pollute the temp folder (which is
-			// generally
-			// already incredibly busy). So let's create a temp folder for the
-			// results.
-			Calendar c = Calendar.getInstance();
-			String name = String.format("sdkTests_%1$tF_%1$tT", c).replace(':', '-'); //$NON-NLS-1$
-			File tmpDir = new File(base, name);
-			if (!tmpDir.exists() && tmpDir.mkdir()) {
-				sTempDir = tmpDir;
-			} else {
-				sTempDir = base;
-			}
-			addCleanupDir(sTempDir);
-		}
-		return sTempDir;
+	public File getTempDir() {		
+		return temporaryFolder.getRoot();
 	}
 
 	protected String removeSessionData(String data) {
@@ -202,7 +216,7 @@ public abstract class SdkTestCase {
 	}
 
 	protected void assertEqualsGolden(String basename, String actual, String newExtension) throws IOException {
-		String testName = name.getMethodName();
+		String testName = this.testName.getMethodName();
 		if (testName.startsWith("test")) {
 			testName = testName.substring(4);
 			if (Character.isUpperCase(testName.charAt(0))) {
@@ -233,7 +247,19 @@ public abstract class SdkTestCase {
 					Files.write(actual, new File(getTargetDir(), expectedName), Charsets.UTF_8);
 				}
 				System.out.println("The files differ: diff " + expectedPath + " " + actualPath);
-				assertEquals("The files differ - see " + expectedPath + " versus " + actualPath, expected, actual);
+				Reader expectedReader = new InputStreamReader( new FileInputStream(expectedPath));
+				Reader actualReader = new InputStreamReader(new FileInputStream(actualPath));
+				
+				try {
+					XMLUnit.setIgnoreAttributeOrder(true);
+					XMLUnit.setIgnoreWhitespace(true);
+					assertXMLEqual(expectedReader, actualReader);
+				} catch (SAXException e) {
+					assertEquals("The files differ - see " + expectedPath + " versus " + actualPath, expected, actual);
+				} finally {
+					expectedReader.close();
+					actualReader.close();
+				}
 			}
 		}
 	}
@@ -320,7 +346,7 @@ public abstract class SdkTestCase {
 		return sb.toString();
 	}
 
-	protected void deleteFile(File dir) {
+	public static void deleteFile(File dir) {
 		if (dir.isDirectory()) {
 			for (File f : dir.listFiles()) {
 				deleteFile(f);
@@ -382,7 +408,7 @@ public abstract class SdkTestCase {
 		}
 		return makeTestFile(targetDir, name, relative, stream);
 	}
-
+ 
 	protected static void addCleanupDir(File dir) {
 		sCleanDirs.add(dir);
 		try {
@@ -393,33 +419,5 @@ public abstract class SdkTestCase {
 		sCleanDirs.add(dir.getAbsoluteFile());
 	}
 
-	protected String cleanup(String result) {
-		List<File> sorted = new ArrayList<File>(sCleanDirs);
-		// Process dirs in order such that we match longest substrings first
-		Collections.sort(sorted, new Comparator<File>() {
-			@Override
-			public int compare(File file1, File file2) {
-				String path1 = file1.getPath();
-				String path2 = file2.getPath();
-				int delta = path2.length() - path1.length();
-				if (delta != 0) {
-					return delta;
-				} else {
-					return path1.compareTo(path2);
-				}
-			}
-		});
-		for (File dir : sorted) {
-			if (result.contains(dir.getPath())) {
-				result = result.replace(dir.getPath(), "/TESTROOT");
-			}
-		}
-		// The output typically contains a few directory/filenames.
-		// On Windows we need to change the separators to the unix-style
-		// forward slash to make the test as OS-agnostic as possible.
-		if (File.separatorChar != '/') {
-			result = result.replace(File.separatorChar, '/');
-		}
-		return result;
-	}
+
 }

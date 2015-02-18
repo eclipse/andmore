@@ -64,6 +64,7 @@ public abstract class RefactoringTestBase extends AdtProjectTest {
 	@Before
 	public void setUp() throws Exception {
 		// Not calling super.setUp
+		super.startMonitoringJob();
 	}
 
 	protected void checkRefactoring(Refactoring refactoring, String expected, @Nullable String expectedWarnings)
@@ -107,7 +108,7 @@ public abstract class RefactoringTestBase extends AdtProjectTest {
 	}
 
 	protected IProject createProject(Object[] testData) throws Exception {
-		String name = super.name.getMethodName();
+		String name = super.testName.getMethodName();
 		IProject project = createProject(name);
 		mProject = project;
 		File projectDir = AdtUtils.getAbsolutePath(project).toFile();

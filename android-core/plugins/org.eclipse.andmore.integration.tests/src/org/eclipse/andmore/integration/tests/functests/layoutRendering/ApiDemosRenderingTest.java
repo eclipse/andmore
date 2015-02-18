@@ -81,6 +81,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+@Ignore
 public class ApiDemosRenderingTest extends SdkLoadingTestCase {
 
 	/**
@@ -179,7 +180,6 @@ public class ApiDemosRenderingTest extends SdkLoadingTestCase {
 	}
 
 	@Test
-	@Ignore
 	public void testApiDemos() throws IOException, XmlPullParserException {
 		findApiDemos();
 	}

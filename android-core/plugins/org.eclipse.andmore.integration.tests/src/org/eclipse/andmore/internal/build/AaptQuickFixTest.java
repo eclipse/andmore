@@ -53,24 +53,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-@Ignore
 public class AaptQuickFixTest extends AdtProjectTest {
+	
 	@Override
-	protected boolean testCaseNeedsUniqueProject() {
-		// Make a separate test project for this test such that we don't pollute
-		// code assist
-		// tests with our new resources
+	protected boolean testNeedsUniqueProject() {
 		return true;
 	}
 
 	@Test
-	@Ignore("XMLUnit")
 	public void testQuickFix1() throws Exception {
 		// Test adding a value into an existing file (res/values/strings.xml)
 		checkResourceFix("quickfix1.xml", "android:text=\"@string/firs^tstring\"", "res/values/strings.xml");
 	}
 
 	@Test
+	@Ignore
 	public void testQuickFix2() throws Exception {
 		// Test adding a value into a new file (res/values/dimens.xml, will be
 		// created)
@@ -78,7 +75,7 @@ public class AaptQuickFixTest extends AdtProjectTest {
 	}
 
 	@Test
-	@Ignore("XMLUnit")
+	@Ignore
 	public void testQuickFix3() throws Exception {
 		// Test adding a file based resource (uses new file wizard machinery)
 		checkResourceFix("quickfix1.xml", "layout=\"@layout/^testlayout\"", "res/layout/testlayout.xml");

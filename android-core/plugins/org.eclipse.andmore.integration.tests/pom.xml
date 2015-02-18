@@ -13,9 +13,9 @@
 		<artifactId>andmore-core-parent</artifactId>
 		<version>0.5.0-SNAPSHOT</version>
 	</parent>
-	
+
 	<properties>
-		<os-jvm-flags>-Xms256m -Xmx512m -XX:MaxPermSize=256M</os-jvm-flags>
+		<os-jvm-flags>-Xms256m -Xmx1024m -XX:MaxPermSize=256M</os-jvm-flags>
 	</properties>
 
 
@@ -114,7 +114,7 @@
 					<skipTests>false</skipTests>
 					<testFailureIgnore>true</testFailureIgnore>
 					<useUIHarness>true</useUIHarness>
-					<forkedProcessTimeoutInSeconds>120</forkedProcessTimeoutInSeconds>
+					<appArgLine>-debug -console</appArgLine>
 					<argLine>${os-jvm-flags} ${tycho.testArgLine}</argLine>
 					<dependency-resolution>
 						<extraRequirements>
@@ -125,6 +125,33 @@
 							</requirement>
 						</extraRequirements>
 					</dependency-resolution>
+					<dependencies>
+					    <dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.andmore</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.sdk.ide</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.wst.xml.ui</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.wst.xsd.ui</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.wst.wsdl.ui</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+					</dependencies>
 				</configuration>
 			</plugin>
 		</plugins>

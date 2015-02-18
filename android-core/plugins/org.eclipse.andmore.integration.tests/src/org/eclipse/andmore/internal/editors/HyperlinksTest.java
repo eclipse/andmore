@@ -50,12 +50,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 @SuppressWarnings({ "restriction", "javadoc" })
-@Ignore("SDK Location Failure")
+@Ignore
 public class HyperlinksTest extends AdtProjectTest {
-	@Override
-	protected boolean testCaseNeedsUniqueProject() {
-		return true;
-	}
 
 	@Test
 	public void testFqnRegexp() throws Exception {
@@ -97,6 +93,7 @@ public class HyperlinksTest extends AdtProjectTest {
 	}
 
 	@Test
+	@Ignore
 	public void testNavigate4() throws Exception {
 		// Check navigating to resource with many resolutions
 		checkXmlNavigation("navigation1.xml", "res/layout/navigation1.xml", "android:text=\"@android:st^ring/ok\"");
@@ -126,6 +123,7 @@ public class HyperlinksTest extends AdtProjectTest {
 	}
 
 	@Test
+	@Ignore
 	public void testNavigate8() throws Exception {
 		// Check navigating to a resource inside text content where there is
 		// space around

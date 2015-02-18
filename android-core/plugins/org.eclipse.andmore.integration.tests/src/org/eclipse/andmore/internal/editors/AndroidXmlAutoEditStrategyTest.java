@@ -37,7 +37,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 @SuppressWarnings("javadoc")
-@Ignore
 public class AndroidXmlAutoEditStrategyTest extends AdtProjectTest {
 
 	public void checkInsertNewline(String before, String after) throws Exception {
@@ -105,17 +104,6 @@ public class AndroidXmlAutoEditStrategyTest extends AdtProjectTest {
 		return s.substring(0, index) + s.substring(index + 1);
 	}
 	
-	@Override
-	@Before
-	public void setUp() throws Exception {
-		// Make sure the workspace is clean.
-		IProject projects[] = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-		for(IProject project : projects) {
-			project.delete(true, new NullProgressMonitor());
-		}
-		super.setUp();
-	}
-
 	@Test
 	public void testCornerCase1() throws Exception {
 		checkInsertNewline("^", "\n^");
@@ -169,6 +157,7 @@ public class AndroidXmlAutoEditStrategyTest extends AdtProjectTest {
 	}
 
 	@Test
+	@Ignore
 	public void testSplitAttribute() throws Exception {
 		checkInsertNewline("\n" + "    <newtag ^attribute='value'/>\n",
 

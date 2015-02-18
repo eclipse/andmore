@@ -65,13 +65,7 @@ public class ExportGradleTest extends AdtProjectTest {
 		mLastThrown = null;
 	}
 
-	@Override
-	protected boolean testCaseNeedsUniqueProject() {
-		return true;
-	}
-
 	@Test
-	@Ignore
 	public void testSimpleAndroidApp() throws Throwable {
 		IProject project = getProject("simple-app");
 		final IJavaProject javaProject = BaseProjectHelper.getJavaProject(project);
@@ -118,7 +112,6 @@ public class ExportGradleTest extends AdtProjectTest {
 	}
 
 	@Test
-	@Ignore
 	public void testSimpleAndroidLib() throws Throwable {
 		final IProject project = getProject("simple-library");
 		ProjectState projectState = Sdk.getProjectState(project.getProject());
@@ -174,7 +167,6 @@ public class ExportGradleTest extends AdtProjectTest {
 	}
 
 	@Test
-	@Ignore
 	public void testPlainJavaProject() throws Throwable {
 		IProject project = getJavaProject("simple-java");
 		final IJavaProject javaProject = BaseProjectHelper.getJavaProject(project);
@@ -212,7 +204,7 @@ public class ExportGradleTest extends AdtProjectTest {
 	protected IProject getProject(String projectName) {
 		IProject project = createProject(projectName);
 		assertNotNull(project);
-		if (!testCaseNeedsUniqueProject() && !testNeedsUniqueProject()) {
+		if (!testNeedsUniqueProject()) {
 			addCleanupDir(AdtUtils.getAbsolutePath(project).toFile());
 		}
 		addCleanupDir(project.getFullPath().toFile());
@@ -222,7 +214,7 @@ public class ExportGradleTest extends AdtProjectTest {
 	protected IProject getJavaProject(String projectName) {
 		IProject project = createJavaProject(projectName);
 		assertNotNull(project);
-		if (!testCaseNeedsUniqueProject() && !testNeedsUniqueProject()) {
+		if (!testNeedsUniqueProject()) {
 			addCleanupDir(AdtUtils.getAbsolutePath(project).toFile());
 		}
 		addCleanupDir(project.getFullPath().toFile());

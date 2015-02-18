@@ -30,8 +30,8 @@ import org.w3c.dom.Element;
 import java.util.List;
 
 @SuppressWarnings("javadoc")
-@Ignore
 public class UseCompoundDrawableRefactoringTest extends RefactoringTest {
+	
 	@Test
 	public void testCombine() throws Exception {
 		assertNull(combine(null, null));
@@ -51,30 +51,35 @@ public class UseCompoundDrawableRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore
 	public void test1() throws Exception {
 		// Test converting an image above a text view
 		checkRefactoring("refactoring/usecompound/compound1.xml", "@+id/layout1");
 	}
 
 	@Test
+	@Ignore
 	public void test2() throws Exception {
 		// Test converting an image below a text view
 		checkRefactoring("refactoring/usecompound/compound2.xml", "@+id/layout2");
 	}
 
 	@Test
+	@Ignore
 	public void test3() throws Exception {
 		// Test converting an image to the left of a text view
 		checkRefactoring("refactoring/usecompound/compound3.xml", "@+id/layout3");
 	}
 
 	@Test
+	@Ignore
 	public void test4() throws Exception {
 		// Test converting an image to the right of a text view
 		checkRefactoring("refactoring/usecompound/compound4.xml", "@+id/layout4");
 	}
 
 	@Test
+	@Ignore
 	public void test5() throws Exception {
 		// Test converting an image where the LinearLayout is referenced (in a
 		// relative layout)
@@ -83,6 +88,7 @@ public class UseCompoundDrawableRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore
 	public void test6() throws Exception {
 		// Test converting an image where the LinearLayout is referenced (in a
 		// relative layout)
@@ -91,18 +97,21 @@ public class UseCompoundDrawableRefactoringTest extends RefactoringTest {
 	}
 
 	@Test
+	@Ignore
 	public void test7() throws Exception {
 		// Test converting where a namespace needs to be migrated
 		checkRefactoring("refactoring/usecompound/compound5.xml", "@+id/layout");
 	}
 
 	@Test
+	@Ignore
 	public void test8() throws Exception {
 		// Test padding handling
 		checkRefactoring("refactoring/usecompound/compound6.xml", "@+id/layout1");
 	}
 
 	@Test
+	@Ignore
 	public void test9() throws Exception {
 		// Test margin combination
 		checkRefactoring("refactoring/usecompound/compound7.xml", "@+id/layout1");

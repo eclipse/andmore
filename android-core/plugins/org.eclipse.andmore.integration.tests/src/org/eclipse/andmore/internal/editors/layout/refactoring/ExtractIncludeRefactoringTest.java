@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Ignore
 public class ExtractIncludeRefactoringTest extends RefactoringTest {
 
 	@Override
@@ -43,12 +42,6 @@ public class ExtractIncludeRefactoringTest extends RefactoringTest {
 		return false;
 	}
 
-	@Override
-	protected boolean testCaseNeedsUniqueProject() {
-		// Because some of these tests look at ALL layouts in the project
-		// to identify matches
-		return true;
-	}
 
 	@Test
 	public void testExtract1() throws Exception {

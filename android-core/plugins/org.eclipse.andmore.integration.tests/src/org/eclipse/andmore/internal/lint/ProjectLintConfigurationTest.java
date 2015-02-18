@@ -39,7 +39,6 @@ import org.junit.Test;
 import java.io.File;
 
 @SuppressWarnings("javadoc")
-@Ignore
 public class ProjectLintConfigurationTest extends AdtProjectTest {
 
 	@Test
@@ -192,7 +191,7 @@ public class ProjectLintConfigurationTest extends AdtProjectTest {
 
 	@Override
 	protected File getTargetDir() {
-		File targetDir = new File(getTempDir(), getClass().getSimpleName() + "_" + name.getMethodName());
+		File targetDir = new File(getTempDir(), getClass().getSimpleName() + "_" + testName.getMethodName());
 		addCleanupDir(targetDir);
 		return targetDir;
 	}
