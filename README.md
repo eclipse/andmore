@@ -1,7 +1,3 @@
-# Andmore Logo
-
-*The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License.*
-
 # Contributing
 
 [Andmore](https://www.eclipse.org/andmore) is a fork of the former MOTODEV Studio and Android Development Tools plugins for eclipse.
@@ -99,4 +95,8 @@ There is a project set that can be imported as an alternative to using Maven. Th
 is in android-core/plugins/org.eclipse.andmore/projectSet.psf.  The project set file is
 not guaranteed to be always updated, so if dependency issues arise, use the Maven import.
 
+
+## Andmore Logo
+
+*The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License.*
 
