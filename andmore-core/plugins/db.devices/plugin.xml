@@ -126,7 +126,7 @@
    <extension
        point="org.eclipse.ui.preferencePages">
            <page
-               category="org.eclipse.andmore.platform.ui.preference"
+               category="org.eclipse.andmore.preferences.main"
                class="org.eclipse.andmore.android.db.devices.ui.preferences.DbPreferencePage"
                id="org.eclipse.andmore.android.db.preferencepage"
                name="%preferencePageName">

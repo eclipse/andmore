@@ -115,30 +115,31 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<profiles>
 		<profile>
-		     <id>findbugs</id>
-		     <build>
-		     	<plugins>
-		     		<plugin>
-				       <groupId>org.codehaus.mojo</groupId>
-				       <artifactId>findbugs-maven-plugin</artifactId>
-				       <version>3.0.0</version>
-				       <configuration>
-						<findbugsXmlOutput>true</findbugsXmlOutput>
-						<failOnError>false</failOnError>
-					    </configuration>
-					 <executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		     	</plugins>
-		     </build>
+			<id>findbugs</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>findbugs-maven-plugin</artifactId>
+						<version>3.0.0</version>
+						<configuration>
+							<findbugsXmlOutput>true</findbugsXmlOutput>
+							<failOnError>false</failOnError>
+							<excludeFilterFile>findbugsExclusion.xml</excludeFilterFile>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 </project>

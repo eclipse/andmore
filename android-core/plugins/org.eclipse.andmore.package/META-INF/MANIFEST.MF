@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.andmore.package;singleton:=true
 Bundle-Version: 0.5.0.qualifier
-Bundle-Vendor: %providerName
+Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Eclipse-BundleShape: dir
 Require-Bundle: org.eclipse.platform,

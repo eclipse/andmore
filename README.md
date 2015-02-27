@@ -1,3 +1,7 @@
+# Andmore Logo
+
+*The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License.*
+
 # Contributing
 
 [Andmore](https://www.eclipse.org/andmore) is a fork of the former MOTODEV Studio and Android Development Tools plugins for eclipse.
@@ -86,8 +90,8 @@ SDK is installed.  Java 1.7 or 1.8 are supported.
 1. When the projects are imported, there will be some errors. Ignore them for now.
 1. Choose _Preferences>Plug-in Development>Target Platform_
 1. Choose the target that ends with andmore.target. If there are other Andmore targets with different names, ignore them.
-1. There will be some sub-projects that do not need to be in the workspace and they may have compile errors because they are for a different OS than you are using. It is alright to close them for now.
-1. Create a run configuration. You will probably need to add *-XX:MaxPermSize=256m* or higher.
+1. There will be some sub-projects that do not need to be in the workspace. They will have compile errors because they are for a different OS than you are using. It is alright to close them in Eclipse, but don't delete them from the filesystem as the Maven build compiles them properly.
+1. Create a run configuration. You will probably need to add *-XX:MaxPermSize=256m* or higher to the VM Arguments setting on the Arguments tab.
 
 ## Project set
 

@@ -5,7 +5,7 @@
    <extension 
          point="org.eclipse.ui.preferencePages">
        <page
-             category="org.eclipse.andmore.platform.ui.preference"
+             category="org.eclipse.andmore.preferences.main"
              class="org.eclipse.andmore.android.localization.translators.preferences.ui.TranslationPreferencePage"
              id="org.eclipse.andmore.android.localization.translators.preferencepage"
              name="%preferencePageName">
