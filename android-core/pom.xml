@@ -21,6 +21,7 @@
 
     <modules>
         <module>plugins/org.eclipse.andmore.base</module>
+        <module>plugins/org.eclipse.andmore.ddmsuilib</module>
         <module>plugins/org.eclipse.andmore.ddms</module>
         <module>plugins/org.eclipse.andmore.gldebugger</module>
         <module>plugins/org.eclipse.andmore.hierarchyviewer</module>
