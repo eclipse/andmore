@@ -23,6 +23,7 @@ import com.android.ddmlib.Log;
 import com.android.ddmlib.ShellCommandUnresponsiveException;
 import com.android.ddmlib.TimeoutException;
 
+import org.eclipse.andmore.charts.piechart.PieChart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -35,10 +36,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.experimental.chart.swt.ChartComposite;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -47,6 +44,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+// PieChart implementation using SWTChart
+// https://eclipse.googlesource.com/linuxtools/org.eclipse.linuxtools/+/f6cf0d213bc791ca45b2e3b8f0c6c4d01375177f/profiling/org.eclipse.linuxtools.dataviewers.piechart/src/org/eclipse/linuxtools/dataviewers/piechart/PieChart.java
+	
 
 /**
  * Displays system information graphs obtained from a bugreport file or device.
@@ -57,8 +58,7 @@ public class SysinfoPanel extends TablePanel implements IShellOutputReceiver {
     private Label mLabel;
     private Button mFetchButton;
     private Combo mDisplayMode;
-
-    private DefaultPieDataset mDataset;
+    private PieChart pieChart;
 
     // The bugreport file to process
     private File mDataFile;
@@ -92,7 +92,7 @@ public class SysinfoPanel extends TablePanel implements IShellOutputReceiver {
      * @param file The bugreport file to process.
      */
     public void generateDataset(File file) {
-        mDataset.clear();
+        //mDataset.clear();
         mLabel.setText("");
         if (file == null) {
             return;
@@ -281,27 +281,27 @@ public class SysinfoPanel extends TablePanel implements IShellOutputReceiver {
         mLabel = new Label(top, SWT.NONE);
         mLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        mDataset = new DefaultPieDataset();
-        JFreeChart chart = ChartFactory.createPieChart("", mDataset, false
-                /* legend */, true/* tooltips */, false /* urls */);
+//        mDataset = new DefaultPieDataset();
+        pieChart = new PieChart(top, SWT.BORDER);
+        
 
-        ChartComposite chartComposite = new ChartComposite(top,
-                SWT.BORDER, chart,
-                ChartComposite.DEFAULT_HEIGHT,
-                ChartComposite.DEFAULT_HEIGHT,
-                ChartComposite.DEFAULT_MINIMUM_DRAW_WIDTH,
-                ChartComposite.DEFAULT_MINIMUM_DRAW_HEIGHT,
-                3000,
-                // max draw width. We don't want it to zoom, so we put a big number
-                3000,
-                // max draw height. We don't want it to zoom, so we put a big number
-                true,  // off-screen buffer
-                true,  // properties
-                true,  // save
-                true,  // print
-                false,  // zoom
-                true);
-        chartComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+//        ChartComposite chartComposite = new ChartComposite(top,
+//                SWT.BORDER, chart,
+//                ChartComposite.DEFAULT_HEIGHT,
+//                ChartComposite.DEFAULT_HEIGHT,
+//                ChartComposite.DEFAULT_MINIMUM_DRAW_WIDTH,
+//                ChartComposite.DEFAULT_MINIMUM_DRAW_HEIGHT,
+//                3000,
+//                // max draw width. We don't want it to zoom, so we put a big number
+//                3000,
+//                // max draw height. We don't want it to zoom, so we put a big number
+//                true,  // off-screen buffer
+//                true,  // properties
+//                true,  // save
+//                true,  // print
+//                false,  // zoom
+//                true);
+        pieChart.setLayoutData(new GridData(GridData.FILL_BOTH));
         return top;
     }
 
@@ -393,7 +393,7 @@ public class SysinfoPanel extends TablePanel implements IShellOutputReceiver {
                 Matcher m = lockPattern.matcher(line);
                 if (m.find()) {
                     double value = parseTimeMs(m.group(2)) / 1000.;
-                    mDataset.setValue(m.group(1), value);
+//                    mDataset.setValue(m.group(1), value);
                     total -= value;
                 } else {
                     m = totalPattern.matcher(line);
@@ -404,7 +404,7 @@ public class SysinfoPanel extends TablePanel implements IShellOutputReceiver {
             }
         }
         if (total > 0) {
-            mDataset.setValue("Unlocked", total);
+//            mDataset.setValue("Unlocked", total);
         }
     }
 
@@ -429,7 +429,7 @@ public class SysinfoPanel extends TablePanel implements IShellOutputReceiver {
             if (m.find()) {
                 long count = Long.parseLong(m.group(1));
                 String name = m.group(2);
-                mDataset.setValue(name, count);
+//                mDataset.setValue(name, count);
             }
         }
     }
@@ -463,20 +463,20 @@ public class SysinfoPanel extends TablePanel implements IShellOutputReceiver {
                 long kernel = Long.parseLong(m.group(4));
                 if ("TOTAL".equals(name)) {
                     if (both < 100) {
-                        mDataset.setValue("Idle", (100 - both));
+//                        mDataset.setValue("Idle", (100 - both));
                     }
                 } else {
                     // Try to make graphs more useful even with rounding;
                     // log often has 0% user + 0% kernel = 1% total
                     // We arbitrarily give extra to kernel
                     if (user > 0) {
-                        mDataset.setValue(name + " (user)", user);
+//                        mDataset.setValue(name + " (user)", user);
                     }
                     if (kernel > 0) {
-                        mDataset.setValue(name + " (kernel)" , both - user);
+//                        mDataset.setValue(name + " (kernel)" , both - user);
                     }
                     if (user == 0 && kernel == 0 && both > 0) {
-                        mDataset.setValue(name, both);
+//                        mDataset.setValue(name, both);
                     }
                 }
             }
@@ -509,22 +509,22 @@ public class SysinfoPanel extends TablePanel implements IShellOutputReceiver {
                 if (line.startsWith("MemTotal")) {
                     total = kb;
                 } else if (line.startsWith("MemFree")) {
-                    mDataset.setValue("Free", kb);
+//                    mDataset.setValue("Free", kb);
                     total -= kb;
                 } else if (line.startsWith("Slab")) {
-                    mDataset.setValue("Slab", kb);
+//                    mDataset.setValue("Slab", kb);
                     total -= kb;
                 } else if (line.startsWith("PageTables")) {
-                    mDataset.setValue("PageTables", kb);
+//                   mDataset.setValue("PageTables", kb);
                     total -= kb;
                 } else if (line.startsWith("Buffers") && kb > 0) {
-                    mDataset.setValue("Buffers", kb);
+//                    mDataset.setValue("Buffers", kb);
                     total -= kb;
                 } else if (line.startsWith("Inactive")) {
-                    mDataset.setValue("Inactive", kb);
+//                    mDataset.setValue("Inactive", kb);
                     total -= kb;
                 } else if (line.startsWith("MemFree")) {
-                    mDataset.setValue("Free", kb);
+//                    mDataset.setValue("Free", kb);
                     total -= kb;
                 }
             } else {
@@ -550,14 +550,14 @@ public class SysinfoPanel extends TablePanel implements IShellOutputReceiver {
             String cmdline = line.substring(43).trim().replace("/system/bin/", "");
             // Arbitrary minimum size to display
             if (pss > 2000) {
-                mDataset.setValue(cmdline, pss);
+//                mDataset.setValue(cmdline, pss);
             } else {
                 other += pss;
             }
             total -= pss;
         }
-        mDataset.setValue("Other", other);
-        mDataset.setValue("Unknown", total);
+//        mDataset.setValue("Other", other);
+//        mDataset.setValue("Unknown", total);
     }
 
     /**
@@ -582,12 +582,12 @@ public class SysinfoPanel extends TablePanel implements IShellOutputReceiver {
                 if (durParts.length == 2) {
                     long dur = Long.parseLong(durParts[0]) * 60 + Long
                             .parseLong(durParts[1]);
-                    mDataset.setValue(authority, dur);
+//                    mDataset.setValue(authority, dur);
                 } else if (duration.length() == 3) {
                     long dur = Long.parseLong(durParts[0]) * 3600
                             + Long.parseLong(durParts[1]) * 60 + Long
                             .parseLong(durParts[2]);
-                    mDataset.setValue(authority, dur);
+//                    mDataset.setValue(authority, dur);
                 }
             }
         }

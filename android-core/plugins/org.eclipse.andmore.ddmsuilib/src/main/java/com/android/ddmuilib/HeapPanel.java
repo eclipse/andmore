@@ -49,20 +49,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.CategoryLabelPositions;
-import org.jfree.chart.labels.CategoryToolTipGenerator;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.CategoryItemRenderer;
-import org.jfree.chart.title.TextTitle;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.experimental.chart.swt.ChartComposite;
-import org.jfree.experimental.swt.SWTUtils;
+import org.swtchart.Chart;
+import org.swtchart.IBarSeries;
+import org.swtchart.ISeries.SeriesType;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -133,10 +122,8 @@ public final class HeapPanel extends BaseHeapPanel {
 
     private Composite mStatisticsBase;
     private Table mStatisticsTable;
-    private JFreeChart mChart;
-    private ChartComposite mChartComposite;
+    private Chart mChart;
     private Button mGcButton;
-    private DefaultCategoryDataset mAllocCountDataSet;
 
     private Composite mLinearBase;
     private Label mLinearHeapImage;
@@ -370,7 +357,7 @@ public final class HeapPanel extends BaseHeapPanel {
         mStatisticsTable = createDetailedTable(mStatisticsBase);
         mStatisticsTable.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-        createChart();
+        createChart(mStatisticsBase);
 
         //create the linear composite
         mLinearBase = new Composite(mDisplayBase, SWT.NONE);
@@ -600,63 +587,72 @@ public final class HeapPanel extends BaseHeapPanel {
     /**
      * Creates the chart below the statistics table
      */
-    private void createChart() {
-        mAllocCountDataSet = new DefaultCategoryDataset();
-        mChart = ChartFactory.createBarChart(null, "Size", "Count", mAllocCountDataSet,
-                PlotOrientation.VERTICAL, false, true, false);
+    private void createChart(Composite parent) {
+    	mChart = new Chart(parent, SWT.NONE);
+    	
+//        mAllocCountDataSet = new DefaultCategoryDataset();
+//        mChart = ChartFactory.createBarChart(null, "Size", "Count", mAllocCountDataSet,
+//                PlotOrientation.VERTICAL, false, true, false);
 
         // get the font to make a proper title. We need to convert the swt font,
         // into an awt font.
-        Font f = mStatisticsBase.getFont();
-        FontData[] fData = f.getFontData();
+        Font font = mStatisticsBase.getFont();
 
-        // event though on Mac OS there could be more than one fontData, we'll only use
-        // the first one.
-        FontData firstFontData = fData[0];
+        
+        mChart.getTitle().setText("Allocation count per size");
+        mChart.getTitle().setFont(font);
+        
+        mChart.getAxisSet().getXAxis(0).getTitle().setText("Size");
+        mChart.getAxisSet().getYAxis(0).getTitle().setText("Count");
 
-        java.awt.Font awtFont = SWTUtils.toAwtFont(mStatisticsBase.getDisplay(),
-                firstFontData, true /* ensureSameSize */);
+        // create bar series
+//        IBarSeries barSeries = (IBarSeries) chart.getSeriesSet()
+//            .createSeries(SeriesType.BAR, "bar series");
+//        barSeries.setYSeries();
 
-        mChart.setTitle(new TextTitle("Allocation count per size", awtFont));
 
-        Plot plot = mChart.getPlot();
-        if (plot instanceof CategoryPlot) {
-            // get the plot
-            CategoryPlot categoryPlot = (CategoryPlot)plot;
+//        Plot plot = mChart.getPlot();
+//        if (plot instanceof CategoryPlot) {
+//            // get the plot
+//            CategoryPlot categoryPlot = (CategoryPlot)plot;
+//
+//            // set the domain axis to draw labels that are displayed even with many values.
+//            CategoryAxis domainAxis = categoryPlot.getDomainAxis();
+//            domainAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_90);
+//
+//            CategoryItemRenderer renderer = categoryPlot.getRenderer();
+//            renderer.setBaseToolTipGenerator(new CategoryToolTipGenerator() {
+//                @Override
+//                public String generateToolTip(CategoryDataset dataset, int row, int column) {
+//                    // get the key for the size of the allocation
+//                    ByteLong columnKey = (ByteLong)dataset.getColumnKey(column);
+//                    String rowKey = (String)dataset.getRowKey(row);
+//                    Number value = dataset.getValue(rowKey, columnKey);
+//
+//                    return String.format("%1$d %2$s of %3$d bytes", value.intValue(), rowKey,
+//                            columnKey.getValue());
+//                }
+//            });
+//        }
+//        mChartComposite = new ChartComposite(mStatisticsBase, SWT.BORDER, mChart,
+//                ChartComposite.DEFAULT_WIDTH,
+//                ChartComposite.DEFAULT_HEIGHT,
+//                ChartComposite.DEFAULT_MINIMUM_DRAW_WIDTH,
+//                ChartComposite.DEFAULT_MINIMUM_DRAW_HEIGHT,
+//                3000, // max draw width. We don't want it to zoom, so we put a big number
+//                3000, // max draw height. We don't want it to zoom, so we put a big number
+//                true,  // off-screen buffer
+//                true,  // properties
+//                true,  // save
+//                true,  // print
+//                false,  // zoom
+//                true);   // tooltips
 
-            // set the domain axis to draw labels that are displayed even with many values.
-            CategoryAxis domainAxis = categoryPlot.getDomainAxis();
-            domainAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_90);
+        mChart.setLayoutData(new GridData(GridData.FILL_BOTH));
+        
+        // adjust the axis range
+        mChart.getAxisSet().adjustRange();
 
-            CategoryItemRenderer renderer = categoryPlot.getRenderer();
-            renderer.setBaseToolTipGenerator(new CategoryToolTipGenerator() {
-                @Override
-                public String generateToolTip(CategoryDataset dataset, int row, int column) {
-                    // get the key for the size of the allocation
-                    ByteLong columnKey = (ByteLong)dataset.getColumnKey(column);
-                    String rowKey = (String)dataset.getRowKey(row);
-                    Number value = dataset.getValue(rowKey, columnKey);
-
-                    return String.format("%1$d %2$s of %3$d bytes", value.intValue(), rowKey,
-                            columnKey.getValue());
-                }
-            });
-        }
-        mChartComposite = new ChartComposite(mStatisticsBase, SWT.BORDER, mChart,
-                ChartComposite.DEFAULT_WIDTH,
-                ChartComposite.DEFAULT_HEIGHT,
-                ChartComposite.DEFAULT_MINIMUM_DRAW_WIDTH,
-                ChartComposite.DEFAULT_MINIMUM_DRAW_HEIGHT,
-                3000, // max draw width. We don't want it to zoom, so we put a big number
-                3000, // max draw height. We don't want it to zoom, so we put a big number
-                true,  // off-screen buffer
-                true,  // properties
-                true,  // save
-                true,  // print
-                false,  // zoom
-                true);   // tooltips
-
-        mChartComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
     }
 
     private static String prettyByteCount(long bytes) {
@@ -888,7 +884,8 @@ public final class HeapPanel extends BaseHeapPanel {
      * Fills the chart with the content of the list of {@link HeapSegmentElement}.
      */
     private void showChart(ArrayList<HeapSegmentElement> list) {
-        mAllocCountDataSet.clear();
+    	
+    	
 
         if (list != null) {
             String rowKey = "Alloc Count";
@@ -899,7 +896,7 @@ public final class HeapPanel extends BaseHeapPanel {
                 if (element.getLength() != currentSize) {
                     if (currentSize != -1) {
                         ByteLong columnKey = new ByteLong(currentSize);
-                        mAllocCountDataSet.addValue(currentCount, rowKey, columnKey);
+ //                       mAllocCountDataSet.addValue(currentCount, rowKey, columnKey);
                     }
 
                     currentSize = element.getLength();
@@ -912,7 +909,7 @@ public final class HeapPanel extends BaseHeapPanel {
             // add the last item
             if (currentSize != -1) {
                 ByteLong columnKey = new ByteLong(currentSize);
-                mAllocCountDataSet.addValue(currentCount, rowKey, columnKey);
+ //               mAllocCountDataSet.addValue(currentCount, rowKey, columnKey);
             }
         }
     }
