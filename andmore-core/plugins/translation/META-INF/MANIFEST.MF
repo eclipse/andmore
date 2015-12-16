@@ -12,15 +12,8 @@ Require-Bundle: org.eclipse.core.net,
  org.eclipse.ui.workbench,
  org.eclipse.andmore.android.common,
  org.eclipse.ui.net,
- org.eclipse.sequoyah.localization.android,
- org.eclipse.sequoyah.localization.editor,
- org.apache.commons.net;bundle-version="1.4.1",
- org.apache.oro;bundle-version="2.0.8"
+ org.apache.commons.httpclient;bundle-version="3.1.0"
 Bundle-ClassPath: .
-Import-Package: org.apache.commons.httpclient,
- org.apache.commons.httpclient.auth;version="3.1.0",
- org.apache.commons.httpclient.methods;version="3.1.0",
- org.apache.commons.httpclient.params;version="3.1.0"
 Bundle-Activator: org.eclipse.andmore.android.localization.translators.TranslationPlugin
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy

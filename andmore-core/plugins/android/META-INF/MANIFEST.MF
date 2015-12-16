@@ -14,18 +14,15 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.andmore,
  org.eclipse.andmore.ddms,
  org.eclipse.jdt.core,
- org.eclipse.jface.text,
  org.apache.xerces,
  org.eclipse.ui.console,
  org.eclipse.sequoyah.localization.tools,
  org.eclipse.sequoyah.device.framework,
  org.eclipse.sequoyah.device.common.utilities,
  org.eclipse.debug.ui,
- org.eclipse.core.expressions,
  org.eclipse.andmore.base,
  org.eclipse.jdt.ui,
- org.apache.commons.net;bundle-version="1.4.1",
- org.apache.oro;bundle-version="2.0.8"
+ org.apache.commons.net;bundle-version="1.4.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Localization: plugin
 Export-Package: 
@@ -41,6 +38,4 @@ Export-Package:
  org.eclipse.andmore.android.wizards.installapp,
  org.eclipse.andmore.android.wizards.monkey
 Bundle-ActivationPolicy: lazy
-Import-Package: org.eclipse.equinox.security.storage,
- org.eclipse.ui.console
 Bundle-ClassPath: .
