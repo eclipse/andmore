@@ -21,11 +21,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.sequoyah.device.common.utilities,
  org.eclipse.ui.console,
  org.eclipse.ui.ide,
- org.eclipse.andmore;resolution:=optional,
- org.apache.commons.httpclient,
- org.eclipse.andmore.base;resolution:=optional,
- org.apache.commons.net;bundle-version="1.4.1",
- org.apache.oro;bundle-version="2.0.8"
+ org.apache.commons.httpclient
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.andmore.android.common,
  org.eclipse.andmore.android.common.exception,
