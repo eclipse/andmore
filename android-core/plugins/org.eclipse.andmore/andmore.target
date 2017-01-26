@@ -49,6 +49,7 @@
 <unit id="org.mockito" version="1.9.5.v201311280930"/>
 <unit id="org.apache.httpcomponents.httpclient" version="4.1.3.v201209201135"/>
 <unit id="org.apache.httpcomponents.httpcore" version="4.1.4.v201203221030"/>
+<unit id="org.swtchart" version="0.7.0.v201201201914"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/"/>
 </location>
 </locations>
