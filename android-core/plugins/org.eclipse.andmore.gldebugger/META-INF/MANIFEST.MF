@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tracer for OpenGL ES
 Bundle-SymbolicName: org.eclipse.andmore.gldebugger;singleton:=true
-Bundle-Version: 0.5.1.qualifier
+Bundle-Version: 0.5.2.qualifier
 Bundle-Activator: org.eclipse.andmore.gltrace.GlTracePlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

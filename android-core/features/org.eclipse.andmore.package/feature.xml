@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.andmore.package.feature"
       label="Andmore Package Feature (Incubating)"
-      version="0.5.1.qualifier"
+      version="0.5.2.qualifier"
       provider-name="Eclipse Andmore"
       plugin="org.eclipse.andmore.package"
       license-feature="org.eclipse.license"

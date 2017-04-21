@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.andmore.sign.feature"
       label="%feature.label"
-      version="0.5.1.qualifier"
+      version="0.5.2.qualifier"
       provider-name="%feature.provider.name"
       plugin="org.eclipse.andmore.android.certmanager"
       os="linux,macosx,win32"

@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.andmore.android.feature"
       label="%feature.android.label"
-      version="0.5.1.qualifier"
+      version="0.5.2.qualifier"
       provider-name="%feature.android.provider.name"
       plugin="org.eclipse.andmore.android.product"
       os="linux,macosx,win32"

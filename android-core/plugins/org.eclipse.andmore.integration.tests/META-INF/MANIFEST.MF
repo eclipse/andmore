@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Android Plugin Tests
 Bundle-SymbolicName: org.eclipse.andmore.integration.tests
-Bundle-Version: 0.5.1.qualifier
+Bundle-Version: 0.5.2.qualifier
 Bundle-Vendor: Eclipse Andmore
 Fragment-Host: org.eclipse.andmore
 Require-Bundle: org.junit,

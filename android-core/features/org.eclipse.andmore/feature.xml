@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.andmore.feature"
       label="%feature.label"
-      version="0.5.1.qualifier"
+      version="0.5.2.qualifier"
       provider-name="%feature.provider.name"
       plugin="org.eclipse.andmore"
       license-feature="org.eclipse.license"

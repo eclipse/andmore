@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ADT XML Overlay
 Bundle-SymbolicName: org.eclipse.andmore.overlay;singleton:=true
-Bundle-Version: 0.5.1.qualifier
+Bundle-Version: 0.5.2.qualifier
 Bundle-Vendor: Eclipse Andmore
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,

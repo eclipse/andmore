@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.andmore</groupId>
 	<artifactId>andmore-parent</artifactId>
-	<version>0.5.1-SNAPSHOT</version>
+	<version>0.5.2-SNAPSHOT</version>
 	<name>Andmore Parent</name>
 	<packaging>pom</packaging>
 
