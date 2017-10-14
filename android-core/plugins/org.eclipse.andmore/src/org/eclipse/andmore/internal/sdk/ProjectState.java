@@ -57,14 +57,6 @@ import java.util.regex.Matcher;
  *
  */
 public final class ProjectState {
-	
-    /**
-     * The name of the property to enable the --no-version-vectors aapt option
-     * when packaging the resources. This constant should propably rather go to
-     * ProjectProperties, but the library that contains it is not included 
-     * in andmore as source code.
-     */
-    public static final String NO_VERSION_VECTORS_PROPERTY = "no-version-vectors.enabled";
 
     /**
      * A class that represents a library linked to a project.
@@ -388,17 +380,6 @@ public final class ProjectState {
         String value = mProperties.getProperty(ProjectProperties.PROPERTY_LIBRARY);
         return value != null && Boolean.valueOf(value);
     }
-    
-    /**
-     * Determines whether aapt should use the --no-version-vectors
-     * option in addition to other command line parameters.
-     * 
-     * @return True, if the corresponding project property is set to true.
-     */
-    public boolean isNoVersionVectors() {
-        return Boolean.parseBoolean(mProperties.getProperty(NO_VERSION_VECTORS_PROPERTY));
-    }
-    
 
     /**
      * Returns whether the project depends on one or more libraries.

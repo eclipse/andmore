@@ -193,9 +193,7 @@ public class ApiDemosRenderingTest extends SdkLoadingTestCase {
 	}
 
 	private void findApiDemos() throws IOException, XmlPullParserException {
-		IAndroidTarget[] targets = getSdk().getTargets();
-
-		for (IAndroidTarget target : targets) {
+		for (IAndroidTarget target : getSdk().getTargets()) {
 			String path = target.getPath(IAndroidTarget.SAMPLES);
 			File samples = new File(path);
 			if (samples.isDirectory()) {

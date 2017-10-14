@@ -206,7 +206,7 @@ public class DeviceChooserDialog extends Dialog implements IDeviceChangeListener
                             if (info == null) {
                                 return "?";
                             }
-                            return info.getTarget().getFullName();
+                            return mSdk.getAndroidTargetFor(info).getFullName();
                         } else {
                             String deviceBuild = device.getProperty(IDevice.PROP_BUILD_VERSION);
                             if (deviceBuild == null) {

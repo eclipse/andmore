@@ -281,8 +281,7 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	protected IProject createProject(String name) {
 		IAndroidTarget target = null;
 
-		IAndroidTarget[] targets = getSdk().getTargets();
-		for (IAndroidTarget t : targets) {
+		for (IAndroidTarget t : getSdk().getTargets()) {
 			if (!t.isPlatform()) {
 				continue;
 			}
@@ -324,8 +323,7 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	public void createTestProject() {
 		IAndroidTarget target = null;
 
-		IAndroidTarget[] targets = getSdk().getTargets();
-		for (IAndroidTarget t : targets) {
+		for (IAndroidTarget t : getSdk().getTargets()) {
 			if (t.getVersion().getApiLevel() >= TARGET_API_LEVEL) {
 				target = t;
 				break;

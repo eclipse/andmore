@@ -16,12 +16,12 @@
 
 package org.eclipse.andmore.internal.editors.layout.configuration;
 
-import static com.android.ide.common.rendering.HardwareConfigHelper.MANUFACTURER_GENERIC;
-import static com.android.ide.common.rendering.HardwareConfigHelper.getGenericLabel;
-import static com.android.ide.common.rendering.HardwareConfigHelper.getNexusLabel;
-import static com.android.ide.common.rendering.HardwareConfigHelper.isGeneric;
-import static com.android.ide.common.rendering.HardwareConfigHelper.isNexus;
-import static com.android.ide.common.rendering.HardwareConfigHelper.sortNexusList;
+//import static com.android.ide.common.rendering.HardwareConfigHelper.MANUFACTURER_GENERIC;
+//import static com.android.ide.common.rendering.HardwareConfigHelper.getGenericLabel;
+//import static com.android.ide.common.rendering.HardwareConfigHelper.getNexusLabel;
+//import static com.android.ide.common.rendering.HardwareConfigHelper.isGeneric;
+//import static com.android.ide.common.rendering.HardwareConfigHelper.isNexus;
+//import static com.android.ide.common.rendering.HardwareConfigHelper.sortNexusList;
 
 import com.android.annotations.NonNull;
 import com.android.annotations.Nullable;
@@ -104,17 +104,17 @@ class DeviceMenuListener extends SelectionAdapter {
         // Group the devices by manufacturer, then put them in the menu.
         // If we don't have anything but Nexus devices, group them together rather than
         // make many manufacturer submenus.
-        boolean haveNexus = false;
-        boolean haveNonNexus = false;
+        //boolean haveNexus = false;
+        //boolean haveNonNexus = false;
         if (!deviceCollection.isEmpty()) {
             Map<String, List<Device>> manufacturers = new TreeMap<String, List<Device>>();
             for (Device device : deviceCollection) {
                 List<Device> devices;
-                if (isNexus(device)) {
-                    haveNexus = true;
-                } else if (!isGeneric(device)) {
-                    haveNonNexus = true;
-                }
+                //if (isNexus(device)) {
+                //    haveNexus = true;
+                //} else if (!isGeneric(device)) {
+                //    haveNonNexus = true;
+                //}
                 if (manufacturers.containsKey(device.getManufacturer())) {
                     devices = manufacturers.get(device.getManufacturer());
                 } else {
@@ -123,7 +123,7 @@ class DeviceMenuListener extends SelectionAdapter {
                 }
                 devices.add(device);
             }
-            if (haveNonNexus) {
+            //if (haveNonNexus) {
                 for (List<Device> devices : manufacturers.values()) {
                     Menu manufacturerMenu = menu;
                     if (manufacturers.size() > 1) {
@@ -139,7 +139,9 @@ class DeviceMenuListener extends SelectionAdapter {
                         deviceItem.addSelectionListener(new DeviceMenuListener(chooser, device));
                     }
                 }
-            } else {
+            }
+            /*
+            else {
                 List<Device> nexus = new ArrayList<Device>();
                 List<Device> generic = new ArrayList<Device>();
                 if (haveNexus) {
@@ -181,6 +183,7 @@ class DeviceMenuListener extends SelectionAdapter {
                     item.addSelectionListener(new DeviceMenuListener(chooser, device));
                 }
             }
+            */
         }
 
         @SuppressWarnings("unused")

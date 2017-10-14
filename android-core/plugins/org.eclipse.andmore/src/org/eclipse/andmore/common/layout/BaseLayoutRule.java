@@ -82,6 +82,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -332,7 +333,7 @@ public class BaseLayoutRule extends BaseViewRule {
      */
     protected static Map<String, Pair<String, String>> getDropIdMap(INode targetNode,
             IDragElement[] elements, boolean createNewIds) {
-        Map<String, Pair<String, String>> idMap = new HashMap<String, Pair<String, String>>();
+        Map<String, Pair<String, String>> idMap = new LinkedHashMap<String, Pair<String, String>>();
 
         if (createNewIds) {
             collectIds(idMap, elements);

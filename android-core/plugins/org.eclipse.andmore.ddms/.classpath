@@ -3,7 +3,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src/"/>
-	<classpathentry exported="true" kind="lib" path="libs/ddmlib.jar" sourcepath="/ddmlib"/>
+	<classpathentry exported="true" kind="lib" path="libs/ddmlib-25.3.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/ddmuilib.jar" sourcepath="/ddmuilib"/>
 	<classpathentry exported="true" kind="lib" path="libs/uiautomatorviewer.jar" sourcepath="/uiautomatorviewer/src"/>
 	<classpathentry kind="output" path="target/classes"/>

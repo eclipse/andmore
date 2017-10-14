@@ -621,7 +621,7 @@ public class Configuration {
         StringBuilder sb = new StringBuilder(32);
         Device device = getDevice();
         if (device != null) {
-            sb.append(device.getName());
+            sb.append(device.getId());
             sb.append(SEP);
             State state = getDeviceState();
             if (state != null) {
@@ -745,7 +745,7 @@ public class Configuration {
         String[] values = data.split(SEP);
         if (values.length >= 6 && values.length <= 8) {
             for (Device d : mConfigChooser.getDevices()) {
-                if (d.getName().equals(values[0])) {
+                if (d.getId().equals(values[0]) || d.getDisplayName().equals(values[0])) {
                     mDevice = d;
                     String stateName = null;
                     FolderConfiguration config = null;
@@ -980,8 +980,7 @@ public class Configuration {
             @NonNull String id) {
         Sdk currentSdk = Sdk.getCurrent();
         if (currentSdk != null) {
-            IAndroidTarget[] targets = currentSdk.getTargets();
-            for (IAndroidTarget target : targets) {
+            for (IAndroidTarget target : currentSdk.getTargets()) {
                 if (id.equals(targetToString(target))) {
                     return target;
                 }

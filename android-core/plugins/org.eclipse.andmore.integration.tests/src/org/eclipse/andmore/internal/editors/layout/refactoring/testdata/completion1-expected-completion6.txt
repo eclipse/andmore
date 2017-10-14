@@ -20,4 +20,5 @@ Code completion in completion1.xml for style="@android:^style/Widget.Button":
 @android:public/
 @android:raw/
 @android:string/
+@android:transition/
 @android:xml/

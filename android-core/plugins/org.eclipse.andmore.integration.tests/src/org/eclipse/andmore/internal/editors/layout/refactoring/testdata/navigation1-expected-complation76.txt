@@ -80,3 +80,17 @@ Code completion in navigation1.xml for ?android:a^ttr/alertDialogStyle:
 ?android:accessibilityLiveRegion
 ?android:advancedPrintOptionsActivity
 ?android:allowEmbedded
+?android:actionBarTheme
+?android:actionOverflowMenuStyle
+?android:autoRemoveFromRecents
+?android:actionModeShareDrawable
+?android:actionModeFindDrawable
+?android:actionModeWebSearchDrawable
+?android:actionBarPopupTheme
+?android:amPmTextColor
+?android:amPmBackgroundColor
+?android:ambientShadowAlpha
+?android:accessibilityTraversalBefore
+?android:accessibilityTraversalAfter
+?android:allowUndo
+?android:autoVerify

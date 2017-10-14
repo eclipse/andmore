@@ -26,7 +26,7 @@ import com.android.ide.common.api.Rect;
 import com.android.utils.Pair;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -60,7 +60,7 @@ public class BaseLayoutRuleTest extends LayoutTestBase {
     public void testCollectIds1() {
         IDragElement[] elements = TestDragElement.create(TestDragElement.create(
                 "android.widget.Button", new Rect(0, 0, 100, 80)).id("@+id/Button01"));
-        Map<String, Pair<String, String>> idMap = new HashMap<String, Pair<String, String>>();
+        Map<String, Pair<String, String>> idMap = new LinkedHashMap<String, Pair<String, String>>();
         new BaseLayoutRule();
 		Map<String, Pair<String, String>> ids = BaseLayoutRule.collectIds(idMap, elements);
         assertEquals(1, ids.size());
@@ -77,7 +77,7 @@ public class BaseLayoutRuleTest extends LayoutTestBase {
                 "android.widget.Button", new Rect(0, 0, 100, 80)).set("myuri", ATTR_ID,
                 "@+id/Button01"));
 
-        Map<String, Pair<String, String>> idMap = new HashMap<String, Pair<String, String>>();
+        Map<String, Pair<String, String>> idMap = new LinkedHashMap<String, Pair<String, String>>();
         new BaseLayoutRule();
 		Map<String, Pair<String, String>> ids = BaseLayoutRule.collectIds(idMap, elements);
         assertEquals(0, ids.size());
@@ -118,7 +118,7 @@ public class BaseLayoutRuleTest extends LayoutTestBase {
      */
     @Test
     public void testCollectIds3() {
-        Map<String, Pair<String, String>> idMap = new HashMap<String, Pair<String, String>>();
+        Map<String, Pair<String, String>> idMap = new LinkedHashMap<String, Pair<String, String>>();
 
         IDragElement[] elements = createSampleElements();
         new BaseLayoutRule();
@@ -139,7 +139,7 @@ public class BaseLayoutRuleTest extends LayoutTestBase {
      */
     @Test
     public void testRemapIds1() {
-        Map<String, Pair<String, String>> idMap = new HashMap<String, Pair<String, String>>();
+        Map<String, Pair<String, String>> idMap = new LinkedHashMap<String, Pair<String, String>>();
         BaseLayoutRule baseLayout = new BaseLayoutRule();
         IDragElement[] elements = createSampleElements();
         BaseLayoutRule.collectIds(idMap, elements);
@@ -257,7 +257,7 @@ public class BaseLayoutRuleTest extends LayoutTestBase {
                 TestDragElement.create("a.w.B").id("@+id/child2").set("uri", "childprop2a",
                         "value2a").set("uri", "childprop2b", "value2b"));
         INode newNode = TestNode.create("a.w.B").id("@+id/foo");
-        Map<String, Pair<String, String>> idMap = new HashMap<String, Pair<String, String>>();
+        Map<String, Pair<String, String>> idMap = new LinkedHashMap<String, Pair<String, String>>();
         BaseLayoutRule layout = new BaseLayoutRule();
         BaseLayoutRule.addInnerElements(newNode, oldElement, idMap);
         assertEquals(2, newNode.getChildren().length);

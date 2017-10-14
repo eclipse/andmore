@@ -974,32 +974,27 @@ public class AndroidContentAssistTest extends AdtProjectTest {
 
 	private void checkLayoutCompletion(String name, String caretLocation) throws Exception {
 		IFile file = getLayoutFile(getProject(), name);
-		IDE.setDefaultEditor(file, CommonXmlEditor.ID);
-		checkCompletion(name, file, caretLocation, new LayoutContentAssist());
+		checkCompletion(name, file, caretLocation, new LayoutContentAssist(), CommonXmlEditor.ID);
 	}
 
 	private void checkColorCompletion(String name, String caretLocation) throws Exception {
 		IFile file = getTestDataFile(getProject(), name, FD_RES + "/" + FD_RES_COLOR + "/" + name);
-		IDE.setDefaultEditor(file, CommonXmlEditor.ID);
-		checkCompletion(name, file, caretLocation, new ColorContentAssist());
+		checkCompletion(name, file, caretLocation, new ColorContentAssist(), CommonXmlEditor.ID);
 	}
 
 	private void checkAnimCompletion(String name, String caretLocation) throws Exception {
 		IFile file = getTestDataFile(getProject(), name, FD_RES + "/" + FD_RES_ANIM + "/" + name);
-		IDE.setDefaultEditor(file, CommonXmlEditor.ID);
-		checkCompletion(name, file, caretLocation, new AnimationContentAssist());
+		checkCompletion(name, file, caretLocation, new AnimationContentAssist(), CommonXmlEditor.ID);
 	}
 
 	private void checkAnimatorCompletion(String name, String caretLocation) throws Exception {
 		IFile file = getTestDataFile(getProject(), name, FD_RES + "/" + FD_RES_ANIMATOR + "/" + name);
-		IDE.setDefaultEditor(file, CommonXmlEditor.ID);
-		checkCompletion(name, file, caretLocation, new AnimationContentAssist());
+		checkCompletion(name, file, caretLocation, new AnimationContentAssist(), CommonXmlEditor.ID);
 	}
 
 	private void checkDrawableCompletion(String name, String caretLocation) throws Exception {
 		IFile file = getTestDataFile(getProject(), name, FD_RES + "/" + FD_RES_DRAWABLE + "/" + name);
-		IDE.setDefaultEditor(file, CommonXmlEditor.ID);
-		checkCompletion(name, file, caretLocation, new DrawableContentAssist());
+		checkCompletion(name, file, caretLocation, new DrawableContentAssist(), CommonXmlEditor.ID);
 	}
 
 	private void checkManifestCompletion(String name, String caretLocation) throws Exception {
@@ -1007,30 +1002,29 @@ public class AndroidContentAssistTest extends AdtProjectTest {
 		// replace
 		// the default manifest created in the test project.
 		IFile file = getTestDataFile(getProject(), name, "AndroidManifest.xml", true);
-		IDE.setDefaultEditor(file, ManifestEditor.ID);
 
-		checkCompletion(name, file, caretLocation, new ManifestContentAssist());
+		checkCompletion(name, file, caretLocation, new ManifestContentAssist(), ManifestEditor.ID);
 	}
 
 	private void checkApplyLayoutCompletion(String name, String caretLocation, String match) throws Exception {
-		checkApplyCompletion(name, getLayoutFile(getProject(), name), caretLocation, new LayoutContentAssist(), match);
+		checkApplyCompletion(name, getLayoutFile(getProject(), name), caretLocation, new LayoutContentAssist(), match, CommonXmlEditor.ID);
 	}
 
 	private void checkResourceCompletion(String name, String caretLocation) throws Exception {
-		checkCompletion(name, getValueFile(getProject(), name), caretLocation, new ValuesContentAssist());
+		checkCompletion(name, getValueFile(getProject(), name), caretLocation, new ValuesContentAssist(), CommonXmlEditor.ID);
 	}
 
 	private void checkApplyResourceCompletion(String name, String caretLocation, String match) throws Exception {
-		checkApplyCompletion(name, getValueFile(getProject(), name), caretLocation, new ValuesContentAssist(), match);
+		checkApplyCompletion(name, getValueFile(getProject(), name), caretLocation, new ValuesContentAssist(), match, CommonXmlEditor.ID);
 	}
 
-	private ICompletionProposal[] complete(IFile file, String caretLocation, AndroidContentAssist assist)
+	private ICompletionProposal[] complete(IFile file, String caretLocation, AndroidContentAssist assist, String editorId)
 			throws Exception {
 
 		// Open file
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		assertNotNull(page);
-		IEditorPart editor = IDE.openEditor(page, file);
+		IEditorPart editor = IDE.openEditor(page, file, editorId);
 		assertTrue(editor instanceof AndroidXmlEditor);
 		AndroidXmlEditor xmlEditor = (AndroidXmlEditor) editor;
 
@@ -1059,8 +1053,8 @@ public class AndroidContentAssistTest extends AdtProjectTest {
 	}
 
 	private void checkApplyCompletion(String basename, IFile file, String caretLocation, AndroidContentAssist assist,
-			String match) throws Exception {
-		ICompletionProposal[] proposals = complete(file, caretLocation, assist);
+			String match, String editorId) throws Exception {
+		ICompletionProposal[] proposals = complete(file, caretLocation, assist, editorId);
 		ICompletionProposal chosen = null;
 		for (ICompletionProposal proposal : proposals) {
 			if (proposal.getDisplayString().equals(match)) {
@@ -1102,9 +1096,9 @@ public class AndroidContentAssistTest extends AdtProjectTest {
 		assertEqualsGolden(basename, summary.toString(), "diff");
 	}
 
-	private void checkCompletion(String basename, IFile file, String caretLocation, AndroidContentAssist assist)
+	private void checkCompletion(String basename, IFile file, String caretLocation, AndroidContentAssist assist, String editorId)
 			throws Exception {
-		ICompletionProposal[] proposals = complete(file, caretLocation, assist);
+		ICompletionProposal[] proposals = complete(file, caretLocation, assist, editorId);
 		StringBuilder sb = new StringBuilder(1000);
 		sb.append("Code completion in " + basename + " for " + caretLocation + ":\n");
 		for (ICompletionProposal proposal : proposals) {

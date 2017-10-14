@@ -9,9 +9,11 @@ permission : The "permission" tag declares a security permission that can be  us
 permission-group : The "permission-group" tag declares a logical grouping of related  permissions.
 permission-tree : The "permission-tree" tag declares the base of a tree of permission  values: it declares that this package has ownership of the given  permission name, as well as all names underneath it (separated  by '.').
 protected-broadcast : Private tag to declare system protected broadcast actions.
+resource-overlay : Attributes relating to resource overlay packages.
 supports-input
 supports-screens : The "supports-screens" specifies the screen dimensions an application  supports.
+upgrade-key-set : Associate declared KeySets with upgrading capability.
 uses-configuration : The "uses-configuration" tag specifies a specific hardware configuration  value used by the application.
-uses-feature : The "uses-feature" tag specifies a specific feature used by the  application.
+uses-feature : The "uses-feature" tag specifies a specific device hardware or  software feature used by the application.
 uses-permission : The "uses-permission" tag requests a "permission" that the containing  package must be granted in order for it to operate correctly.
 uses-sdk : The "uses-sdk" tag describes the SDK features that the containing  package must be running on to operate correctly.

@@ -825,7 +825,7 @@ public class AdtUtils {
     public static String getTargetLabel(@NonNull IAndroidTarget target) {
         if (target.isPlatform()) {
             AndroidVersion version = target.getVersion();
-            String codename = target.getProperty(PkgProps.PLATFORM_CODENAME);
+            String codename = target.getVersion().getCodename();
             String release = target.getProperty("ro.build.version.release"); //$NON-NLS-1$
             if (codename != null) {
                 return String.format("API %1$d: Android %2$s (%3$s)",

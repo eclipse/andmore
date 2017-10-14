@@ -16,30 +16,17 @@
 
 package org.eclipse.andmore.internal.build.builders;
 
-import com.android.SdkConstants;
-import com.android.annotations.NonNull;
-import com.android.annotations.Nullable;
-import com.android.ide.common.xml.ManifestData;
-import com.android.io.StreamException;
-import com.android.manifmerger.ManifestMerger;
-import com.android.manifmerger.MergerLog;
-import com.android.sdklib.AndroidVersion;
-import com.android.sdklib.BuildToolInfo;
-import com.android.sdklib.IAndroidTarget;
-import com.android.sdklib.build.RenderScriptChecker;
-import com.android.sdklib.build.RenderScriptProcessor;
-import com.android.sdklib.internal.build.BuildConfigGenerator;
-import com.android.sdklib.internal.build.SymbolLoader;
-import com.android.sdklib.internal.build.SymbolWriter;
-import com.android.sdklib.internal.project.ProjectProperties;
-import com.android.sdklib.io.FileOp;
-import com.android.sdklib.repository.FullRevision;
-import com.android.utils.ILogger;
-import com.android.utils.Pair;
-import com.android.xml.AndroidManifest;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.andmore.AndmoreAndroidConstants;
 import org.eclipse.andmore.AndmoreAndroidPlugin;
@@ -60,7 +47,6 @@ import org.eclipse.andmore.internal.project.XmlErrorHandler.BasicXmlErrorListene
 import org.eclipse.andmore.internal.resources.manager.IdeScanningContext;
 import org.eclipse.andmore.internal.resources.manager.ProjectResources;
 import org.eclipse.andmore.internal.resources.manager.ResourceManager;
-import org.eclipse.andmore.internal.sdk.AdtManifestMergeCallback;
 import org.eclipse.andmore.internal.sdk.ProjectState;
 import org.eclipse.andmore.internal.sdk.Sdk;
 import org.eclipse.andmore.io.IFileWrapper;
@@ -83,14 +69,35 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.xml.sax.SAXException;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.parsers.ParserConfigurationException;
+import com.android.SdkConstants;
+import com.android.annotations.NonNull;
+import com.android.ide.common.xml.ManifestData;
+import com.android.io.StreamException;
+import com.android.manifmerger.ManifestMerger2;
+import com.android.manifmerger.ManifestMerger2.Invoker;
+import com.android.manifmerger.ManifestMerger2.MergeFailureException;
+import com.android.manifmerger.ManifestMerger2.MergeType;
+import com.android.manifmerger.MergingReport;
+import com.android.manifmerger.MergingReport.MergedManifestKind;
+import com.android.manifmerger.MergingReport.Record;
+import com.android.repository.Revision;
+import com.android.repository.io.FileOpUtils;
+import com.android.sdklib.AndroidVersion;
+import com.android.sdklib.BuildToolInfo;
+import com.android.sdklib.IAndroidTarget;
+import com.android.sdklib.build.RenderScriptChecker;
+import com.android.sdklib.build.RenderScriptProcessor;
+import com.android.sdklib.internal.build.BuildConfigGenerator;
+import com.android.builder.core.DefaultManifestParser;
+import com.android.builder.symbols.RGeneration;
+import com.android.builder.symbols.SymbolIo;
+import com.android.builder.symbols.SymbolTable;
+import com.android.sdklib.internal.project.ProjectProperties;
+import com.android.utils.Pair;
+import com.android.xml.AndroidManifest;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 
 /**
  * Pre Java Compiler.
@@ -277,7 +284,13 @@ public class PreCompilerBuilder extends BaseBuilder {
             IAndroidTarget projectTarget = projectState.getTarget();
 
             // get the libraries
-            List<IProject> libProjects = projectState.getFullLibraryProjects();
+            List<IProject> libProjects = new LinkedList<IProject>(projectState.getFullLibraryProjects());
+            for (Iterator<IProject> iter = libProjects.iterator(); iter.hasNext();) {
+                IProject libProject = iter.next();
+                if (!libProject.isOpen()) {
+                    iter.remove();
+                }
+            }
             result = libProjects.toArray(new IProject[libProjects.size()]);
 
             IJavaProject javaProject = JavaCore.create(project);
@@ -433,7 +446,7 @@ public class PreCompilerBuilder extends BaseBuilder {
             }
 
             if (projectState.getRenderScriptSupportMode()) {
-                FullRevision minBuildToolsRev = new FullRevision(19,0,3);
+                Revision minBuildToolsRev = new Revision(19,0,3);
                 if (mBuildToolInfo.getRevision().compareTo(minBuildToolsRev) == -1) {
                     String msg = "RenderScript support mode requires Build-Tools 19.0.3 or later.";
                     AndmoreAndroidPlugin.printErrorToConsole(project, msg);
@@ -966,78 +979,48 @@ public class PreCompilerBuilder extends BaseBuilder {
         // manifest over.
         if (enabled == false || libProjects.size() == 0) {
             try {
-                new FileOp().copyFile(manifest.getLocation().toFile(),
-                        outFile.getLocation().toFile());
-
-                outFile.refreshLocal(IResource.DEPTH_INFINITE, mDerivedProgressMonitor);
+                if (outFile.exists()) {
+                    outFile.setContents(manifest.getContents(), 0, mDerivedProgressMonitor);
+                }
+                else {
+                    outFile.create(manifest.getContents(), 0, mDerivedProgressMonitor);
+                }
 
                 saveProjectBooleanProperty(PROPERTY_MERGE_MANIFEST, mMustMergeManifest = false);
-            } catch (IOException e) {
+            } catch (CoreException e) {
                 handleException(e, "Failed to copy Manifest");
                 return false;
             }
         } else {
-            final ArrayList<String> errors = new ArrayList<String>();
 
             // TODO change MergerLog.wrapSdkLog by a custom IMergerLog that will create
             // and maintain error markers.
-            ManifestMerger merger = new ManifestMerger(
-                MergerLog.wrapSdkLog(new ILogger() {
-                    @Override
-                    public void warning(@NonNull String warningFormat, Object... args) {
-                        AndmoreAndroidPlugin.printToConsole(getProject(), String.format(warningFormat, args));
-                    }
+            Invoker invoker = ManifestMerger2.newMerger(manifest.getLocation().toFile(), AndmoreAndroidPlugin.getDefault(), MergeType.APPLICATION); // TODO Get the Project type
 
-                    @Override
-                    public void info(@NonNull String msgFormat, Object... args) {
-                        AndmoreAndroidPlugin.printToConsole(getProject(), String.format(msgFormat, args));
-                    }
-
-                    @Override
-                    public void verbose(@NonNull String msgFormat, Object... args) {
-                        info(msgFormat, args);
-                    }
-
-                    @Override
-                    public void error(@Nullable Throwable t, @Nullable String errorFormat,
-                            Object... args) {
-                        errors.add(String.format(errorFormat, args));
-                    }
-                }),
-                new AdtManifestMergeCallback());
-
-            File[] libManifests = new File[libProjects.size()];
-            int libIndex = 0;
             for (IProject lib : libProjects) {
-                libManifests[libIndex++] = lib.getFile(SdkConstants.FN_ANDROID_MANIFEST_XML)
-                        .getLocation().toFile();
+                invoker.addLibraryManifest(lib.getFile(SdkConstants.FN_ANDROID_MANIFEST_XML)
+                        .getLocation().toFile());
             }
-
-            if (merger.process(
-                    outFile.getLocation().toFile(),
-                    manifest.getLocation().toFile(),
-                    libManifests,
-                    null /*injectAttributes*/, null /*packageOverride*/) == false) {
-                if (errors.size() > 1) {
+            
+            try {
+                MergingReport report = invoker.merge();
+                if (report.getResult().isError()) {
                     StringBuilder sb = new StringBuilder();
-                    for (String s : errors) {
-                        sb.append(s).append('\n');
+                    for (Record record : report.getLoggingRecords()) {
+                        if (record.getSeverity() == MergingReport.Record.Severity.ERROR) {
+                            sb.append(record.getMessage()).append('\n');
+                        }
                     }
-
-                    markProject(AndmoreAndroidConstants.MARKER_MANIFMERGER, sb.toString(),
-                            IMarker.SEVERITY_ERROR);
-
-                } else if (errors.size() == 1) {
-                    markProject(AndmoreAndroidConstants.MARKER_MANIFMERGER, errors.get(0),
-                            IMarker.SEVERITY_ERROR);
-                } else {
-                    markProject(AndmoreAndroidConstants.MARKER_MANIFMERGER, "Unknown error merging manifest",
-                            IMarker.SEVERITY_ERROR);
+                    markProject(AndmoreAndroidConstants.MARKER_MANIFMERGER, sb.toString(), IMarker.SEVERITY_ERROR);
+                    return false;
                 }
+                outFile.setContents(new ByteArrayInputStream(report.getMergedDocument(MergedManifestKind.MERGED).getBytes()), 0, mDerivedProgressMonitor);
+            }
+            catch (MergeFailureException e) {
+                markProject(AndmoreAndroidConstants.MARKER_MANIFMERGER, "Unknown error merging manifest", IMarker.SEVERITY_ERROR);
                 return false;
             }
 
-            outFile.refreshLocal(IResource.DEPTH_INFINITE, mDerivedProgressMonitor);
             saveProjectBooleanProperty(PROPERTY_MERGE_MANIFEST, mMustMergeManifest = false);
         }
 
@@ -1265,12 +1248,14 @@ public class PreCompilerBuilder extends BaseBuilder {
                 throw new AbortBuildException();
             }
 
-            // now if the project has libraries, R needs to be created for each libraries
+            // now if the project has libraries, R needs to be created for each library
             // unless this is a library.
             if (isLibrary == false && !libRFiles.isEmpty()) {
                 File rFile = new File(outputFolder, SdkConstants.FN_RESOURCE_TEXT);
                 // if the project has no resources, the file could not exist.
                 if (rFile.isFile()) {
+                	generateLibraryRs(new File(osOutputPath), outputFolder, libRFiles);
+                	/*
                     // Load the full symbols from the full R.txt file.
                     SymbolLoader fullSymbolValues = new SymbolLoader(rFile);
                     fullSymbolValues.load();
@@ -1307,6 +1292,7 @@ public class PreCompilerBuilder extends BaseBuilder {
                         }
                         writer.write();
                     }
+                */
                 }
             }
 
@@ -1396,5 +1382,43 @@ public class PreCompilerBuilder extends BaseBuilder {
         // get a folder for this path under the 'gen' source folder, and return it.
         // This IFolder may not reference an actual existing folder.
         return mGenFolder.getFolder(packagePath);
+    }
+
+
+    /**
+     * see {@link com.android.builder.core.AndroidBuilder#processResources(com.android.builder.internal.aapt.Aapt,
+     * com.android.builder.internal.aapt.AaptPackageConfig.Builder, boolean)}
+     *
+     * @param libraries
+     * @throws MojoExecutionException
+     * From Simpligility android-maven-plugin
+     * @author William Ferguson - william.ferguson@xandar.com.au
+     */
+    public void generateLibraryRs(final File targetDirectory, final File genDirectory, final List<Pair<File, String>> libRFiles)
+    {
+        // list of all the symbol tables
+        final List<SymbolTable> symbolTables = new ArrayList<SymbolTable>(libRFiles.size());
+
+        // For each dependency, load its symbol file.
+        for (final Pair<File, String> lib : libRFiles) {
+            File rFile = lib.getFirst();
+            if (rFile.isFile()) {
+            	File unpackedLibDirectory = rFile.getParentFile();
+                final File libManifestFile = new File(unpackedLibDirectory, "AndroidManifest.xml");
+                final String packageName = new DefaultManifestParser(libManifestFile).getPackage();
+                SymbolTable libSymbols = SymbolIo.read(rFile);
+                libSymbols = libSymbols.rename(packageName, libSymbols.getTableName());
+                symbolTables.add(libSymbols);
+            }
+        }
+
+        if (!symbolTables.isEmpty()) {
+            // load the full resources values from the R.txt calculated for the project.
+            final File projectR = new File(targetDirectory, "R.txt");
+            final SymbolTable mainSymbols = SymbolIo.read(projectR);
+
+            // now loop on all the package name, merge all the symbols to write, and write them
+            RGeneration.generateRForLibraries(mainSymbols, symbolTables, genDirectory.getAbsoluteFile(), false);
+        }
     }
 }

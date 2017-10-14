@@ -1,4 +1,11 @@
 Code completion in drawable1.xml for ^xmlns:android:
 android:opacity : Indicates the opacity of the layer.  [enum]
 android:autoMirrored : Indicates if the drawable needs to be mirrored when its layout  direction is RTL (right-to-left).  [boolean]
+android:paddingMode : Indicates how layer padding should affect the bounds of subsequent  layers.  [enum]
+android:paddingTop : Explicit top padding.  [dimension]
+android:paddingBottom : Explicit bottom padding.  [dimension]
+android:paddingLeft : Explicit left padding.  [dimension]
+android:paddingRight : Explicit right padding.  [dimension]
+android:paddingStart : Explicit start padding.  [dimension]
+android:paddingEnd : Explicit end padding.  [dimension]
 xmlns:android

@@ -18,7 +18,7 @@ package org.eclipse.andmore.internal.editors.layout.gle2;
 
 import com.android.annotations.NonNull;
 import com.android.annotations.Nullable;
-import com.android.ide.common.rendering.RenderSecurityManager;
+import org.eclipse.andmore.internal.editors.layout.RenderSecurityManager;
 import com.android.ide.common.rendering.api.LayoutLog;
 
 import org.eclipse.andmore.AndmoreAndroidPlugin;

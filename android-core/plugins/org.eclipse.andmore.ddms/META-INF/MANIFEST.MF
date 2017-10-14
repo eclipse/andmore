@@ -34,7 +34,7 @@ Export-Package: com.android.ddmlib,
  org.eclipse.andmore.ddms.preferences,
  org.eclipse.andmore.ddms.views
 Bundle-ClassPath: .,
- libs/ddmlib.jar,
+ libs/ddmlib-25.3.3.jar,
  libs/ddmuilib.jar,
  libs/uiautomatorviewer.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -74,8 +74,7 @@ public class SampleProjectTest extends SdkLoadingTestCase {
 		// TODO: For reporting purposes, it would be better if a separate test
 		// success or failure
 		// could be reported for each sample
-		IAndroidTarget[] targets = getSdk().getTargets();
-		for (IAndroidTarget target : targets) {
+		for (IAndroidTarget target : getSdk().getTargets()) {
 			doTestSamplesForTarget(target);
 		}
 	}

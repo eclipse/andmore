@@ -1,5 +1,6 @@
 Code completion in completion9.xml for ^<Button:
 <AbsoluteLayout ></AbsoluteLayout>
+<ActionMenuView ></ActionMenuView>
 <AdapterViewFlipper ></AdapterViewFlipper>
 <AnalogClock />
 <AutoCompleteTextView />
@@ -51,6 +52,7 @@ Code completion in completion9.xml for ^<Button:
 <TextureView />
 <TimePicker />
 <ToggleButton />
+<Toolbar ></Toolbar>
 <TwoLineListItem />
 <VideoView />
 <View /> : Attributes that can be used with android.view.View or any of its subclasses.

@@ -103,7 +103,7 @@ public abstract class SdkLoadingTestCase extends SdkTestCase {
 			sdk = Sdk.getCurrent();
 		}
 		
-		if (sdk.getTargets().length == 0) {
+		if (sdk.getTargets().size() == 0) {
 			System.out.println("Did not find any valid targets. Reloading SDK from " + sdkLocation);
 			sdk = Sdk.loadSdk(sdkLocation);
 		}
@@ -122,7 +122,7 @@ public abstract class SdkLoadingTestCase extends SdkTestCase {
 	 */
 	@SuppressWarnings("unused")
 	private void validateSdk(Sdk sdk) {
-		assertTrue("sdk has no targets", sdk.getTargets().length > 0);
+		assertTrue("sdk has no targets", sdk.getTargets().size() > 0);
 		for (IAndroidTarget target : sdk.getTargets()) {
 			if (!validateSdk(target)) {
 				continue;

@@ -16,17 +16,26 @@
 
 package org.eclipse.andmore.internal.actions;
 
-import com.android.annotations.NonNull;
+import java.util.ArrayList;
+import java.util.Iterator;
 
+import org.eclipse.andmore.AndmoreAndroidConstants;
 import org.eclipse.andmore.internal.project.AndroidNature;
 import org.eclipse.andmore.internal.project.ProjectHelper;
+import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -36,7 +45,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-import java.util.Iterator;
+import com.android.annotations.NonNull;
 
 /**
  * Action to fix the project properties:
@@ -102,6 +111,7 @@ public class FixProjectAction implements IObjectActionDelegate {
                     if (monitor != null) {
                         monitor.beginTask("Fix Project Properties", 6);
                     }
+//                    fixAdtEntries(project, monitor);
 
                     ProjectHelper.fixProject(project);
                     if (monitor != null) {
@@ -150,5 +160,61 @@ public class FixProjectAction implements IObjectActionDelegate {
     public void init(IWorkbenchWindow window) {
         // pass
     }
+
+	private static void fixAdtEntries(IProject libraryProject, IProgressMonitor monitor) {
+
+		// Update the NatureIds
+		try {
+			IProjectDescription desc = libraryProject.getDescription();
+			String[] natureIds = desc.getNatureIds();
+			for (int i = 0; i < natureIds.length; i++) {
+				natureIds[i] = natureIds[i].replace("com.android.ide.eclipse.adt", "org.eclipse.andmore");
+			}
+			desc.setNatureIds(natureIds);
+			ICommand[] commands = desc.getBuildSpec();
+			for (int i = 0; i < commands.length; i++) {
+				commands[i].setBuilderName(
+						commands[i].getBuilderName().replace("com.android.ide.eclipse.adt", "org.eclipse.andmore"));
+			}
+			desc.setBuildSpec(commands);
+			libraryProject.setDescription(desc, monitor);
+			updateClasspathEntries(JavaCore.create(libraryProject));
+		} catch (CoreException e) {
+		}
+	}
+
+	@SuppressWarnings("restriction")
+	private static void updateClasspathEntries(IJavaProject androidProject) throws JavaModelException {
+		ArrayList<IClasspathEntry> newclasspathEntries = new ArrayList<IClasspathEntry>();
+
+		IClasspathEntry[] classpathEntries = androidProject.getRawClasspath();
+		for (IClasspathEntry classpathEntry : classpathEntries) {
+			if (classpathEntry.getEntryKind() == IClasspathEntry.CPE_CONTAINER) {
+				String classpathId = classpathEntry.getPath().toString();
+				if (classpathId.equals(AndmoreAndroidConstants.ADT_CONTAINER_DEPENDENCIES)) {
+					newclasspathEntries.add(createNewAndmoreContainer(AndmoreAndroidConstants.CONTAINER_DEPENDENCIES));
+				} else if (classpathId.equals(AndmoreAndroidConstants.ADT_CONTAINER_FRAMEWORK)) {
+					newclasspathEntries.add(createNewAndmoreContainer(AndmoreAndroidConstants.CONTAINER_FRAMEWORK));
+				} else if (classpathId.equals(AndmoreAndroidConstants.ADT_CONTAINER_PRIVATE_LIBRARIES)) {
+					newclasspathEntries
+							.add(createNewAndmoreContainer(AndmoreAndroidConstants.CONTAINER_PRIVATE_LIBRARIES));
+				} else {
+					newclasspathEntries.add(classpathEntry);
+				}
+
+			} else {
+				newclasspathEntries.add(classpathEntry);
+			}
+		}
+
+		IClasspathEntry[] andmoreClasspathEntries = new IClasspathEntry[newclasspathEntries.size()];
+		newclasspathEntries.toArray(andmoreClasspathEntries);
+		androidProject.setRawClasspath(andmoreClasspathEntries, true, new NullProgressMonitor());
+	}
+
+	private static IClasspathEntry createNewAndmoreContainer(String id) {
+		IClasspathEntry andmoreClasspathEntry = JavaCore.newContainerEntry(new Path(id));
+		return andmoreClasspathEntry;
+	}
 
 }

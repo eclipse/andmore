@@ -63,7 +63,7 @@ final class TypoFix extends DocumentFix {
         if (typo == null) {
             return;
         }
-        List<String> replacements = TypoDetector.getSuggestions(message, TextFormat.TEXT);
+        List<String> replacements = TypoDetector.getSuggestions(message, TextFormat.TEXT).getReplacements();
         if (replacements == null || replacements.isEmpty()) {
             return;
         }
@@ -105,7 +105,7 @@ final class TypoFix extends DocumentFix {
     protected List<LintFix> getAllFixes() {
         String message = mMarker.getAttribute(IMarker.MESSAGE, "");
         String typo = TypoDetector.getTypo(message, TextFormat.TEXT);
-        List<String> replacements = TypoDetector.getSuggestions(message, TextFormat.TEXT);
+        List<String> replacements = TypoDetector.getSuggestions(message, TextFormat.TEXT).getReplacements();
         if (replacements != null && !replacements.isEmpty() && typo != null) {
             List<LintFix> allFixes = new ArrayList<LintFix>(replacements.size());
             for (String replacement : replacements) {

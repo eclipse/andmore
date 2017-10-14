@@ -1,5 +1,6 @@
 Code completion in completion1.xml for btn_default">^</FrameLayout>:
 <AbsoluteLayout ></AbsoluteLayout>
+<ActionMenuView ></ActionMenuView>
 <AdapterViewFlipper ></AdapterViewFlipper>
 <AnalogClock />
 <AutoCompleteTextView />
@@ -51,6 +52,7 @@ Code completion in completion1.xml for btn_default">^</FrameLayout>:
 <TextureView />
 <TimePicker />
 <ToggleButton />
+<Toolbar ></Toolbar>
 <TwoLineListItem />
 <VideoView />
 <View /> : Attributes that can be used with android.view.View or any of its subclasses.

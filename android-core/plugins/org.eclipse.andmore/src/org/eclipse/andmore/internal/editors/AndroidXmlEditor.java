@@ -1253,8 +1253,7 @@ public abstract class AndroidXmlEditor extends FormEditor {
             if (currentSdk != null) {
                 try {
                     String path = AdtUtils.getFile(urlInput.getURI().toURL()).getPath();
-                    IAndroidTarget[] targets = currentSdk.getTargets();
-                    for (IAndroidTarget target : targets) {
+                    for (IAndroidTarget target : currentSdk.getTargets()) {
                         if (path.startsWith(target.getLocation())) {
                             return currentSdk.getTargetData(target);
                         }

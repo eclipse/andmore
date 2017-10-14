@@ -70,7 +70,7 @@ public class ConfigurationTest extends TestCase {
         assertFalse(folderConfig.getLocaleQualifier().hasRegion());
         assertEquals("nb", folderConfig.getLocaleQualifier().getLanguage());
 
-        assertEquals("2.7\" QVGA::nb:+Theme::notnight::", configuration.toPersistentString());
+        assertEquals("2.7in QVGA::nb:+Theme::notnight::", configuration.toPersistentString());
 
         configuration.setActivity("foo.bar.FooActivity");
         configuration.setTheme("@android:style/Theme.Holo.Light");

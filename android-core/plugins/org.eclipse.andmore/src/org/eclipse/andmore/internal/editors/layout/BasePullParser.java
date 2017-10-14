@@ -16,7 +16,7 @@
 
 package org.eclipse.andmore.internal.editors.layout;
 
-import com.android.ide.common.rendering.legacy.ILegacyPullParser;
+import com.android.ide.common.rendering.api.ILayoutPullParser;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -29,7 +29,7 @@ import java.io.Reader;
  * <p/>It's designed to work on layout files, and will most likely not work on other resource
  * files.
  */
-public abstract class BasePullParser implements ILegacyPullParser {
+public abstract class BasePullParser implements ILayoutPullParser {
 
     protected int mParsingState = START_DOCUMENT;
 

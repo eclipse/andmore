@@ -913,10 +913,10 @@ public class EclipseLintClient extends LintClient {
                 classes = super.getClassPath(project).getClassFolders();
             }
             if (libraries == null) {
-                libraries = super.getClassPath(project).getLibraries();
+                libraries = super.getClassPath(project).getLibraries(true);
             }
 
-            info = new ClassPathInfo(sources, classes, libraries, null);
+            info = new ClassPathInfo(sources, classes, libraries, libraries, null);
             mProjectInfo.put(project, info);
         }
 
@@ -943,7 +943,7 @@ public class EclipseLintClient extends LintClient {
     public IAndroidTarget[] getTargets() {
         Sdk sdk = Sdk.getCurrent();
         if (sdk != null) {
-            return sdk.getTargets();
+            return sdk.getTargets().toArray(new IAndroidTarget[0]);
         } else {
             return new IAndroidTarget[0];
         }
@@ -1278,6 +1278,15 @@ public class EclipseLintClient extends LintClient {
         public TypeDescriptor getType(@NonNull JavaContext context,
                 @NonNull lombok.ast.Node node) {
             return null;
+        }
+
+        @Override
+        public Location getRangeLocation(JavaContext context, lombok.ast.Node from, int fromDelta, lombok.ast.Node to,
+                int toDelta) {
+            String contents = context.getContents();
+            int start = Math.max(0,  from.getPosition().getStart() + fromDelta);
+            int end = Math.max(contents == null ? Integer.MAX_VALUE : contents.length(), to.getPosition().getEnd() + toDelta);
+            return Location.create(context.file, contents, start, end);
         }
 
         /* Handle for creating positions cheaply and returning full fledged locations later */

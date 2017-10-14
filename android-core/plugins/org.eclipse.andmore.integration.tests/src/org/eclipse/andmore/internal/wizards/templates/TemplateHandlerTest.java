@@ -83,6 +83,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -346,9 +347,8 @@ public class TemplateHandlerTest extends SdkLoadingTestCase {
 
 		// Iterate over all (valid) combinations of build target, minSdk and
 		// targetSdk
-		IAndroidTarget[] targets = Sdk.getCurrent().getTargets();
-		for (int i = targets.length - 1; i >= 0; i--) {
-			IAndroidTarget target = targets[i];
+		Collection<IAndroidTarget> targets = Sdk.getCurrent().getTargets();
+		for (IAndroidTarget target : targets) {
 			if (!target.isPlatform()) {
 				continue;
 			}
@@ -450,9 +450,8 @@ public class TemplateHandlerTest extends SdkLoadingTestCase {
 
 		// Iterate over all (valid) combinations of build target, minSdk and
 		// targetSdk
-		IAndroidTarget[] targets = Sdk.getCurrent().getTargets();
-		for (int i = targets.length - 1; i >= 0; i--) {
-			IAndroidTarget target = targets[i];
+		Collection<IAndroidTarget> targets = Sdk.getCurrent().getTargets();
+		for (IAndroidTarget target : targets) {
 			if (!target.isPlatform()) {
 				continue;
 			}

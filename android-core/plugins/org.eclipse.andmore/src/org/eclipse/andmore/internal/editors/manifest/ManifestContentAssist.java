@@ -64,8 +64,7 @@ public final class ManifestContentAssist extends AndroidContentAssist {
             if (sdk == null) {
                 return false;
             }
-            IAndroidTarget[] targets = sdk.getTargets();
-            for (IAndroidTarget target : targets) {
+            for (IAndroidTarget target : sdk.getTargets()) {
                 AndroidVersion version = target.getVersion();
                 int apiLevel = version.getApiLevel();
                 if (apiLevel > max) {

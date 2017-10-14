@@ -320,16 +320,13 @@ public abstract class BaseBuilder extends IncrementalProjectBuilder {
         if (projectState == null) {
             projectState = Sdk.getProjectState(javaProject.getProject());
         }
-        
-        // the project state can still be null, 
-        // e.g. if there is no project.properties file
+
         if (projectState == null) {
-        	throw new AbortBuildException();
+            throw new AbortBuildException();
         }
-        
         // get the target for the project
-        IAndroidTarget target = projectState.getTarget();        	
-        
+        IAndroidTarget target = projectState.getTarget();
+
         if (target == null) {
             throw new AbortBuildException();
         }

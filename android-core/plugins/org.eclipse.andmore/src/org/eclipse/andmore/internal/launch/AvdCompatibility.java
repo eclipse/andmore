@@ -16,6 +16,8 @@
 
 package org.eclipse.andmore.internal.launch;
 
+import org.eclipse.andmore.internal.sdk.Sdk;
+
 import com.android.sdklib.AndroidVersion;
 import com.android.sdklib.IAndroidTarget;
 import com.android.sdklib.internal.avd.AvdInfo;
@@ -41,7 +43,8 @@ public class AvdCompatibility {
             return Compatibility.UNKNOWN;
         }
 
-        IAndroidTarget avdTarget = avd.getTarget();
+        Sdk currentSdk = Sdk.getCurrent();
+        IAndroidTarget avdTarget = currentSdk == null ? null : currentSdk.getAndroidTargetFor(avd);
         if (avdTarget == null) {
             return Compatibility.UNKNOWN;
         }

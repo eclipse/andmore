@@ -9,13 +9,15 @@ Bundle-ClassPath: .,
  libs/freemarker-2.3.20.jar,
  libs/rule-api.jar,
  libs/asset-studio.jar,
+ libs/uast-162.2228.14.jar, 
  libs/lint-api.jar,
  libs/lint-checks.jar,
  libs/lombok-ast-0.2.3.jar,
  libs/propertysheet.jar,
  libs/ant-glob.jar,
  libs/swtmenubar.jar,
- libs/manifest-merger.jar
+ libs/manifest-merger-25.3.3.jar,
+ libs/builder-2.3.3.jar
 Bundle-Activator: org.eclipse.andmore.AndmoreAndroidPlugin
 Bundle-Vendor: Eclipse Andmore
 Require-Bundle: org.eclipse.andmore.base,

@@ -261,7 +261,7 @@ public class SdkTargetSelector extends Composite {
 				item.setText(0, target.getName());
 				item.setText(1, target.getVendor());
 				item.setText(2, target.getVersion().getApiString());
-				item.setText(3, target.getVersionName());
+				item.setText(3, target.getVersionName() == null ? target.getVersion().getApiString() : target.getVersionName());
 				if (target == project.getSdkTarget()) {
 					item.setChecked(true);
 					selection = target;

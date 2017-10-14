@@ -17,16 +17,14 @@
 package org.eclipse.andmore.internal;
 
 import com.android.SdkConstants;
-import com.android.sdklib.repository.FullRevision;
-import com.android.sdklib.repository.FullRevision.PreviewComparison;
+import com.android.repository.Revision;
+import com.android.repository.Revision.PreviewComparison;
 import com.android.sdklib.repository.PkgProps;
 
 import org.eclipse.andmore.AndmoreAndroidPlugin;
 import org.eclipse.andmore.Messages;
 import org.eclipse.andmore.AndmoreAndroidPlugin.CheckSdkErrorHandler;
 import org.eclipse.andmore.AndmoreAndroidPlugin.CheckSdkErrorHandler.Solution;
-import org.osgi.framework.Constants;
-import org.osgi.framework.Version;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -51,7 +49,7 @@ public class VersionCheck {
     /**
      * The minimum version of the SDK Tools that this version of ADT requires.
      */
-    private final static FullRevision MIN_TOOLS_REV = new FullRevision(23, 0, 0, 0);
+    private final static Revision MIN_TOOLS_REV = new Revision(23, 0, 0, 0);
 
     /**
      * Pattern to get the minimum plugin version supported by the SDK. This is read from
@@ -136,7 +134,7 @@ public class VersionCheck {
 
         // now check whether the tools are new enough.
         String osTools = osSdkPath + SdkConstants.OS_SDK_TOOLS_FOLDER;
-        FullRevision toolsRevision = new FullRevision(Integer.MAX_VALUE);
+        Revision toolsRevision = new Revision(Integer.MAX_VALUE);
         try {
             reader = new BufferedReader(new FileReader(osTools + SdkConstants.FN_SOURCE_PROP));
             String line;
@@ -144,7 +142,7 @@ public class VersionCheck {
                 Matcher m = sSourcePropPattern.matcher(line);
                 if (m.matches()) {
                     try {
-                        toolsRevision = FullRevision.parseRevision(m.group(1));
+                        toolsRevision = Revision.parseRevision(m.group(1));
                     } catch (NumberFormatException ignore) {}
                     break;
                 }
@@ -175,21 +173,4 @@ public class VersionCheck {
 
         return true; // no error!
     }
-
-	private static boolean compatibleVersion(int minMajorVersion, int minMinorVersion, int minMicroVersion,
-			Version version) {
-		boolean valid = true;
-        if (version.getMajor() < minMajorVersion) {
-            valid = false;
-        } else if (version.getMajor() == minMajorVersion) {
-            if (version.getMinor() < minMinorVersion) {
-                valid = false;
-            } else if (version.getMinor() == minMinorVersion) {
-                if (version.getMicro() < minMicroVersion) {
-                    valid = false;
-                }
-            }
-        }
-		return valid;
-	}
 }

@@ -16,26 +16,26 @@
 
 package org.eclipse.andmore.internal.actions;
 
-import com.android.SdkConstants;
-import com.android.annotations.Nullable;
-import com.android.sdklib.SdkManager;
-import com.android.sdklib.internal.project.ProjectProperties;
-import com.android.sdklib.internal.project.ProjectProperties.PropertyType;
-import com.android.sdklib.internal.project.ProjectPropertiesWorkingCopy;
-import com.android.sdklib.io.FileOp;
-import com.android.sdkuilib.internal.repository.ui.AdtUpdateDialog;
-import com.android.utils.NullLogger;
-import com.android.utils.Pair;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
 
+import org.eclipse.andmore.AdtUtils;
 import org.eclipse.andmore.AndmoreAndroidConstants;
 import org.eclipse.andmore.AndmoreAndroidPlugin;
-import org.eclipse.andmore.AdtUtils;
 import org.eclipse.andmore.internal.sdk.AdtConsoleSdkLog;
 import org.eclipse.andmore.internal.sdk.ProjectState;
 import org.eclipse.andmore.internal.sdk.Sdk;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.IFileSystem;
+import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -62,10 +62,17 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
+import com.android.SdkConstants;
+import com.android.annotations.Nullable;
+import com.android.repository.api.LocalPackage;
+import com.android.repository.io.FileOp;
+import com.android.repository.io.FileOpUtils;
+import com.android.repository.testframework.FakeProgressIndicator;
+import com.android.sdklib.internal.project.ProjectProperties;
+import com.android.sdklib.internal.project.ProjectProperties.PropertyType;
+import com.android.sdklib.internal.project.ProjectPropertiesWorkingCopy;
+import com.android.sdkuilib.internal.repository.ui.AdtUpdateDialog;
+import com.android.utils.Pair;
 
 /**
  * An action to add the android-support-v4.jar support library
@@ -230,8 +237,8 @@ public class AddSupportJarAction implements IObjectActionDelegate {
         final Sdk sdk = Sdk.getCurrent();
         if (sdk != null) {
             String sdkLocation = sdk.getSdkOsLocation();
-            SdkManager manager = SdkManager.createManager(sdkLocation, NullLogger.getLogger());
-            Map<String, Integer> versions = manager.getExtrasVersions();
+//            SdkManager manager = SdkManager.createManager(sdkLocation, NullLogger.getLogger());
+            Map<String, Integer> versions = Collections.emptyMap(); //manager.getExtrasVersions();
             Integer version = versions.get(VENDOR_ID + '/' + SUPPORT_ID);
             if (version == null) {
                 // Check the old compatibility library. When the library is updated in-place
@@ -368,27 +375,18 @@ public class AddSupportJarAction implements IObjectActionDelegate {
     private static File getSupportPackageDir() {
         final Sdk sdk = Sdk.getCurrent();
         if (sdk != null) {
-            String sdkLocation = sdk.getSdkOsLocation();
-            SdkManager manager = SdkManager.createManager(sdkLocation, NullLogger.getLogger());
-            Map<String, Integer> versions = manager.getExtrasVersions();
-            Integer version = versions.get(VENDOR_ID + '/' + SUPPORT_ID);
-            if (version != null) {
-                File supportPath = new File(sdkLocation,
-                        SdkConstants.FD_EXTRAS + File.separator
-                        + VENDOR_ID + File.separator
-                        + SUPPORT_ID);
+            LocalPackage pkg = sdk.getAndroidSdkHandler().getLatestLocalPackageForPrefix("extras;android;support", false, new FakeProgressIndicator());
+            if (pkg != null) {
+                File supportPath = pkg.getLocation();
                 return supportPath;
             }
 
             // Check the old compatibility library. When the library is updated in-place
             // the manager doesn't change its folder name (since that is a source of
             // endless issues on Windows.)
-            version = versions.get(VENDOR_ID + '/' + COMPATIBILITY_ID);
-            if (version != null) {
-                File supportPath = new File(sdkLocation,
-                        SdkConstants.FD_EXTRAS + File.separator
-                        + VENDOR_ID + File.separator
-                        + COMPATIBILITY_ID);
+            pkg = sdk.getAndroidSdkHandler().getLatestLocalPackageForPrefix("extras;android;compatibility", false, new FakeProgressIndicator());
+            if (pkg != null) {
+                File supportPath = pkg.getLocation();
                 return supportPath;
             }
         }
@@ -491,6 +489,10 @@ public class AddSupportJarAction implements IObjectActionDelegate {
                 }
             }
 
+			// Resources copied from the SDK can have old namespace references
+			updateClasspath(newProject.getFile(".project"), monitor);
+			updateClasspath(newProject.getFile(".classpath"), monitor);
+
             newProject.open(monitor);
 
             return newProject;
@@ -499,6 +501,36 @@ public class AddSupportJarAction implements IObjectActionDelegate {
             return null;
         }
     }
+
+	private static void updateClasspath(IFile file, IProgressMonitor monitor) {
+		BufferedReader reader = null;
+		StringBuilder builder = new StringBuilder();
+		try {
+			File osFile = new File(file.getLocationURI());
+			reader = new BufferedReader(new FileReader(osFile));
+			int read = -1;
+			char[] bytes = new char[1024];
+			while ((read = reader.read(bytes)) != -1) {
+				builder.append(bytes, 0, read);
+			}
+		} catch (Exception e) {
+			// do nothing
+			return;
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					return;
+				}
+			}
+		}
+		try {
+			String content = builder.toString().replaceAll("com.android.ide.eclipse.adt", "org.eclipse.andmore");
+			file.setContents(new ByteArrayInputStream(content.getBytes()), true, false, monitor);
+		} catch (CoreException e) {
+		}
+	}
 
     /**
      * Adds a library dependency on the given library into the given project.
@@ -606,7 +638,7 @@ public class AddSupportJarAction implements IObjectActionDelegate {
         File destPath = loc.toFile();
 
         // Only modify the file if necessary so that we don't trigger unnecessary recompilations
-        FileOp f = new FileOp();
+        FileOp f = FileOpUtils.create();
         if (!f.isFile(destPath) || !f.isSameFile(jarPath, destPath)) {
             f.copyFile(jarPath, destPath);
             // Make sure Eclipse discovers java.io file changes

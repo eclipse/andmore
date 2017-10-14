@@ -28,16 +28,21 @@ import com.android.ide.common.rendering.LayoutLibrary;
 import com.android.ide.common.sdk.LoadStatus;
 import com.android.io.StreamException;
 import com.android.prefs.AndroidLocation.AndroidLocationException;
+import com.android.repository.Revision;
+import com.android.repository.api.LocalPackage;
+import com.android.repository.api.RepoManager;
+import com.android.repository.testframework.FakeProgressIndicator;
 import com.android.sdklib.AndroidVersion;
 import com.android.sdklib.BuildToolInfo;
 import com.android.sdklib.IAndroidTarget;
-import com.android.sdklib.SdkManager;
 import com.android.sdklib.devices.DeviceManager;
+import com.android.sdklib.internal.avd.AvdInfo;
 import com.android.sdklib.internal.avd.AvdManager;
 import com.android.sdklib.internal.project.ProjectProperties;
 import com.android.sdklib.internal.project.ProjectProperties.PropertyType;
+import com.android.sdklib.repository.AndroidSdkHandler;
+import com.android.sdklib.repository.meta.DetailsTypes;
 import com.android.sdklib.internal.project.ProjectPropertiesWorkingCopy;
-import com.android.sdklib.repository.FullRevision;
 import com.android.utils.ILogger;
 import com.google.common.collect.Maps;
 
@@ -136,7 +141,9 @@ public final class Sdk  {
         final HashSet<IJavaProject> projectsToReload = new HashSet<IJavaProject>();
     }
 
-    private final SdkManager mManager;
+    private final AndroidSdkHandler mAndroidSdkHandler;
+
+    private final RepoManager mManager;
     private final Map<String, DexWrapper> mDexWrappers = Maps.newHashMap();
     private final AvdManager mAvdManager;
     private final DeviceManager mDeviceManager;
@@ -273,20 +280,22 @@ public final class Sdk  {
                 }
             };
 
+            
             // get an SdkManager object for the location
-            SdkManager manager = SdkManager.createManager(sdkLocation, log);
+            AndroidSdkHandler androidSdkHandler = AndroidSdkHandler.getInstance(new File(sdkLocation));
             try {
-                if (manager == null) {
+                if (androidSdkHandler == null) {
                     hasError.set(true);
                 } else {
+                    RepoManager manager = androidSdkHandler.getSdkManager(new FakeProgressIndicator());
                     // create the AVD Manager
                     AvdManager avdManager = null;
                     try {
-                        avdManager = AvdManager.getInstance(manager.getLocalSdk(), log);
+                        avdManager = AvdManager.getInstance(androidSdkHandler, log);
                     } catch (AndroidLocationException e) {
                         log.error(e, "Error parsing the AVDs");
                     }
-                    sCurrentSdk = new Sdk(manager, avdManager);
+                    sCurrentSdk = new Sdk(androidSdkHandler, manager, avdManager);
                     return sCurrentSdk;
                 }
             } finally {
@@ -334,7 +343,7 @@ public final class Sdk  {
     @Deprecated
     @Nullable
     public String getSdkOsLocation() {
-        String path = mManager == null ? null : mManager.getLocation();
+        String path = mManager == null ? null : mManager.getLocalPath().toString();
         if (path != null) {
             // For backward compatibility make sure it ends with a separator.
             // This used to be the case when the SDK Manager was created from a String path
@@ -353,29 +362,10 @@ public final class Sdk  {
      */
     @Nullable
     public File getSdkFileLocation() {
-        if (mManager == null || mManager.getLocalSdk() == null) {
+        if (mAndroidSdkHandler == null) {
             return null;
         }
-        return mManager.getLocalSdk().getLocation();
-    }
-
-    /**
-     * Returns a <em>new</em> {@link SdkManager} that can parse the SDK located
-     * at the current {@link #getSdkOsLocation()}.
-     * <p/>
-     * Implementation detail: The {@link Sdk} has its own internal manager with
-     * a custom logger which is not designed to be useful for outsiders. Callers
-     * who need their own {@link SdkManager} for parsing will often want to control
-     * the logger for their own need.
-     * <p/>
-     * This is just a convenient method equivalent to writing:
-     * <pre>SdkManager.createManager(Sdk.getCurrent().getSdkLocation(), log);</pre>
-     *
-     * @param log The logger for the {@link SdkManager}.
-     * @return A new {@link SdkManager} parsing the same location.
-     */
-    public @Nullable SdkManager getNewSdkManager(@NonNull ILogger log) {
-        return SdkManager.createManager(getSdkOsLocation(), log);
+        return mAndroidSdkHandler.getLocation();
     }
 
     /**
@@ -392,8 +382,9 @@ public final class Sdk  {
     /**
      * Returns the list of targets that are available in the SDK.
      */
-    public IAndroidTarget[] getTargets() {
-        return mManager.getTargets();
+    @NonNull
+    public Collection<IAndroidTarget> getTargets() {
+        return mAndroidSdkHandler.getAndroidTargetManager(new FakeProgressIndicator()).getTargets(new FakeProgressIndicator());
     }
 
     /**
@@ -407,7 +398,7 @@ public final class Sdk  {
      * directory without altering the source.properties.)
      */
     public boolean haveTargetsChanged() {
-        return mManager.hasChanged();
+        return false; //mManager.hasChanged();
     }
 
     /**
@@ -418,14 +409,14 @@ public final class Sdk  {
      */
     @Nullable
     public IAndroidTarget getTargetFromHashString(@NonNull String hash) {
-        return mManager.getTargetFromHashString(hash);
+        return mAndroidSdkHandler.getAndroidTargetManager(new FakeProgressIndicator()).getTargetFromHashString(hash, new FakeProgressIndicator());
     }
 
     @Nullable
     public BuildToolInfo getBuildToolInfo(@Nullable String buildToolVersion) {
         if (buildToolVersion != null) {
             try {
-                return mManager.getBuildTool(FullRevision.parseRevision(buildToolVersion));
+                return mAndroidSdkHandler.getBuildToolInfo(Revision.parseRevision(buildToolVersion), new FakeProgressIndicator());
             } catch (Exception e) {
                 // ignore, return null below.
             }
@@ -436,7 +427,7 @@ public final class Sdk  {
 
     @Nullable
     public BuildToolInfo getLatestBuildTool() {
-        return mManager.getLatestBuildTool();
+        return mAndroidSdkHandler.getLatestBuildTool(new FakeProgressIndicator(), true);
     }
 
     /**
@@ -772,6 +763,14 @@ public final class Sdk  {
         }
     }
 
+    @Nullable
+    public IAndroidTarget getAndroidTargetFor(AvdInfo avdInfo) {
+        // TODO this is intended for testing and is clearly wrong, we probably need some ProgressIndicator -> ProgressMonitor
+        FakeProgressIndicator indicator = new FakeProgressIndicator();
+        return mAndroidSdkHandler.getAndroidTargetManager(indicator)
+                .getTargetOfAtLeastApiLevel(avdInfo.getAndroidVersion().getApiLevel(), indicator);
+    }
+
     /**
      * Return the {@link AndroidTargetData} for a given {@link IProject}.
      */
@@ -834,6 +833,11 @@ public final class Sdk  {
         return mAvdManager;
     }
 
+    @NonNull
+    public AndroidSdkHandler getAndroidSdkHandler() {
+        return mAndroidSdkHandler;
+    }
+
     @Nullable
     public static AndroidVersion getDeviceVersion(@NonNull IDevice device) {
         try {
@@ -891,6 +895,14 @@ public final class Sdk  {
         }
     }
 
+    @NonNull
+    public Map<File, String> getExtraSamples() {
+        Map<File, String> samples = new HashMap<File, String>();
+        
+        // TODO how do we find these properly?
+        return samples;
+    }
+
     /**
      * Unload the SDK's target data.
      *
@@ -916,9 +928,10 @@ public final class Sdk  {
         }
     }
 
-    private Sdk(SdkManager manager, AvdManager avdManager) {
+    private Sdk(AndroidSdkHandler androidSdkHandler, RepoManager manager, AvdManager avdManager) {
         mManager = manager;
         mAvdManager = avdManager;
+        mAndroidSdkHandler = androidSdkHandler;
 
         // listen to projects closing
         GlobalProjectMonitor monitor = GlobalProjectMonitor.getMonitor();
@@ -930,10 +943,10 @@ public final class Sdk  {
                 IResourceDelta.CHANGED | IResourceDelta.ADDED | IResourceDelta.REMOVED);
 
         // pre-compute some paths
-        mDocBaseUrl = getDocumentationBaseUrl(manager.getLocation() +
+        mDocBaseUrl = getDocumentationBaseUrl(manager.getLocalPath() +
                 SdkConstants.OS_SDK_DOCS_FOLDER);
 
-        mDeviceManager = DeviceManager.createInstance(manager.getLocalSdk().getLocation(),
+        mDeviceManager = DeviceManager.createInstance(mAndroidSdkHandler.getLocation(),
                                                       AndmoreAndroidPlugin.getDefault());
 
         // update whatever ProjectState is already present with new IAndroidTarget objects.

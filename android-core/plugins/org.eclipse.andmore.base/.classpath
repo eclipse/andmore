@@ -3,15 +3,17 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src/"/>
-	<classpathentry exported="true" kind="lib" path="libs/annotations.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/common.jar" sourcepath="/common"/>
-	<classpathentry exported="true" kind="lib" path="libs/guava-17.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/annotations-25.3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/common-25.3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/guava-18.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/httpmime-4.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/kxml2-2.3.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/layoutlib-api.jar" sourcepath="/layoutlib-api"/>
-	<classpathentry exported="true" kind="lib" path="libs/sdklib.jar" sourcepath="/sdklib"/>
+	<classpathentry exported="true" kind="lib" path="libs/layoutlib-api-25.3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/sdklib-25.3.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/sdkstats.jar" sourcepath="/sdkstats"/>
-	<classpathentry exported="true" kind="lib" path="libs/dvlib.jar" sourcepath="/dvlib"/>
-	<classpathentry exported="true" kind="lib" path="libs/sdk-common.jar" sourcepath="/sdk-common"/>
+	<classpathentry exported="true" kind="lib" path="libs/dvlib-25.3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/sdk-common-25.3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/repository-25.3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/jimfs-1.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

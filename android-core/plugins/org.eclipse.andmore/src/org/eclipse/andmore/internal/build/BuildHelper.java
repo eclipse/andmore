@@ -113,7 +113,7 @@ public class BuildHelper {
 
     private static final String MULTIDEX_ENABLED_PROPERTY = "multidex.enabled";
     private static final String MULTIDEX_MAIN_DEX_LIST_PROPERTY = "multidex.main-dex-list";
-    
+        
     @NonNull
     private final ProjectState mProjectState;
     @NonNull
@@ -957,9 +957,7 @@ public class BuildHelper {
         if (aaptCommand.equals(COMMAND_PACKAGE)) {
             commandArray.add("-f");          //$NON-NLS-1$
             commandArray.add("--no-crunch"); //$NON-NLS-1$
-            if (mProjectState.isNoVersionVectors()) {
-            	commandArray.add("--no-version-vectors"); //$NON-NLS-1$	
-            }
+
             // if more than one res, this means there's a library (or more) and we need
             // to activate the auto-add-overlay
             if (osResPaths.size() > 1) {

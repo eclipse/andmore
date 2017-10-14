@@ -386,7 +386,7 @@ public final class AndroidLaunchController implements IDebugBridgeChangeListener
             }
 
             if (preferredAvd != null) {
-                IAndroidTarget preferredAvdTarget = preferredAvd.getTarget();
+                IAndroidTarget preferredAvdTarget = currentSdk.getAndroidTargetFor(preferredAvd);
                 if (preferredAvdTarget != null
                         && !preferredAvdTarget.getVersion().canRun(minApiVersion)) {
                     preferredAvd = null;
@@ -660,7 +660,8 @@ public final class AndroidLaunchController implements IDebugBridgeChangeListener
     private Collection<IDevice> findCompatibleDevices(IDevice[] devices,
             AndroidVersion requiredVersion, boolean includeDevices, boolean includeAvds) {
         Set<IDevice> compatibleDevices = new HashSet<IDevice>(devices.length);
-        AvdManager avdManager = Sdk.getCurrent().getAvdManager();
+        Sdk currentSdk = Sdk.getCurrent();
+        AvdManager avdManager = currentSdk.getAvdManager();
         for (IDevice d: devices) {
             boolean isEmulator = d.isEmulator();
             boolean canRun = false;
@@ -671,8 +672,9 @@ public final class AndroidLaunchController implements IDebugBridgeChangeListener
                 }
 
                 AvdInfo avdInfo = avdManager.getAvd(d.getAvdName(), true);
-                if (avdInfo != null && avdInfo.getTarget() != null) {
-                    canRun = avdInfo.getTarget().getVersion().canRun(requiredVersion);
+                IAndroidTarget target = currentSdk.getAndroidTargetFor(avdInfo);
+                if (avdInfo != null && target != null) {
+                    canRun = target.getVersion().canRun(requiredVersion);
                 }
             } else {
                 if (!includeDevices) {
@@ -701,14 +703,15 @@ public final class AndroidLaunchController implements IDebugBridgeChangeListener
             AndroidVersion minApiVersion) {
         AvdInfo[] avds = avdManager.getValidAvds();
         AvdInfo bestAvd = null;
+        Sdk currentSdk = Sdk.getCurrent();
         for (AvdInfo avd : avds) {
             if (AvdCompatibility.canRun(avd, projectTarget, minApiVersion)
                     == AvdCompatibility.Compatibility.YES) {
                 // at this point we can ignore the code name issue since
                 // AvdCompatibility.canRun() will already have filtered out the non compatible AVDs.
                 if (bestAvd == null ||
-                        avd.getTarget().getVersion().getApiLevel() <
-                            bestAvd.getTarget().getVersion().getApiLevel()) {
+                        currentSdk.getAndroidTargetFor(avd).getVersion().getApiLevel() <
+                        currentSdk.getAndroidTargetFor(bestAvd).getVersion().getApiLevel()) {
                     bestAvd = avd;
                 }
             }
@@ -1257,7 +1260,13 @@ public final class AndroidLaunchController implements IDebugBridgeChangeListener
      */
     private String doInstall(DelayedLaunchInfo launchInfo, final String remotePath,
             final IDevice device, boolean reinstall) throws InstallException {
-        return device.installRemotePackage(remotePath, reinstall);
+        try {
+            device.installRemotePackage(remotePath, reinstall);
+            return null;
+        }
+        catch (InstallException e) {
+            return e.getMessage();
+        }
     }
 
     /**

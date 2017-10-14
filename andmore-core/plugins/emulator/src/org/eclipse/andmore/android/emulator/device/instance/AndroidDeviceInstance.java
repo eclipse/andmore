@@ -58,6 +58,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 
 import com.android.sdklib.IAndroidTarget;
 import com.android.sdklib.internal.avd.AvdInfo;
+import com.android.sdklib.repository.targets.AndroidTargetManager;
 
 /**
  * DESCRIPTION: This class represents a Android Emulator instance
@@ -366,7 +367,7 @@ public class AndroidDeviceInstance extends AbstractMobileInstance implements IAn
 
 		if (vmInfo != null) {
 			// VM target
-			instanceProperties.setProperty(IDevicePropertiesConstants.vmTarget, vmInfo.getTarget().getName());
+			instanceProperties.setProperty(IDevicePropertiesConstants.vmTarget, SdkUtils.getCurrentSdk().getAndroidTargetFor(vmInfo).getName());
 
 			// ABI Type
 			instanceProperties.setProperty(IDevicePropertiesConstants.abiType, vmInfo.getAbiType());
@@ -404,8 +405,9 @@ public class AndroidDeviceInstance extends AbstractMobileInstance implements IAn
 		AvdInfo avdInfo = SdkUtils.getValidVm(getName());
 		if (avdInfo != null) {
 			String skinPath = avdInfo.getProperties().get("skin.path");
-			skinPath = SdkUtils.getCurrentSdk().getSdkOsLocation() + skinPath;
-			IAndroidTarget target = avdInfo.getTarget();
+			skinPath = new File(SdkUtils.getCurrentSdk().getSdkFileLocation(), skinPath).getAbsolutePath();
+			
+			IAndroidTarget target = SdkUtils.getCurrentSdk().getAndroidTargetFor(avdInfo);
 			File candidateFile = new File(skinPath);
 			// If path specified on the skin does not exist, try to retrieve it
 			// from the target.
@@ -459,7 +461,7 @@ public class AndroidDeviceInstance extends AbstractMobileInstance implements IAn
 		IAndroidTarget result = null;
 		AvdInfo avdInfo = SdkUtils.getValidVm(getName());
 		if (avdInfo != null) {
-			result = avdInfo.getTarget();
+			result = SdkUtils.getCurrentSdk().getAndroidTargetFor(avdInfo);
 		}
 		return result;
 	}

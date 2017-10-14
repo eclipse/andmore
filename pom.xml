@@ -37,19 +37,25 @@
 	</ciManagement>
 
 	<properties>
+        <project.java.version>1.8</project.java.version>
 		<tycho-version>0.26.0</tycho-version>
 		<eclipse-site>http://download.eclipse.org/releases/neon/</eclipse-site>
-		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository</orbit-site>
+		<orbit-site>http://download.eclipse.org/tools/orbit/R-builds/R20170307180635/repository</orbit-site>
 		<sequoyah-site>http://download.eclipse.org/sequoyah/updates/2.1/</sequoyah-site>
 		<m2e-update-site>http://download.eclipse.org/technology/m2e/releases/</m2e-update-site>
+        <android.builder.version>2.3.0</android.builder.version>
+        <android.tools.version>25.3.3</android.tools.version>
+        <third-party-repo>file:/F:/development/swt-droid/swt-android-core/site/target/repository</third-party-repo>
 	</properties>
 
 	<repositories>
+		<!--
 		<repository>
 			<id>sequoyah</id>
 			<layout>p2</layout>
 			<url>${sequoyah-site}</url>
 		</repository>
+		-->
 		<repository>
 			<id>eclipse</id>
 			<layout>p2</layout>
@@ -141,6 +147,15 @@
 					<groupId>org.eclipse.tycho.extras</groupId>
 					<artifactId>tycho-pack200b-plugin</artifactId>
 					<version>${tycho-version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-compiler-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+						<source>${project.java.version}</source>
+						<target>${project.java.version}</target>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.eclipse.cbi.maven.plugins</groupId>

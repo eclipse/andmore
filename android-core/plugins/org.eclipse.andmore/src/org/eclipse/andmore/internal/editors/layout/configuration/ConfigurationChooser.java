@@ -886,10 +886,9 @@ public class ConfigurationChooser extends Composite
 
         Sdk currentSdk = Sdk.getCurrent();
         if (currentSdk != null) {
-            IAndroidTarget[] targets = currentSdk.getTargets();
-            for (int i = 0 ; i < targets.length; i++) {
-                if (targets[i].hasRenderingLibrary()) {
-                    mTargetList.add(targets[i]);
+            for (IAndroidTarget target : currentSdk.getTargets()) {
+                if (target.hasRenderingLibrary()) {
+                    mTargetList.add(target);
                 }
             }
 

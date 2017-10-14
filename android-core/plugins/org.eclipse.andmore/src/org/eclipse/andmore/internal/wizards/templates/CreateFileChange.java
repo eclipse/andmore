@@ -19,7 +19,7 @@ package org.eclipse.andmore.internal.wizards.templates;
 import com.android.annotations.NonNull;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
-import com.google.common.io.InputSupplier;
+import com.google.common.io.ByteSource;
 
 import org.eclipse.andmore.AndmoreAndroidPlugin;
 import org.eclipse.andmore.AdtUtils;
@@ -80,7 +80,7 @@ public class CreateFileChange extends ResourceChange {
     @SuppressWarnings("resource") // Eclipse doesn't know about Guava's Closeables.closeQuietly
     @Override
     public Change perform(IProgressMonitor pm) throws CoreException {
-        InputSupplier<FileInputStream> supplier = Files.newInputStreamSupplier(mSource);
+        ByteSource supplier = Files.asByteSource(mSource);
         InputStream is = null;
         try {
             pm.beginTask("Creating file", 3);
@@ -93,7 +93,7 @@ public class CreateFileChange extends ResourceChange {
                 AdtUtils.ensureExists(folder);
             }
 
-            is = supplier.getInput();
+            is = supplier.openBufferedStream();
             file.create(is, false, new SubProgressMonitor(pm, 1));
             pm.worked(1);
         } catch (Exception ioe) {

@@ -62,6 +62,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -382,7 +383,7 @@ public class NewProjectPage extends WizardPage
         if (current == null) {
             return new IAndroidTarget[0];
         }
-        IAndroidTarget[] targets = current.getTargets();
+        Collection<IAndroidTarget> targets = current.getTargets();
         List<IAndroidTarget> list = new ArrayList<IAndroidTarget>();
 
         for (IAndroidTarget target : targets) {

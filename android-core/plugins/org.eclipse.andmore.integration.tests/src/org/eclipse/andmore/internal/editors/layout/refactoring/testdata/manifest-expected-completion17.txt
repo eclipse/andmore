@@ -3,6 +3,7 @@ xmlns:android
 package : This attribute gives a unique name for the package, using a Java-style naming convention to avoid name collisions. For example, applications published by Google could have names of the form com.google.app.appname
 android:versionCode : Internal version code.  [integer]
 android:versionName : The text shown to the user to indicate the version they have.  [string]
+android:revisionCode : Internal revision code.  [integer]
 android:sharedUserId : Specify the name of a user ID that will be shared between multiple  packages.  [string]
 android:sharedUserLabel : Specify a label for the shared user UID of this package.  [reference]
 android:installLocation : The default install location defined by an application.  [enum]
