@@ -33,6 +33,7 @@ import com.android.ide.common.rendering.api.Result.Status;
 import com.android.ide.common.resources.ResourceFile;
 import com.android.ide.common.resources.ResourceRepository;
 import com.android.ide.common.resources.ResourceResolver;
+import com.android.ide.common.resources.ResourceValueMap;
 import com.android.ide.common.resources.configuration.FolderConfiguration;
 import com.android.ide.common.resources.configuration.ScreenOrientationQualifier;
 import com.android.io.IAbstractFile;
@@ -610,8 +611,8 @@ public class RenderPreview implements IJobChangeListener {
             return null;
         }
 
-        Map<ResourceType, Map<String, ResourceValue>> configuredFrameworkRes = null;
-        Map<ResourceType, Map<String, ResourceValue>> configuredProjectRes = null;
+        Map<ResourceType, ResourceValueMap> configuredFrameworkRes = null;
+        Map<ResourceType, ResourceValueMap> configuredProjectRes = null;
 
         FolderConfiguration config = configuration.getFullConfig();
         IAndroidTarget target = graphicalEditor.getRenderingTarget();

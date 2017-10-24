@@ -1254,7 +1254,7 @@ public class PreCompilerBuilder extends BaseBuilder {
                 File rFile = new File(outputFolder, SdkConstants.FN_RESOURCE_TEXT);
                 // if the project has no resources, the file could not exist.
                 if (rFile.isFile()) {
-                	generateLibraryRs(new File(osOutputPath), outputFolder, libRFiles);
+                	generateLibraryRs(outputFolder, new File(osOutputPath), libRFiles);
                 	/*
                     // Load the full symbols from the full R.txt file.
                     SymbolLoader fullSymbolValues = new SymbolLoader(rFile);
@@ -1394,7 +1394,7 @@ public class PreCompilerBuilder extends BaseBuilder {
      * From Simpligility android-maven-plugin
      * @author William Ferguson - william.ferguson@xandar.com.au
      */
-    public void generateLibraryRs(final File targetDirectory, final File genDirectory, final List<Pair<File, String>> libRFiles)
+    public void generateLibraryRs(final File outputDirectory, final File genDirectory, final List<Pair<File, String>> libRFiles)
     {
         // list of all the symbol tables
         final List<SymbolTable> symbolTables = new ArrayList<SymbolTable>(libRFiles.size());
@@ -1414,7 +1414,7 @@ public class PreCompilerBuilder extends BaseBuilder {
 
         if (!symbolTables.isEmpty()) {
             // load the full resources values from the R.txt calculated for the project.
-            final File projectR = new File(targetDirectory, "R.txt");
+            final File projectR = new File(outputDirectory, "R.txt");
             final SymbolTable mainSymbols = SymbolIo.read(projectR);
 
             // now loop on all the package name, merge all the symbols to write, and write them

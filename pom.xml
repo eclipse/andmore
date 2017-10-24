@@ -76,6 +76,11 @@
 			<url>http://download.eclipse.org/cbi/updates/license/</url>
 			<layout>p2</layout>
 		</repository>
+	    <repository>
+	        <id>third-party-plugins</id>
+	        <layout>p2</layout>
+	        <url>${third-party-repo}</url>
+	    </repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -155,6 +160,8 @@
 					<configuration>
 						<source>${project.java.version}</source>
 						<target>${project.java.version}</target>
+		                <compilerArgument>-warn:none</compilerArgument>     
+		                <compilerArgument>-err:none</compilerArgument>      
 					</configuration>
 				</plugin>
 				<plugin>

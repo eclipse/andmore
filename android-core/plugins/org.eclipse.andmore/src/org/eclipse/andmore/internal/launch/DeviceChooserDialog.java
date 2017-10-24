@@ -479,7 +479,7 @@ public class DeviceChooserDialog extends Dialog implements IDeviceChangeListener
         offsetComp.setLayout(layout);
 
         mPreferredAvdSelector = new AvdSelector(offsetComp,
-                mSdk.getSdkOsLocation(),
+                mSdk.getSdkFileLocation().toString(),
                 mSdk.getAvdManager(),
                 new NonRunningAvdFilter(),
                 DisplayMode.SIMPLE_SELECTION,

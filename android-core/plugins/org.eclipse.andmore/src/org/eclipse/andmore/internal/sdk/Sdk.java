@@ -29,7 +29,6 @@ import com.android.ide.common.sdk.LoadStatus;
 import com.android.io.StreamException;
 import com.android.prefs.AndroidLocation.AndroidLocationException;
 import com.android.repository.Revision;
-import com.android.repository.api.LocalPackage;
 import com.android.repository.api.RepoManager;
 import com.android.repository.testframework.FakeProgressIndicator;
 import com.android.sdklib.AndroidVersion;
@@ -41,14 +40,13 @@ import com.android.sdklib.internal.avd.AvdManager;
 import com.android.sdklib.internal.project.ProjectProperties;
 import com.android.sdklib.internal.project.ProjectProperties.PropertyType;
 import com.android.sdklib.repository.AndroidSdkHandler;
-import com.android.sdklib.repository.meta.DetailsTypes;
 import com.android.sdklib.internal.project.ProjectPropertiesWorkingCopy;
 import com.android.utils.ILogger;
 import com.google.common.collect.Maps;
 
 import org.eclipse.andmore.AndmoreAndroidConstants;
 import org.eclipse.andmore.AndmoreAndroidPlugin;
-import org.eclipse.andmore.internal.build.DexWrapper;
+//import org.eclipse.andmore.internal.build.DexWrapper;
 import org.eclipse.andmore.internal.editors.common.CommonXmlEditor;
 import org.eclipse.andmore.internal.preferences.AdtPrefs;
 import org.eclipse.andmore.internal.project.BaseProjectHelper;
@@ -144,7 +142,7 @@ public final class Sdk  {
     private final AndroidSdkHandler mAndroidSdkHandler;
 
     private final RepoManager mManager;
-    private final Map<String, DexWrapper> mDexWrappers = Maps.newHashMap();
+    //private final Map<String, DexWrapper> mDexWrappers = Maps.newHashMap();
     private final AvdManager mAvdManager;
     private final DeviceManager mDeviceManager;
 
@@ -790,6 +788,7 @@ public final class Sdk  {
      * Returns a {@link DexWrapper} object to be used to execute dx commands. If dx.jar was not
      * loaded properly, then this will return <code>null</code>.
      */
+    /*
     @Nullable
     public DexWrapper getDexWrapper(@Nullable BuildToolInfo buildToolInfo) {
         if (buildToolInfo == null) {
@@ -823,7 +822,7 @@ public final class Sdk  {
             mDexWrappers.clear();
         }
     }
-
+*/
     /**
      * Returns the {@link AvdManager}. If the AvdManager failed to parse the AVD folder, this could
      * be <code>null</code>.

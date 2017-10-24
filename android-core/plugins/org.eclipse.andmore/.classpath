@@ -3,19 +3,17 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src/"/>
-	<classpathentry exported="true" kind="lib" path="libs/sdkuilib.jar" sourcepath="/sdkuilib"/>
-	<classpathentry exported="true" kind="lib" path="libs/ninepatch.jar" sourcepath="/ninepatch"/>
+	<classpathentry exported="true" kind="lib" path="libs/ninepatch.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/freemarker-2.3.20.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/rule-api.jar" sourcepath="/rule-api"/>
-	<classpathentry exported="true" kind="lib" path="libs/asset-studio.jar" sourcepath="/asset-studio"/>
-	<classpathentry exported="true" kind="lib" path="libs/uast-162.2228.14.jar"
-	<classpathentry exported="true" kind="lib" path="libs/lint-api.jar" sourcepath="/lint-api"/>
-	<classpathentry exported="true" kind="lib" path="libs/lint-checks.jar" sourcepath="/lint-checks"/>
+	<classpathentry exported="true" kind="lib" path="libs/rule-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/asset-studio.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/uast-162.2228.14.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/lint-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/lint-checks.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/lombok-ast-0.2.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/propertysheet.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/ant-glob.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/swtmenubar.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/manifest-merger-25.3.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/build-25.3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/builder-2.3.3.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

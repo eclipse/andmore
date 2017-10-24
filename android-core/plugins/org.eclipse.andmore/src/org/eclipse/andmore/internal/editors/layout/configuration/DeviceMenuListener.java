@@ -17,9 +17,9 @@
 package org.eclipse.andmore.internal.editors.layout.configuration;
 
 //import static com.android.ide.common.rendering.HardwareConfigHelper.MANUFACTURER_GENERIC;
-//import static com.android.ide.common.rendering.HardwareConfigHelper.getGenericLabel;
+import static com.android.ide.common.rendering.HardwareConfigHelper.getGenericLabel;
 //import static com.android.ide.common.rendering.HardwareConfigHelper.getNexusLabel;
-//import static com.android.ide.common.rendering.HardwareConfigHelper.isGeneric;
+import static com.android.ide.common.rendering.HardwareConfigHelper.isGeneric;
 //import static com.android.ide.common.rendering.HardwareConfigHelper.isNexus;
 //import static com.android.ide.common.rendering.HardwareConfigHelper.sortNexusList;
 
@@ -139,8 +139,8 @@ class DeviceMenuListener extends SelectionAdapter {
                         deviceItem.addSelectionListener(new DeviceMenuListener(chooser, device));
                     }
                 }
-            }
             /*
+            }
             else {
                 List<Device> nexus = new ArrayList<Device>();
                 List<Device> generic = new ArrayList<Device>();

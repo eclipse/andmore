@@ -204,14 +204,6 @@ public class UiElementPullParser extends BasePullParser {
     }
 
     /**
-     * Legacy method required by {@link com.android.layoutlib.api.IXmlPullParser}
-     */
-    @Override
-    public Object getViewKey() {
-        return getViewCookie();
-    }
-
-    /**
      * This implementation does nothing for now as all the embedded XML will use a normal KXML
      * parser.
      */

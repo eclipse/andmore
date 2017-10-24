@@ -18,7 +18,6 @@ package org.eclipse.andmore.internal.editors.layout;
 
 import com.android.SdkConstants;
 import com.android.ide.common.rendering.api.ILayoutPullParser;
-import com.android.layoutlib.api.ILayoutResult.ILayoutViewInfo;
 
 import org.eclipse.andmore.AndmoreAndroidConstants;
 import org.eclipse.andmore.internal.editors.layout.descriptors.ViewElementDescriptor;
@@ -30,7 +29,7 @@ import org.xmlpull.v1.XmlPullParserException;
  * The parser emulates a layout that contains just one widget, described by the
  * {@link ViewElementDescriptor} passed in the constructor.
  * <p/>
- * This pull parser generates {@link ILayoutViewInfo}s which key is a {@link ViewElementDescriptor}.
+ * This pull parser generates ILayoutViewInfos which key is a {@link ViewElementDescriptor}.
  */
 public class WidgetPullParser extends BasePullParser {
 
@@ -52,14 +51,6 @@ public class WidgetPullParser extends BasePullParser {
     public Object getViewCookie() {
         // we need a viewKey or the ILayoutResult will not contain any ILayoutViewInfo
         return mDescriptor;
-    }
-
-    /**
-     * Legacy method required by {@link com.android.layoutlib.api.IXmlPullParser}
-     */
-    @Override
-    public Object getViewKey() {
-        return getViewCookie();
     }
 
     @Override
