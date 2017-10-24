@@ -51,17 +51,36 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.debug.core.DebugEvent;
+import org.eclipse.debug.core.DebugException;
+import org.eclipse.debug.core.DebugPlugin;
+import org.eclipse.debug.core.IDebugEventSetListener;
+import org.eclipse.debug.core.ILaunch;
+import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationType;
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.debug.core.ILaunchManager;
+import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.jdt.core.IClasspathContainer;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.internal.launching.DefaultProjectClasspathEntry;
+import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
+import org.eclipse.jdt.launching.IRuntimeClasspathEntry;
+import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.swt.widgets.Display;
 
 import com.android.SdkConstants;
 import com.android.annotations.NonNull;
 import com.android.annotations.Nullable;
+import com.android.dx.command.dexer.DxContext;
+import com.android.dx.command.dexer.Main;
+import com.android.dx.command.dexer.Main.Arguments;
 import com.android.prefs.AndroidLocation.AndroidLocationException;
 import com.android.sdklib.BuildToolInfo;
 import com.android.sdklib.IAndroidTarget;
@@ -105,6 +124,47 @@ import com.google.common.hash.Hashing;
  */
 public class BuildHelper {
 
+    private class DebugEventListener implements IDebugEventSetListener {
+        IProcess process;
+        ILaunchConfiguration config;
+ 
+        public DebugEventListener(ILaunchConfiguration config)
+        {
+            this.config = config;
+        }
+        
+        public IProcess getProcess()
+        {
+            return process;
+        }
+
+        @Override
+        public void handleDebugEvents(DebugEvent[] events)
+        {
+            if (events!=null) {
+                for (DebugEvent debugEvent: events) {
+                    if ((debugEvent.getSource() instanceof IProcess) && 
+                        (debugEvent.getKind() == DebugEvent.TERMINATE) &&
+                         handleDebugEvent(debugEvent)) 
+                        break;
+                }
+            }
+        }
+
+        boolean handleDebugEvent(DebugEvent event)
+        {
+            process = (IProcess) event.getSource();
+            if (config != process.getLaunch().getLaunchConfiguration()) 
+                return false;
+            DebugPlugin.getDefault().removeDebugEventListener(this);
+            synchronized(this)
+            {
+                this.notifyAll();
+            }
+            return true;
+         }
+    }
+    
     private static final String CONSOLE_PREFIX_DX = "Dx";   //$NON-NLS-1$
     private final static String TEMP_PREFIX = "android_";   //$NON-NLS-1$
 
@@ -774,12 +834,12 @@ public class BuildHelper {
 
         // get the dex wrapper
         Sdk sdk = Sdk.getCurrent();
-        DexWrapper wrapper = sdk.getDexWrapper(mBuildToolInfo);
+        //DexWrapper wrapper = sdk.getDexWrapper(mBuildToolInfo);
 
-        if (wrapper == null) {
-            throw new CoreException(new Status(IStatus.ERROR, AndmoreAndroidPlugin.PLUGIN_ID,
-                    Messages.ApkBuilder_UnableBuild_Dex_Not_loaded));
-        }
+        //if (wrapper == null) {
+        //    throw new CoreException(new Status(IStatus.ERROR, AndmoreAndroidPlugin.PLUGIN_ID,
+        //            Messages.ApkBuilder_UnableBuild_Dex_Not_loaded));
+        //}
 
         try {
             // set a temporary prefix on the print streams.
@@ -844,8 +904,8 @@ public class BuildHelper {
                                 dexedLib.delete();
                             }
 
-                            int res = wrapper.run(dexedLibPath, Collections.singleton(input),
-                                    mForceJumbo, false, null, false, mVerbose, mOutStream, mErrStream);
+                            int res = runDx(dexedLibPath, Collections.singleton(input),
+                                    mForceJumbo, false, null, false, mVerbose, true, mOutStream, mErrStream);
 
                             if (res != 0) {
                                 // output error message and mark the project.
@@ -871,13 +931,14 @@ public class BuildHelper {
                 }
             }
             
-            int res = wrapper.run(osOutFilePath,
+            int res = runDx(osOutFilePath,
                     finalInputPaths,
                     mForceJumbo,
                     multiDexEnabled,
                     mainDexListFileLocation,
                     true, // minimalMainDex is true, only used for multidex
                     mVerbose,
+                    false,
                     mOutStream, mErrStream);
 
             mOutStream.setPrefix(null);
@@ -900,6 +961,216 @@ public class BuildHelper {
             throw new DexException(message, t);
         }
     }
+
+    /**
+     * TODO - Determine if DexWrapper should be retained for build tools version 21 - 25
+     * Runs the dex command.
+     * @param osOutFilePath the OS path to the outputfile (classes.dex
+     * @param osFilenames list of input source files (.class and .jar files)
+     * @param forceJumbo force jumbo mode.
+     * @param enableMultiDex
+     * @param mainDexListFile
+     * @param minimalMainDex
+     * @param verbose verbose mode
+     * @param predex predex
+     * @param outStream the stdout console
+     * @param errStream the stderr console
+     * @return the integer return code of com.android.dx.command.dexer.Main.run()
+     * @throws CoreException
+     */
+    private int runDx(
+            String osOutFilePath, 
+            Collection<String> osFilenames,
+            boolean forceJumbo, 
+            boolean enableMultiDex,
+            String mainDexListFile, 
+            boolean minimalMainDex, 
+            boolean verbose,
+            boolean predex,
+            AndroidPrintStream outStream, 
+            AndroidPrintStream errStream) throws CoreException
+    {
+        List<String> command = new ArrayList<String>();
+        command.add("--dex");
+        if (verbose)
+            command.add("--verbose"); // --num-threads=4 
+        command.add("--output");
+        command.add(osOutFilePath);
+        for (String fileName: osFilenames)
+            command.add(fileName);
+        List<Path> dxJarPath = Collections.singletonList(new Path(mBuildToolInfo.getPath(BuildToolInfo.PathId.DX_JAR)));
+        return runJavaMain("dex", "com.android.dx.command.Main", "-Djava.awt.headless=true -Xmx1024M -Dfile.encoding=UTF-8", dxJarPath , command);
+        /*
+        // prepare the command line for dx
+        // TODO - Create Dex configuration
+        List<String> command = new ArrayList<String>();
+        // Use JAVA_HOME environment variable, if available
+        command.add("java");
+        command.add("-Djava.awt.headless=true");
+        command.add("-Xmx1024M");
+        command.add("-Dfile.encoding=UTF-8");
+        String dexLocation = mBuildToolInfo.getPath(BuildToolInfo.PathId.DX_JAR);
+        command.add("-cp");
+        command.add(dexLocation);
+        command.add("com.android.dx.command.Main");
+        command.add("--dex");
+        if (verbose)
+            command.add("--verbose"); // --num-threads=4 
+        command.add("--output");
+        command.add(osOutFilePath);
+        for (String fileName: osFilenames)
+            command.add(fileName);
+        String commandArray[] = command.toArray(new String[command.size()]);
+        // launch
+        int returnCode = 1;
+        try {
+            // launch the command line process
+            Process process = Runtime.getRuntime().exec(commandArray);
+
+            // list to store each line of stderr
+            ArrayList<String> results = new ArrayList<String>();
+
+            // get the output and return code from the process
+            returnCode = grabProcessOutput(mProject, process, results);
+
+            if (mVerbose) {
+                for (String resultString : results) {
+                    mOutStream.println(resultString);
+                }
+            }
+
+        } catch (IOException e) {
+            String message = String.format(Messages.DexWrapper_Unable_To_Execute_Dex_s, e.getMessage());
+            AndmoreAndroidPlugin.log(e, message);
+            AndmoreAndroidPlugin.printErrorToConsole(Messages.DexWrapper_Dex_Loader, message);
+            throw new CoreException(new Status(IStatus.ERROR, AndmoreAndroidPlugin.PLUGIN_ID, message, e));
+        } catch (InterruptedException e) {
+            String message = String.format(Messages.DexWrapper_Unable_To_Execute_Dex_s, e.getMessage());
+            AndmoreAndroidPlugin.log(e, message);
+            AndmoreAndroidPlugin.printErrorToConsole(Messages.DexWrapper_Dex_Loader, message);
+            throw new CoreException(new Status(IStatus.ERROR, AndmoreAndroidPlugin.PLUGIN_ID, message, e));
+        }
+        return returnCode;
+        */
+        /*
+        Main main = new Main(new DxContext());
+        Arguments arguments = new Arguments();
+        arguments.fileNames = osFilenames.toArray(new String[osFilenames.size()]);
+        arguments.outName = osOutFilePath;
+        arguments.jarOutput = osOutFilePath.endsWith(SdkConstants.DOT_JAR);
+        arguments.forceJumbo = forceJumbo;
+        arguments.verbose = verbose;
+        arguments.multiDex = enableMultiDex;
+        // Pre dex libraries may not contain any class files
+        if (predex)
+            arguments.emptyOk = true;
+        if (enableMultiDex)
+        {
+            arguments.mainDexListFile = mainDexListFile;
+            arguments.minimalMainDex = minimalMainDex;
+        }
+        try
+        {
+            int returnCode = main.run(arguments);
+            if (returnCode != 0)
+            {
+                String nl = System.getProperty("line.separator");
+                StringBuilder builder = new StringBuilder();
+                if (predex)
+                    builder.append("Pre dex:").append(nl);
+                builder.append("outName").append('=').append('"').append(osOutFilePath).append('"').append(nl);
+                builder.append("forceJumbo").append('=').append(forceJumbo).append(nl);
+                builder.append("multiDex").append('=').append(enableMultiDex).append(nl);
+                if(enableMultiDex)
+                {
+                    builder.append("mainDexListFile").append('=').append('"').append(mainDexListFile).append('"').append(nl);
+                    builder.append("minimalMainDex").append('=').append(minimalMainDex).append(nl);
+                }
+                builder.append("verbose").append('=').append(verbose).append(nl);
+                for (String filename: osFilenames)
+                    builder.append('"').append(filename).append('"').append(nl);
+                mOutStream.println(builder.toString());
+            }
+            return returnCode;
+        }
+        catch (IOException e)
+        {
+            String message = String.format(Messages.DexWrapper_Unable_To_Execute_Dex_s, e.getMessage());
+            AndmoreAndroidPlugin.log(e, message);
+            AndmoreAndroidPlugin.printErrorToConsole(Messages.DexWrapper_Dex_Loader, message);
+            throw new CoreException(new Status(IStatus.ERROR, AndmoreAndroidPlugin.PLUGIN_ID, message, e));
+        }
+        */
+    }
+
+    /**
+     * Launch a Java program
+     * @param cfg the name of the launch configuration to use
+     * @param main Main class
+     * @throws CoreException
+     */
+    @SuppressWarnings("restriction")
+    private int runJavaMain(String configName, String main, String vmArgs, List<Path> classpathList, Collection<String> arguments) throws CoreException {
+        IJavaProject javaProject = JavaCore.create(mProject);
+        javaProject.open(null);
+        StringBuilder builder = new StringBuilder();
+        for (String arg: arguments)
+            builder.append(arg).append(' ');
+        DebugPlugin plugin = DebugPlugin.getDefault();
+        ILaunchManager launchManager = plugin.getLaunchManager();
+        ILaunchConfigurationType launchConfigType = launchManager.getLaunchConfigurationType(
+          IJavaLaunchConfigurationConstants.ID_JAVA_APPLICATION);
+        ILaunchConfigurationWorkingCopy wc = launchConfigType.newInstance(null, configName);
+        wc.setAttribute(
+          IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, javaProject.getElementName());
+        wc.setAttribute(
+          IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, main);
+        wc.setAttribute(
+                IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS, vmArgs);
+        wc.setAttribute(
+                IJavaLaunchConfigurationConstants.ATTR_PROGRAM_ARGUMENTS, builder.toString());
+        List<String> classpath = new ArrayList<String>();
+        for (Path path: classpathList)
+            classpath.add(JavaRuntime.newArchiveRuntimeClasspathEntry(path).getMemento());
+        classpath.add(JavaRuntime.newRuntimeContainerClasspathEntry(new Path( JavaRuntime.JRE_CONTAINER ), IRuntimeClasspathEntry.STANDARD_CLASSES, javaProject).getMemento());
+        classpath.add(new DefaultProjectClasspathEntry(javaProject).getMemento());
+        wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_CLASSPATH, classpath);
+        wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_DEFAULT_CLASSPATH, false);
+        final ILaunchConfiguration config = wc.doSave();   
+        config.launch(ILaunchManager.RUN_MODE, null);
+        final DebugEventListener listener = new DebugEventListener(config);
+        final Display display = AndmoreAndroidPlugin.getDisplay();
+        display.syncExec(new Runnable() {
+            
+            @Override
+            public void run() {
+                DebugPlugin.getDefault().addDebugEventListener(listener);
+                synchronized(listener) {
+                    try {
+                        listener.wait();
+                    }   catch (InterruptedException e) {
+                    }
+                }
+            }
+            
+        });
+        int returnCode = -1;
+        try
+        {
+            IProcess process = listener.getProcess();
+            if (process != null) // Check for null in case of interrupt terminating wait
+                returnCode = process.getExitValue();
+        }
+        catch (DebugException e)
+        {
+            String message = String.format(Messages.DexWrapper_Unable_To_Execute_Dex_s, e.getMessage());
+            AndmoreAndroidPlugin.log(e, message);
+            AndmoreAndroidPlugin.printErrorToConsole(Messages.DexWrapper_Dex_Loader, message);
+            throw new CoreException(new Status(IStatus.ERROR, AndmoreAndroidPlugin.PLUGIN_ID, message, e));
+        }
+        return returnCode;
+    }
+
 
     private String getDexFileName(File inputFile) {
         // get the filename

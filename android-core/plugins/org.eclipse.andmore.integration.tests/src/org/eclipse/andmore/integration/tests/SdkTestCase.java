@@ -26,7 +26,7 @@ import com.google.common.collect.Sets;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
-import com.google.common.io.InputSupplier;
+import com.google.common.io.ByteSource;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -375,12 +375,13 @@ public abstract class SdkTestCase {
 		if (tempFile.exists()) {
 			tempFile.delete();
 		}
-		Files.copy(new InputSupplier<InputStream>() {
+		ByteSource byteSource = new ByteSource() {
 			@Override
-			public InputStream getInput() throws IOException {
+			public InputStream openStream() throws IOException {
 				return contents;
 			}
-		}, tempFile);
+		};
+		byteSource.copyTo(Files.asByteSink(tempFile));
 		return tempFile;
 	}
 

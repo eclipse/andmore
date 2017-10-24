@@ -9,7 +9,6 @@
       <version>0.5.2-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.eclipse.andmore</groupId>
     <artifactId>andmore-core-parent</artifactId>
     <packaging>pom</packaging>
     <name>Android Core</name>

@@ -28,6 +28,7 @@ import org.eclipse.andmore.internal.editors.layout.refactoring.AdtProjectTest;
 import org.eclipse.andmore.internal.sdk.ProjectState;
 import org.eclipse.andmore.internal.sdk.Sdk;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import com.android.sdklib.BuildToolInfo;
 
@@ -36,12 +37,14 @@ import com.android.sdklib.BuildToolInfo;
  */
 
 public class DexWrapperTest extends AdtProjectTest {
-	
+
+    @Ignore // DexWrapper only works with build tools version 21 - 25
 	@Test
 	public void testMainDexClassExists() {
 		loadMainDexClass();
 	}
 	
+    @Ignore // DexWrapper only works with build tools version 21 - 25
 	@Test
 	public void testMainClassFieldsAvailable() {		
 		Class<?> mainDexClass = loadMainDexClass();
@@ -57,6 +60,7 @@ public class DexWrapperTest extends AdtProjectTest {
 	    }
 	}
 	
+    @Ignore // DexWrapper only works with build tools version 21 - 25
 	@Test
 	public void testDexArgumentsAvailable() {
 		Class<?> dexArgumentsClass = loadDexArgumentsClass();

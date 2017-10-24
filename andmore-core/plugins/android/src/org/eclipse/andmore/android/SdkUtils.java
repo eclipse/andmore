@@ -905,7 +905,7 @@ public class SdkUtils {
 		ILogger log = new MessageBoxLog(String.format("Result of updating AVD '%s':", avdInfo.getName()), //$NON-NLS-1$
 				display, false);
 		try {
-			avdManager.updateAvd(avdInfo, avdInfo.getProperties(), AvdStatus.OK, log);
+			avdManager.updateAvd(avdInfo, avdInfo.getProperties());
 			// display the result
 			if (log instanceof MessageBoxLog) {
 				((MessageBoxLog) log).displayResult(true);

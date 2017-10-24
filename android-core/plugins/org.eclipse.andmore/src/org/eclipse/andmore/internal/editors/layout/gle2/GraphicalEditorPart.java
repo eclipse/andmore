@@ -56,6 +56,7 @@ import com.android.ide.common.rendering.api.Result;
 import com.android.ide.common.rendering.api.SessionParams.RenderingMode;
 import com.android.ide.common.resources.ResourceRepository;
 import com.android.ide.common.resources.ResourceResolver;
+import com.android.ide.common.resources.ResourceValueMap;
 import com.android.ide.common.resources.configuration.FolderConfiguration;
 import com.android.ide.common.sdk.LoadStatus;
 import com.android.resources.Density;
@@ -276,8 +277,8 @@ public class GraphicalEditorPart extends EditorPart
      */
     private Reference mIncludedWithin;
 
-    private Map<ResourceType, Map<String, ResourceValue>> mConfiguredFrameworkRes;
-    private Map<ResourceType, Map<String, ResourceValue>> mConfiguredProjectRes;
+    private Map<ResourceType, ResourceValueMap> mConfiguredFrameworkRes;
+    private Map<ResourceType, ResourceValueMap> mConfiguredProjectRes;
     private ProjectCallback mProjectCallback;
     private boolean mNeedsRecompute = false;
     private TargetListener mTargetListener;
@@ -836,7 +837,7 @@ public class GraphicalEditorPart extends EditorPart
 
     @Override
     @NonNull
-    public Map<ResourceType, Map<String, ResourceValue>> getConfiguredFrameworkResources() {
+    public Map<ResourceType, ResourceValueMap> getConfiguredFrameworkResources() {
         if (mConfiguredFrameworkRes == null && mConfigChooser != null) {
             ResourceRepository frameworkRes = getFrameworkResources();
 
@@ -854,7 +855,7 @@ public class GraphicalEditorPart extends EditorPart
 
     @Override
     @NonNull
-    public Map<ResourceType, Map<String, ResourceValue>> getConfiguredProjectResources() {
+    public Map<ResourceType, ResourceValueMap> getConfiguredProjectResources() {
         if (mConfiguredProjectRes == null && mConfigChooser != null) {
             ProjectResources project = getProjectResources();
 
@@ -1657,11 +1658,11 @@ public class GraphicalEditorPart extends EditorPart
             }
             boolean isProjectTheme = mConfigChooser.getConfiguration().isProjectTheme();
 
-            Map<ResourceType, Map<String, ResourceValue>> configuredProjectRes =
+            Map<ResourceType, ResourceValueMap> configuredProjectRes =
                 getConfiguredProjectResources();
 
             // Get the framework resources
-            Map<ResourceType, Map<String, ResourceValue>> frameworkResources =
+            Map<ResourceType, ResourceValueMap> frameworkResources =
                 getConfiguredFrameworkResources();
 
             if (configuredProjectRes == null) {
@@ -2299,7 +2300,7 @@ public class GraphicalEditorPart extends EditorPart
         // There is code to handle this, but it's in layoutlib; we should
         // expose that and use it here.
 
-        Map<ResourceType, Map<String, ResourceValue>> map;
+        Map<ResourceType, ResourceValueMap> map;
         map = isFrameworkResource ? mConfiguredFrameworkRes : mConfiguredProjectRes;
         if (map == null) {
             // Not yet configured
@@ -2383,7 +2384,7 @@ public class GraphicalEditorPart extends EditorPart
     }
 
     private String findString(String name, boolean isFrameworkResource) {
-        Map<ResourceType, Map<String, ResourceValue>> map;
+        Map<ResourceType, ResourceValueMap> map;
         map = isFrameworkResource ? mConfiguredFrameworkRes : mConfiguredProjectRes;
         if (map == null) {
             // Not yet configured
@@ -2845,7 +2846,7 @@ public class GraphicalEditorPart extends EditorPart
      * @return a collection of resource names, never null but possibly empty
      */
     public Collection<String> getResourceNames(boolean framework, ResourceType type) {
-        Map<ResourceType, Map<String, ResourceValue>> map =
+        Map<ResourceType, ResourceValueMap> map =
             framework ? mConfiguredFrameworkRes : mConfiguredProjectRes;
         Map<String, ResourceValue> animations = map.get(type);
         if (animations != null) {

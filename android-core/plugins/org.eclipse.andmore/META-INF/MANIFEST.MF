@@ -4,7 +4,6 @@ Bundle-Name: Core Development Tools for Android
 Bundle-SymbolicName: org.eclipse.andmore;singleton:=true
 Bundle-Version: 0.5.2.qualifier
 Bundle-ClassPath: .,
- libs/sdkuilib.jar,
  libs/ninepatch.jar,
  libs/freemarker-2.3.20.jar,
  libs/rule-api.jar,
@@ -15,9 +14,11 @@ Bundle-ClassPath: .,
  libs/lombok-ast-0.2.3.jar,
  libs/propertysheet.jar,
  libs/ant-glob.jar,
- libs/swtmenubar.jar,
  libs/manifest-merger-25.3.3.jar,
- libs/builder-2.3.3.jar
+ libs/builder-2.3.3.jar,
+ libs/asm-5.0.4.jar,
+ libs/asm-tree-5.0.4.jar,
+ libs/asm-analysis-5.0.4.jar
 Bundle-Activator: org.eclipse.andmore.AndmoreAndroidPlugin
 Bundle-Vendor: Eclipse Andmore
 Require-Bundle: org.eclipse.andmore.base,
@@ -53,18 +54,10 @@ Require-Bundle: org.eclipse.andmore.base,
  org.eclipse.compare,
  org.eclipse.jdt.debug,
  com.google.gson;bundle-version="2.2.4",
- org.objectweb.asm;bundle-version="[4.0.0,5.0.0)"
+ org.objectweb.asm
 Bundle-ActivationPolicy: lazy
 Export-Package: com.android.manifmerger;x-friends:="org.eclipse.andmore.integration.tests",
  com.android.ninepatch;x-friends:="org.eclipse.andmore.integration.tests",
- com.android.sdkuilib.internal.repository;x-friends:="org.eclipse.andmore.integration.tests",
- com.android.sdkuilib.internal.repository.core;x-friends:="org.eclipse.andmore.integration.tests",
- com.android.sdkuilib.internal.repository.icons;x-friends:="org.eclipse.andmore.integration.tests",
- com.android.sdkuilib.internal.repository.ui;x-friends:="org.eclipse.andmore.integration.tests",
- com.android.sdkuilib.internal.tasks;x-friends:="org.eclipse.andmore.integration.tests",
- com.android.sdkuilib.internal.widgets;x-friends:="org.eclipse.andmore.integration.tests",
- com.android.sdkuilib.repository;x-friends:="org.eclipse.andmore.integration.tests",
- com.android.sdkuilib.ui;x-friends:="org.eclipse.andmore.integration.tests",
  com.android.tools.lint.checks;x-friends:="org.eclipse.andmore.integration.tests",
  com.android.tools.lint.client.api;x-friends:="org.eclipse.andmore.integration.tests",
  com.android.tools.lint.detector.api;x-friends:="org.eclipse.andmore.integration.tests",

@@ -20,6 +20,7 @@ import com.android.annotations.Nullable;
 import com.android.ide.common.rendering.api.ResourceValue;
 import com.android.ide.common.resources.ResourceRepository;
 import com.android.resources.ResourceType;
+import com.android.ide.common.resources.ResourceValueMap;
 import com.android.sdklib.IAndroidTarget;
 
 import java.util.Map;
@@ -88,7 +89,7 @@ public interface ConfigurationClient {
      * @return resource type maps to names to resource values
      */
     @NonNull
-    Map<ResourceType, Map<String, ResourceValue>> getConfiguredProjectResources();
+    Map<ResourceType, ResourceValueMap> getConfiguredProjectResources();
 
     /**
      * Returns the configured framework resources for the current file and
@@ -97,7 +98,7 @@ public interface ConfigurationClient {
      * @return resource type maps to names to resource values
      */
     @NonNull
-    Map<ResourceType, Map<String, ResourceValue>> getConfiguredFrameworkResources();
+    Map<ResourceType, ResourceValueMap> getConfiguredFrameworkResources();
 
     /**
      * If the current layout is an included layout rendered within an outer layout,

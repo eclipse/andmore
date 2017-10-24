@@ -45,7 +45,6 @@
 		<m2e-update-site>http://download.eclipse.org/technology/m2e/releases/</m2e-update-site>
         <android.builder.version>2.3.0</android.builder.version>
         <android.tools.version>25.3.3</android.tools.version>
-        <third-party-repo>file:/F:/development/swt-droid/swt-android-core/site/target/repository</third-party-repo>
 	</properties>
 
 	<repositories>
@@ -155,6 +154,8 @@
 					<configuration>
 						<source>${project.java.version}</source>
 						<target>${project.java.version}</target>
+		                <compilerArgument>-warn:none</compilerArgument>     
+		                <compilerArgument>-err:none</compilerArgument>      
 					</configuration>
 				</plugin>
 				<plugin>

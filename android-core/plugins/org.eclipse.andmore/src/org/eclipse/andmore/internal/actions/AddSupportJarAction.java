@@ -236,7 +236,7 @@ public class AddSupportJarAction implements IObjectActionDelegate {
     public static int getInstalledRevision() {
         final Sdk sdk = Sdk.getCurrent();
         if (sdk != null) {
-            String sdkLocation = sdk.getSdkOsLocation();
+//            String sdkLocation = sdk.getSdkOsLocation();
 //            SdkManager manager = SdkManager.createManager(sdkLocation, NullLogger.getLogger());
             Map<String, Integer> versions = Collections.emptyMap(); //manager.getExtrasVersions();
             Integer version = versions.get(VENDOR_ID + '/' + SUPPORT_ID);

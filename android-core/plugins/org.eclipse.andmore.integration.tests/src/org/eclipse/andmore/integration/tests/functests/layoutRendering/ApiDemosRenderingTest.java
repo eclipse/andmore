@@ -29,6 +29,7 @@ import com.android.ide.common.rendering.api.LayoutlibCallback;
 import com.android.ide.common.rendering.api.RenderSession;
 import com.android.ide.common.rendering.api.ResourceReference;
 import com.android.ide.common.rendering.api.ResourceValue;
+import com.android.ide.common.resources.ResourceValueMap;
 import com.android.ide.common.rendering.api.SessionParams;
 import com.android.ide.common.rendering.api.SessionParams.RenderingMode;
 import com.android.ide.common.resources.ResourceItem;
@@ -248,8 +249,8 @@ public class ApiDemosRenderingTest extends SdkLoadingTestCase {
 		FolderConfiguration config = getConfiguration();
 
 		// get the configured resources
-		Map<ResourceType, Map<String, ResourceValue>> configuredFramework = framework.getConfiguredResources(config);
-		Map<ResourceType, Map<String, ResourceValue>> configuredProject = project.getConfiguredResources(config);
+		Map<ResourceType, ResourceValueMap> configuredFramework = framework.getConfiguredResources(config);
+		Map<ResourceType, ResourceValueMap> configuredProject = project.getConfiguredResources(config);
 
 		boolean saveFiles = System.getenv("save_file") != null;
 

@@ -18,6 +18,7 @@ package org.eclipse.andmore.internal.build;
 
 import java.io.File;
 import java.io.PrintStream;
+import java.lang.StringBuilder;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -43,7 +44,6 @@ import com.android.SdkConstants;
 public final class DexWrapper {
 
     public final static String DEX_MAIN = "com.android.dx.command.dexer.Main"; //$NON-NLS-1$
-    public final static String DEX_CONSOLE = "com.android.dx.command.DxConsole"; //$NON-NLS-1$
     public final static String DEX_ARGS = "com.android.dx.command.dexer.Main$Arguments"; //$NON-NLS-1$
 
     public final static String DEX_MAIN_FIELD_OUTPUT_FUTURES = "dexOutputFutures"; //$NON-NLS-1$
@@ -79,9 +79,6 @@ public final class DexWrapper {
     private Field mArgMainDexListFile;
     private Field mArgMinimalMainDex;
     
-    private Field mConsoleOut;
-    private Field mConsoleErr;
-
     /**
      * Loads the dex library from a file path.
      *
@@ -106,7 +103,6 @@ public final class DexWrapper {
 
             // get the classes.
             Class<?> mainClass = loader.loadClass(DEX_MAIN);
-            Class<?> consoleClass = loader.loadClass(DEX_CONSOLE);
             Class<?> argClass = loader.loadClass(DEX_ARGS);
 
             try {
@@ -131,9 +127,6 @@ public final class DexWrapper {
                 mArgMultiDex = argClass.getField(DEX_ARGUMENTS_FIELD_MULTI_DEX); //$NON-NLS-1$
                 mArgMainDexListFile = argClass.getField(DEX_ARGUMENTS_FIELD_MAIN_DEX_LIST_FILE);
                 mArgMinimalMainDex = argClass.getField(DEX_ARGUMENTS_FIELD_MINIMAL_MAIN_DEX);
-
-                mConsoleOut = consoleClass.getField("out"); //$NON-NLS-1$
-                mConsoleErr = consoleClass.getField("err"); //$NON-NLS-1$
 
             } catch (SecurityException e) {
                 return createErrorStatus(Messages.DexWrapper_SecuryEx_Unable_To_Find_API, e);
@@ -177,8 +170,6 @@ public final class DexWrapper {
         mArgMultiDex = null;
         mArgMainDexListFile = null;
         mArgMinimalMainDex = null;
-        mConsoleOut = null;
-        mConsoleErr = null;
         System.gc();
     }
 
@@ -244,8 +235,6 @@ public final class DexWrapper {
         assert mArgMultiDex != null;
         assert mArgMainDexListFile != null;
         assert mArgMinimalMainDex != null;
-        assert mConsoleOut != null;
-        assert mConsoleErr != null;
 
         if (mRunMethod == null) {
             throw new CoreException(createErrorStatus(
@@ -255,9 +244,6 @@ public final class DexWrapper {
         }
 
         try {
-            // set the stream
-            mConsoleErr.set(null /* obj: static field */, errStream);
-            mConsoleOut.set(null /* obj: static field */, outStream);
             
             // create the Arguments object.
             Object args = mArgConstructor.newInstance();
@@ -297,9 +283,23 @@ public final class DexWrapper {
                 msg = String.format("%s. Check the Eclipse log for stack trace.",
                         t.getClass().getName());
             }
-
+            boolean jarOutput = osOutFilePath.endsWith(SdkConstants.DOT_JAR);
+            String nl = System.getProperty("line.separator");
+            StringBuilder builder = new StringBuilder(msg).append(nl);
+            builder.append("outName").append('=').append('"').append(osOutFilePath).append('"').append(nl);
+            builder.append("jarOutput").append('=').append(jarOutput).append(nl);
+            builder.append("forceJumbo").append('=').append(forceJumbo).append(nl);
+            builder.append("multiDex").append('=').append(enableMultiDex).append(nl);
+            if(enableMultiDex)
+            {
+                builder.append("mainDexListFile").append('=').append('"').append(mainDexListFile).append('"').append(nl);
+                builder.append("minimalMainDex").append('=').append(minimalMainDex).append(nl);
+            }
+            builder.append("verbose").append('=').append(verbose).append(nl);
+            for (String filename: osFilenames)
+                builder.append('"').append(filename).append('"').append(nl);
             throw new CoreException(createErrorStatus(
-                    String.format(Messages.DexWrapper_Unable_To_Execute_Dex_s, msg), t));
+                    String.format(Messages.DexWrapper_Unable_To_Execute_Dex_s, builder.toString()), t));
         }
     }
 
