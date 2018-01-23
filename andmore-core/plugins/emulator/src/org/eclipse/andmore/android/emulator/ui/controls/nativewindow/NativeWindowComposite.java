@@ -22,7 +22,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.eclipse.andmore.android.AndroidPlugin;
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.common.preferences.DialogWithToggleUtils;
 import org.eclipse.andmore.android.emulator.core.model.IAndroidEmulatorInstance;
 import org.eclipse.andmore.android.emulator.core.model.IInputLogic;
@@ -250,7 +250,7 @@ public class NativeWindowComposite extends ScrolledComposite implements IAndroid
 			// from native emulator window and assigned to instance
 			if (windowHandle <= 0) {
 				int port = AndroidLogicUtils
-						.getEmulatorPort(DDMSFacade.getSerialNumberByName(androidInstance.getName()));
+						.getEmulatorPort(DeviceMonitor.instance().getSerialNumberByName(androidInstance.getName()));
 				windowHandle = NativeUIUtils.getWindowHandle(androidInstance.getName(), port);
 
 				androidInstance.setWindowHandle(windowHandle);

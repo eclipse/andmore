@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.emulator.core.exception.InstanceStartException;
 import org.eclipse.andmore.android.emulator.core.exception.StartCancelledException;
 import org.eclipse.andmore.android.emulator.core.exception.StartTimeoutException;
@@ -44,9 +44,9 @@ public class TransferFilesLogic implements IAndroidLogic {
 			error("Cannot transfer files because the parameters provided are not as expected.");
 			throw new InstanceStartException(EmulatorNLS.ERR_TransferFilesLogic_NotEnoughInformation);
 		}
-
-		String serialNumber = DDMSFacade.getSerialNumberByName(instance.getName());
-		IStatus status = DDMSFacade.pushFiles(serialNumber, getLocalDir(), getFilenames(), getRemoteDir(), timeout,
+        DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+		String serialNumber = deviceMonitor.getSerialNumberByName(instance.getName());
+		IStatus status = deviceMonitor.pushFiles(serialNumber, getLocalDir(), getFilenames(), getRemoteDir(), timeout,
 				monitor, null);
 		if (status.getSeverity() == IStatus.CANCEL) {
 			throw new StartCancelledException();

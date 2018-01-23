@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="DC.Type" content="task"/>
+<meta name="DC.Title" content="Configuring the Localization Files Editor"/>
+<meta name="abstract" content="The Localization Files Editor requires that you supply a key for the translation service."/>
+<meta name="description" content="The Localization Files Editor requires that you supply a key for the translation service."/>
+<meta name="DC.Relation" scheme="URI" content="../topics/t_localize-about.html"/>
+<meta name="DC.Relation" scheme="URI" content="../topics/r_localization-new-translated-column.html"/>
+<meta name="DC.Relation" scheme="URI" content="../topics/r_localization-translate-cells.html"/>
+<meta name="copyright" content="Motorola Mobility, Inc. 2009-2012" type="primary"/>
+<meta name="DC.Rights.Owner" content="Motorola Mobility, Inc. 2009-2012" type="primary"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="t_localize-configuring"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="../commonltr.css"/>
+<title>Configuring the Localization Files Editor</title>
+</head>
+<body id="t_localize-configuring"><a name="t_localize-configuring"><!-- --></a>
+<a class="hdr-none"/>
+
+  <h1 class="topictitle1">Configuring the Localization Files Editor</h1>
+
+  
+  
+  <div><p>The Localization Files Editor requires that you supply a key for the translation service.</p>
+
+    <div class="section">The Localization Files Editor makes use of Google's translation service to translate strings from one
+      language to another. So that the editor can make use of this service, it must be able to present a key that you
+      have previously obtained from Google.</div>
+
+    <ol>
+      <li>
+        <span>Open the preferences dialog into which you will enter the translation key. There are two ways to do this:</span>
+        <ul>
+          <li>From the translation dialog where you specify the source and destination languages (for instance, the
+            "New translated column" dialog), click <span class="uicontrol">Change your API key</span>.</li>
+
+          <li>If you are running MOTODEV Studio, select <span class="uicontrol">Preferences</span> from the MOTODEV Studio
+            menu. Then, select <span class="menucascade"><span class="uicontrol">MOTODEV Studio</span> &gt; <span class="uicontrol">MOTODEV Studio for
+              Android</span></span> from the list of preferences.</li>
+
+        </ul>
+
+      </li>
+
+      <li>
+        <span>Using the link immediately above the <span class="uicontrol">API Key</span> field, direct your computer's browser
+          to the Google APIs Console.</span>
+         Note that you will need to log in with a Google login and password.
+      </li>
+
+      <li>
+        <span>Click <span class="uicontrol">Create Project</span>.</span>
+      </li>
+
+      <li>
+        <span>Click the "on/off" switch next to Translate API in the list of services. When prompted, review and agree to
+          the legal terms.</span>
+      </li>
+
+      <li>
+        <span>In the upper left corner of the browser window, click <span class="uicontrol">API Access</span>.</span>
+         The API key, along with information about that key (such as the date created) is
+        displayed.
+      </li>
+
+      <li>
+        <span>Copy the API key from the browser window and paste it into the API Key field in the Eclipse (or MOTODEV
+          Studio) preferences dialog.</span>
+      </li>
+
+      <li>
+        <span>Click <span class="uicontrol">OK</span> in the preferences dialog. In your browser you can now sign out of the
+          Google APIs Console.</span>
+      </li>
+
+    </ol>
+
+  </div>
+
+<div>
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a href="../topics/t_localize-about.html" title="Using the Localization Files Editor, you can easily create text string files for new locales, see which strings will be used in a given locale, and identify strings that have yet to be translated, all without having to work directly in XML-formatted files. It makes it easy to add new strings across multiple locales, and edit localized strings.">Localizing Text Strings</a></div>
+</div>
+<div class="relinfo"><strong>Related reference</strong><br/>
+<div><a href="../topics/r_localization-new-translated-column.html" title="Allows you to translate a complete set of text strings from one language to another.">New Translated Column dialog</a></div>
+<div><a href="../topics/r_localization-translate-cells.html" title="Allows you to translate a selected set of text strings from one language to one or more other languages.">Translate Cells dialog</a></div>
+</div>
+</div>
+
+</body>
+</html>

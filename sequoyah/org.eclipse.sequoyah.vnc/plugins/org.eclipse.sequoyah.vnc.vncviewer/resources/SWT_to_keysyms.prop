@@ -1,0 +1,15 @@
+
+CR=XK_Return
+KEYPAD_CR=XK_KP_Enter
+
+ALT_L=XK_Alt_L
+CONTROL=XK_Control_L
+SHIFT=XK_Shift_L
+
+ARROW_UP=XK_Up
+ARROW_DOWN=XK_Down
+ARROW_LEFT=XK_Left
+ARROW_RIGHT=XK_Right
+
+Tab=XK_Tab
+Backspace=XK_Backspace

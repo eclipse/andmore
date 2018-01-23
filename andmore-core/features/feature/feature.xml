@@ -40,9 +40,9 @@
       <import feature="org.eclipse.jdt" version="3.6.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.mat.feature" version="1.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.mat.chart.feature" version="1.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.sequoyah.device.feature" version="2.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.sequoyah.localization.tools.feature" version="2.1.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.sequoyah.localization.android.feature" version="2.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.sequoyah.device.feature" version="0.0.0"/>
+      <import feature="org.eclipse.sequoyah.localization.tools.feature" version="0.0.0"/>
+      <import feature="org.eclipse.sequoyah.localization.android.feature" version="0.0.0"/>
       <import feature="org.eclipse.wst.common.fproj" version="3.2.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.wst.jsdt.feature" version="1.2.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.wst.server_adapters.feature" version="3.2.0" match="greaterOrEqual"/>

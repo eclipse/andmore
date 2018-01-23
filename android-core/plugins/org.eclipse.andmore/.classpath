@@ -7,7 +7,7 @@
 	<classpathentry exported="true" kind="lib" path="libs/rule-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/asset-studio.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/lint-25.3.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/lint-api-25.3.3.jar" sourcepath="F:/m2/repository/com/android/tools/lint/lint-api/25.3.3/lint-api-25.3.3-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/lint-api-25.3.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/lint-checks-25.3.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/lombok-ast-0.2.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/propertysheet.jar"/>

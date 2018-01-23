@@ -23,7 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.andmore.android.AndroidPlugin;
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.SdkUtils;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
@@ -371,7 +371,7 @@ public class LaunchUtils {
 				// wait the device to be online
 				while ((tries < 5) && (deviceSdkVersion <= 0)) {
 					try {
-						deviceSdkVersion = Integer.parseInt(DDMSFacade.getDeviceProperty(instance.getSerialNumber(),
+						deviceSdkVersion = Integer.parseInt(DeviceMonitor.instance().getDeviceProperty(instance.getSerialNumber(),
 								"ro.build.version.sdk"));
 					} catch (NumberFormatException e) {
 						deviceSdkVersion = 0;

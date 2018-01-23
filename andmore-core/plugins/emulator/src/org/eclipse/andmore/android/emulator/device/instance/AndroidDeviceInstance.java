@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.SdkUtils;
 import org.eclipse.andmore.android.emulator.EmulatorPlugin;
@@ -58,7 +58,6 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 
 import com.android.sdklib.IAndroidTarget;
 import com.android.sdklib.internal.avd.AvdInfo;
-import com.android.sdklib.repository.targets.AndroidTargetManager;
 
 /**
  * DESCRIPTION: This class represents a Android Emulator instance
@@ -507,7 +506,8 @@ public class AndroidDeviceInstance extends AbstractMobileInstance implements IAn
 
 	@Override
 	public boolean hasDevice() {
-		return (DDMSFacade.getDeviceBySerialNumber(getSerialNumber()) != null);
+		String serialNumber = getSerialNumber();
+		return serialNumber!= null ? (DeviceMonitor.instance().getDeviceBySerialNumber(serialNumber) != null) : false;
 	}
 
 	@Override
@@ -518,7 +518,7 @@ public class AndroidDeviceInstance extends AbstractMobileInstance implements IAn
 			@Override
 			public void run() {
 				try {
-					DDMSFacade.execRemoteApp(getSerialNumber(),
+					DeviceMonitor.instance().execRemoteApp(getSerialNumber(),
 							AndroidLogicUtils.ORIENTATION_BASE_COMMAND + parameters, new NullProgressMonitor());
 				} catch (IOException e) {
 					error("Failed to send the command to change the emulator display orientation to portrait.");
@@ -723,7 +723,7 @@ public class AndroidDeviceInstance extends AbstractMobileInstance implements IAn
 	 */
 	@Override
 	public String getSerialNumber() {
-		return DDMSFacade.getSerialNumberByName(getName());
+		return DeviceMonitor.instance().getSerialNumberByName(getName());
 	}
 
 	/*

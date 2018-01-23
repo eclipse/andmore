@@ -26,7 +26,7 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 
 import org.eclipse.andmore.AndmoreAndroidPlugin;
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.SdkUtils;
 import org.eclipse.andmore.android.common.exception.AndroidException;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
@@ -253,7 +253,8 @@ public class StartEmulatorProcessLogic implements IAndroidLogic {
 							}
 
 							try {
-								int port = AndroidLogicUtils.getEmulatorPort(DDMSFacade.getSerialNumberByName(instance
+								DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+								int port = AndroidLogicUtils.getEmulatorPort(deviceMonitor.getSerialNumberByName(instance
 										.getName()));
 								if (port > 0) {
 									windowHandle = NativeUIUtils.getWindowHandle(instance.getName(), port);
@@ -290,9 +291,10 @@ public class StartEmulatorProcessLogic implements IAndroidLogic {
 					AndroidLogicUtils
 							.testTimeout(timeoutLimit, NLS.bind(EmulatorNLS.EXC_TimeoutWhileStarting, avdName));
 				} catch (StartTimeoutException e) {
+					DeviceMonitor deviceMonitor = DeviceMonitor.instance();
 					debug("Emulator start timeout has been reached, instance :" + avdName + " has device: "
 							+ instance.hasDevice() + "isOnline? "
-							+ DDMSFacade.isDeviceOnline(DDMSFacade.getSerialNumberByName(avdName)));
+							+ deviceMonitor.isDeviceOnline(deviceMonitor.getSerialNumberByName(avdName)));
 					throw e;
 				}
 			} while (!isEmulatorReady(avdName));
@@ -414,7 +416,8 @@ public class StartEmulatorProcessLogic implements IAndroidLogic {
 	}
 
 	private boolean isEmulatorReady(String avdName) {
-		String serialNum = DDMSFacade.getSerialNumberByName(avdName);
-		return DDMSFacade.isDeviceOnline(serialNum);
+		DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+		String serialNum = deviceMonitor.getSerialNumberByName(avdName);
+		return deviceMonitor.isDeviceOnline(serialNum);
 	}
 }

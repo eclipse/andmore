@@ -1,0 +1,31 @@
+@@ -1 +1
+-
+@@ -2 +1
++ <?xml version="1.0" encoding="utf-8"?>
++ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++     android:id="@+id/linearLayout4"
++     android:layout_width="match_parent"
++     android:layout_height="wrap_content" >
++
++     <LinearLayout
++         android:id="@+id/linearLayout5"
++         android:layout_width="wrap_content"
++         android:layout_height="match_parent" >
++
++         <LinearLayout
++             android:id="@+id/linearLayout6"
++             android:layout_width="wrap_content"
++             android:layout_height="match_parent" >
++
++             <!-- Comment -->
++
++             <Button
++                 android:id="@+id/button6"
++                 android:layout_width="wrap_content"
++                 android:layout_height="wrap_content"
++                 android:text="Button" >
++             </Button>
++         </LinearLayout>
++     </LinearLayout>
++
++ </LinearLayout>

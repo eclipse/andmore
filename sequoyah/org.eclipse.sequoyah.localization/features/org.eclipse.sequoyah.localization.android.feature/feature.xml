@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.sequoyah.localization.android.feature"
+      label="%featureName"
+      version="0.5.2.qualifier"
+      provider-name="%providerName"
+      plugin="org.eclipse.sequoyah.localization.android"
+      license-feature="org.eclipse.license"
+      license-feature-version="0.0.0">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license>
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.eclipse.sequoyah.localization.tools.feature"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.sequoyah.localization.android"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.sequoyah.localization.android.help"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

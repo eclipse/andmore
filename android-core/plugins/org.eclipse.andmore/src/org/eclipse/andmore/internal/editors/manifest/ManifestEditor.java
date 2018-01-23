@@ -369,6 +369,8 @@ public final class ManifestEditor extends AndroidXmlEditor {
      * @param markerDeltas the list of {@link IMarkerDelta}
      */
     private void processMarkerChanges(IMarkerDelta[] markerDeltas) {
+    	if (mUiManifestNode == null)
+    		return;
         AndroidManifestDescriptors descriptors = getManifestDescriptors();
         if (descriptors != null && descriptors.getApplicationElement() != null) {
             UiElementNode app_ui_node = mUiManifestNode.findUiChildNode(

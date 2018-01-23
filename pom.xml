@@ -104,6 +104,7 @@
 	</distributionManagement>
 
 	<modules>
+		<module>sequoyah</module>
 		<module>andmore-swt</module>
 		<module>android-core</module>
 		<module>andmore-core</module>

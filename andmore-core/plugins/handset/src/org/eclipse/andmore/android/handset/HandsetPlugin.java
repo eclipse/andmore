@@ -19,8 +19,8 @@ import java.util.Collection;
 import java.util.Properties;
 
 import org.eclipse.andmore.android.AndroidPlugin;
-import org.eclipse.andmore.android.DDMSFacade;
 import org.eclipse.andmore.android.DdmsRunnable;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.AndmoreEventManager;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.devices.DevicesManager;
@@ -44,7 +44,7 @@ public class HandsetPlugin extends AbstractUIPlugin {
 	private static final Runnable sdkLoaderListener = new Runnable() {
 		@Override
 		public void run() {
-			Collection<String> serialNumbers = DDMSFacade.getConnectedSerialNumbers();
+			Collection<String> serialNumbers = DeviceMonitor.instance().getConnectedSerialNumbers();
 			for (String serial : serialNumbers) {
 				createInstance(serial);
 			}
@@ -120,10 +120,11 @@ public class HandsetPlugin extends AbstractUIPlugin {
 	 *            The serial number of the device to create a TmL instance for
 	 */
 	private static void createInstance(String serialNumber) {
-		if (!DDMSFacade.isEmulator(serialNumber) && !DDMSFacade.isRemote(serialNumber)) {
+		DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+		if (!deviceMonitor.isEmulator(serialNumber) && !deviceMonitor.isRemote(serialNumber)) {
 
 			try {
-				Properties instanceProperties = DDMSFacade.getDeviceProperties(serialNumber);
+				Properties instanceProperties = deviceMonitor.getDeviceProperties(serialNumber);
 
 				HandsetInstanceBuilder projectBuilder = new HandsetInstanceBuilder(serialNumber, instanceProperties);
 
@@ -143,7 +144,8 @@ public class HandsetPlugin extends AbstractUIPlugin {
 	 *            The device to delete the correspondent TmL instance
 	 */
 	private static void deleteInstance(String serialNumber) {
-		if (!DDMSFacade.isEmulator(serialNumber) && !DDMSFacade.isRemote(serialNumber)) {
+		DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+		if (!deviceMonitor.isEmulator(serialNumber) && !deviceMonitor.isRemote(serialNumber)) {
 			DevicesManager.getInstance().deleteInstanceOfDevice(serialNumber);
 		}
 	}

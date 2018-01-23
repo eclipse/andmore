@@ -21,7 +21,7 @@ import static org.eclipse.andmore.android.common.log.AndmoreLogger.info;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.common.exception.AndroidException;
 import org.eclipse.andmore.android.emulator.core.exception.InstanceStartException;
@@ -233,7 +233,7 @@ public class AndroidLogicUtils {
 	public static void kill(IAndroidLogicInstance instance) {
 		if (instance instanceof ISerialNumbered) {
 			String serialNumber = ((ISerialNumbered) instance).getSerialNumber();
-			DDMSFacade.kill(serialNumber);
+			DeviceMonitor.instance().kill(serialNumber);
 			Process process = instance.getProcess();
 			if (process != null) {
 				int tries = 0;
@@ -314,7 +314,7 @@ public class AndroidLogicUtils {
 	 *             If the device is not started
 	 */
 	public static void testDeviceStatus(String serialNumber) throws AndroidException {
-		if (!DDMSFacade.isDeviceOnline(serialNumber)) {
+		if (!DeviceMonitor.instance().isDeviceOnline(serialNumber)) {
 			info("Device is offline: " + serialNumber);
 
 			throw new AndroidException(EmulatorNLS.EXC_AndroidLogicUtils_DeviceIsOffline);

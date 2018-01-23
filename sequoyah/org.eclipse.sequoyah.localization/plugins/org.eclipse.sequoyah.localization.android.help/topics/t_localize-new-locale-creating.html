@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="DC.Type" content="task"/>
+<meta name="DC.Title" content="Creating a new locale"/>
+<meta name="abstract" content="Create a new locale using the Localization Files Editor by adding a new column."/>
+<meta name="description" content="Create a new locale using the Localization Files Editor by adding a new column."/>
+<meta name="DC.Relation" scheme="URI" content="../topics/t_localize-about.html"/>
+<meta name="DC.Relation" scheme="URI" content="../topics/r_localization-string-editor.html"/>
+<meta name="copyright" content="Motorola Mobility, Inc. 2009-2012" type="primary"/>
+<meta name="DC.Rights.Owner" content="Motorola Mobility, Inc. 2009-2012" type="primary"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="t_localize-new-locale-creating"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="../commonltr.css"/>
+<title>Creating a new locale</title>
+</head>
+<body id="t_localize-new-locale-creating"><a name="t_localize-new-locale-creating"><!-- --></a>
+<a class="hdr-none"/>
+
+  <h1 class="topictitle1">Creating a new locale</h1>
+
+  
+  
+  <div><p>Create a new locale using the Localization Files Editor by adding a new column.</p>
+
+    <ol>
+      <li>
+        <span>Launch the Localization Files Editor using one of the following methods:</span>
+        <ul>
+          <li>Double-click <span class="filepath">res/values/strings.xml</span> (or any of the localized <span class="filepath">strings.xml</span> files in your project).</li>
+
+          <li>Right-click <span class="filepath">res/values/strings.xml</span> (or any of the localized <span class="filepath">strings.xml</span> files in your project) and select <span class="menucascade"><span class="uicontrol">Open
+                With</span> &gt; <span class="uicontrol">Other</span></span>. From the Editor Selection dialog, select
+              <span class="uicontrol">Localization Files Editor</span> and click OK.</li>
+
+        </ul>
+
+         The Localization Files Editor appears, showing the base (or default) strings file and any localized
+          strings files.
+      </li>
+
+      <li>
+        <span>Create a new column.</span>
+        <ul>
+          <li>To create a new, empty column, right-click anywhere within the Localization Files Editor table and
+            select <span class="uicontrol">Add Column</span>.</li>
+
+          <li>To create a new column that is a copy of an existing column, right-click within the column to be
+            copied and select <span class="uicontrol">Clone</span>.</li>
+
+        </ul>
+
+         The <span class="uicontrol">New column</span> dialog appears.
+      </li>
+
+      <li>
+        <span>In the <span class="uicontrol">New column</span> dialog, enter a localization file ID. For Android applications
+          this is the name of the resource directory in which the new <span class="filepath">strings.xml</span> file will be
+          created; see <a href="http://developer.android.com/guide/topics/resources/localization.html" target="_blank">http://developer.android.com/guide/topics/resources/localization.html</a> for information on constructing this directory name.</span>
+         The Localization Files Editor validates the localization file ID as you enter it; you cannot create a new
+          column if the name is already in use or is otherwise invalid.
+      </li>
+
+      <li>
+        <span>In the newly created column, add or edit locale-specific text in one or more cells.</span>
+         The newly created column is the right-most in the table. You can hide (or show) columns to better see
+          which cells correspond to which keys. In particular, you may want to hide all columns except <span class="uicontrol">Key</span> (which cannot be hidden), the default string values column, and your new column.
+      </li>
+
+      <li>
+        <span>Select <span class="menucascade"><span class="uicontrol">File</span> &gt; <span class="uicontrol">Save</span></span> to save your
+          changes.</span>
+         The new directory and <span class="filepath">strings.xml</span> file are created.
+      </li>
+
+    </ol>
+
+    <div class="section">To remove a locale simply right-click within the column and select <span class="uicontrol">Remove Column</span>.
+      Note that the XML file corresponding to the locale will be deleted only when you save the project. Also note that
+      you are warned if you attempt to delete the default file (<samp class="codeph">values/strings.xml</samp>), and it will be
+      recreated with blank values the next time you open the Localization Files Editor.</div>
+
+  </div>
+
+<div>
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a href="../topics/t_localize-about.html" title="Using the Localization Files Editor, you can easily create text string files for new locales, see which strings will be used in a given locale, and identify strings that have yet to be translated, all without having to work directly in XML-formatted files. It makes it easy to add new strings across multiple locales, and edit localized strings.">Localizing Text Strings</a></div>
+</div>
+<div class="relinfo"><strong>Related reference</strong><br/>
+<div><a href="../topics/r_localization-string-editor.html" title="Allows you to easily create text string files for new locales, to see which strings will be used in a given locale, and to identify strings that have yet to be translated, all without having to work directly in XML-formatted files.">Localization Files Editor</a></div>
+</div>
+</div>
+
+</body>
+</html>

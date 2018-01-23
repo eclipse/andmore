@@ -22,7 +22,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.TreeSet;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.sequoyah.device.common.utilities.exception.SequoyahException;
@@ -176,7 +176,7 @@ public class DevicesManager {
 
 		String serialNumber = null;
 		for (ISerialNumbered device : getInstancesByType(type)) {
-			if (((serialNumber = device.getSerialNumber()) != null) && (DDMSFacade.isDeviceOnline(serialNumber))) {
+			if (((serialNumber = device.getSerialNumber()) != null) && (DeviceMonitor.instance().isDeviceOnline(serialNumber))) {
 				instancesToReturn.add(device);
 			}
 		}

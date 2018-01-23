@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+<toc link_to="../com.motorola.studio.android.tooldocs.studio.helpbase/main.xml#reference_end" label="Sequoyah User Guide" >
+   
+      <topic label="Localization Files Editor"
+             href="topics/r_localization-string-editor.html"/>
+      <topic label="New Translated Column dialog"
+             href="topics/r_localization-new-translated-column.html"/>
+      <topic label="Translate Cells dialog"
+             href="topics/r_localization-translate-cells.html"/>
+   </toc>

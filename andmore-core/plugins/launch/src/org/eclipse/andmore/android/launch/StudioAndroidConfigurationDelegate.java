@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.eclipse.andmore.AndmoreAndroidPlugin;
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.SdkUtils;
 import org.eclipse.andmore.android.AndmoreEventManager;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
@@ -54,11 +54,13 @@ import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.IDebugUIConstants;
 import org.eclipse.debug.ui.ILaunchGroup;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.sequoyah.device.framework.model.IInstance;
 import org.eclipse.sequoyah.device.framework.model.handler.ServiceHandler;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
@@ -78,31 +80,14 @@ import com.android.ide.common.xml.ManifestData.Activity;
  */
 @SuppressWarnings("restriction")
 public class StudioAndroidConfigurationDelegate extends LaunchConfigDelegate {
-
-	private static final String ERRONEOUS_LAUNCH_CONFIGURATION = "erroneous.launch.config.dialog";
-
-	private static final String NO_COMPATIBLE_DEVICE = "no.compatible.device.dialog";
-
-	IAndroidEmulatorInstance compatibleInstance = null;
-
-	IAndroidEmulatorInstance initialEmulatorInstance = null;
-
-	public List<Client> waitingDebugger = new ArrayList<Client>();
-
 	private class RunAsClientListener implements IClientChangeListener {
-		/**
-         * 
-         */
 		private final IAndroidEmulatorInstance instance;
-
-		/**
-         * 
-         */
 		private final String appToLaunch;
 
 		/**
-		 * 
-		 * @param instance
+		 * Handler for client updates from ADB
+		 * @param instance Android Emulator Instance - can be null
+		 * @param appToLaunch Applicaton being launched - can be null
 		 */
 		RunAsClientListener(IAndroidEmulatorInstance instance, String appToLaunch) {
 			this.instance = instance;
@@ -125,11 +110,10 @@ public class StudioAndroidConfigurationDelegate extends LaunchConfigDelegate {
 					String home = store.getString(AdtPrefs.PREFS_HOME_PACKAGE);
 					if (home.equals(applicationName)) {
 						String serialNumber = client.getDevice().getSerialNumber();
-						String avdName = DDMSFacade.getNameBySerialNumber(serialNumber);
+						String avdName = DeviceMonitor.instance().getNameBySerialNumber(serialNumber);
 						if ((instance != null) && instance.getName().equals(avdName)) {
 							AndmoreLogger.info(StudioAndroidConfigurationDelegate.class,
 									"Delegating launch session to ADT... ");
-
 							synchronized (StudioAndroidConfigurationDelegate.this) {
 								StudioAndroidConfigurationDelegate.this.notify();
 							}
@@ -173,6 +157,17 @@ public class StudioAndroidConfigurationDelegate extends LaunchConfigDelegate {
 		}
 	}
 
+	private static final String ERRONEOUS_LAUNCH_CONFIGURATION = "erroneous.launch.config.dialog";
+
+	private static final String NO_COMPATIBLE_DEVICE = "no.compatible.device.dialog";
+
+	IAndroidEmulatorInstance compatibleInstance = null;
+
+	IAndroidEmulatorInstance initialEmulatorInstance = null;
+
+	public List<Client> waitingDebugger = new ArrayList<Client>();
+
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -188,32 +183,38 @@ public class StudioAndroidConfigurationDelegate extends LaunchConfigDelegate {
 		boolean isOk = super.preLaunchCheck(configuration, mode, monitor);
 
 		if (isOk) {
-			final String instanceName = configuration.getAttribute(
-					ILaunchConfigurationConstants.ATTR_DEVICE_INSTANCE_NAME, (String) null);
-
-			// we found an instance
-			if ((instanceName != null) && (instanceName.length() > 0)) {
-				IAndroidEmulatorInstance instance = DeviceFrameworkManager.getInstance()
-						.getInstanceByName(instanceName);
-				if (instance == null) {
-					String serialNumber = LaunchUtils.getSerialNumberForInstance(instanceName);
-					if (!DDMSFacade.isDeviceOnline(serialNumber)) {
-						isOk = false;
-						handleErrorDuringLaunch(configuration, mode, instanceName);
+			try {
+				final String instanceName = configuration.getAttribute(
+						ILaunchConfigurationConstants.ATTR_DEVICE_INSTANCE_NAME, (String) null);
+	
+				// we found an instance
+				if ((instanceName != null) && (instanceName.length() > 0)) {
+					IAndroidEmulatorInstance instance = DeviceFrameworkManager.getInstance()
+							.getInstanceByName(instanceName);
+					if (instance == null) {
+						String serialNumber = LaunchUtils.getSerialNumberForInstance(instanceName);
+						if (!DeviceMonitor.instance().isDeviceOnline(serialNumber)) {
+							isOk = false;
+							handleErrorDuringLaunch(configuration, mode, instanceName);
+						}
+					} else {
+						if (!instance.isAvailable()) {
+							isOk = false;
+							handleErrorDuringLaunch(configuration, mode, instanceName);
+						}
+	
+						if (!instance.isStarted()) {
+							initialEmulatorInstance = instance;
+							// updates the compatible instance with user response
+							isOk = checkForCompatibleRunningInstances(configuration);
+						}
 					}
 				} else {
-					if (!instance.isAvailable()) {
-						isOk = false;
-						handleErrorDuringLaunch(configuration, mode, instanceName);
-					}
-
-					if (!instance.isStarted()) {
-						initialEmulatorInstance = instance;
-						// updates the compatible instance with user response
-						isOk = checkForCompatibleRunningInstances(configuration);
-					}
+					isOk = false;
+					handleErrorDuringLaunch(configuration, mode, null);
 				}
-			} else {
+			} catch (Exception e) {
+				AndmoreLogger.error(StudioAndroidConfigurationDelegate.class.getName(), "Error while checking if device available", e);
 				isOk = false;
 				handleErrorDuringLaunch(configuration, mode, null);
 			}
@@ -348,34 +349,29 @@ public class StudioAndroidConfigurationDelegate extends LaunchConfigDelegate {
 						throw new CoreException(status);
 					}
 				}
-				// for the do nothing case there is nothing to do
-
-				IAndroidEmulatorInstance emuInstance = DeviceFrameworkManager.getInstance().getInstanceByName(
-						instanceName);
-
-				RunAsClientListener list = null;
+				RunAsClientListener clientUpdateHandler = null;
 
 				// if initialEmulatorInstance is not null it means that it was
 				// offline and user has interacted with StartedInstancesDialog.
 				// The emuInstance variable should be overrided by the
 				// initialEmulatorInstance because the emuInstance can be the
-				// new
-				// user choice (in case he has selected the check box in dialog
+				// new user choice (in case he has selected the check box in dialog
 				// asking to update the run configuration)
-				if (initialEmulatorInstance != null) {
-					emuInstance = initialEmulatorInstance;
-				}
-
+				IAndroidEmulatorInstance emuInstance = 
+					(initialEmulatorInstance != null) ? 
+					initialEmulatorInstance : 
+					DeviceFrameworkManager.getInstance().getInstanceByName(instanceName);
 				try {
 					if (appToLaunch != null) {
-						list = new RunAsClientListener(emuInstance, appToLaunch);
-						AndmoreEventManager.asyncAddClientChangeListener(list);
+						// Both emuInstance and appToLaunch are allowed to be null
+						clientUpdateHandler = new RunAsClientListener(emuInstance, appToLaunch);
+						AndmoreEventManager.asyncAddClientChangeListener(clientUpdateHandler);
 					}
 
 					// The instance from the launch configuration is an emulator
-					// (because the query returned
-					// something different from null) and is not started.
-					if ((emuInstance != null) && (!emuInstance.isStarted())) {
+					// (because the query returned something different from null) and is not started.
+					boolean isEmulatorValid = (emuInstance != null) && (emuInstance.getName() != null);
+					if (isEmulatorValid && !isEmulatorReady(emuInstance.getName()) && !emuInstance.isStarted()) {
 						if (compatibleInstance != null) {
 							emuInstance = compatibleInstance;
 							instanceName = emuInstance.getName();
@@ -401,8 +397,7 @@ public class StudioAndroidConfigurationDelegate extends LaunchConfigDelegate {
 					bringConsoleView();
 
 					// Determining if it is an emulator or handset and creating
-					// the description
-					// to be used for usage data collection
+					// the description to be used for usage data collection
 					String descriptionToLog = "";
 					if (emuInstance != null) {
 						descriptionToLog = UsageDataConstants.VALUE_EMULATOR;
@@ -421,7 +416,7 @@ public class StudioAndroidConfigurationDelegate extends LaunchConfigDelegate {
 
 					descriptionToLog = descriptionToLog + UsageDataConstants.VALUE_NO;
 					super.launch(configurationWorkingCopy, mode, launch, monitor);
-
+                    /* Usage data collection is inactive
 					// Collecting usage data for statistical purposes
 					try {
 						String prjTarget = "";
@@ -447,10 +442,10 @@ public class StudioAndroidConfigurationDelegate extends LaunchConfigDelegate {
 						// Do nothing, but error on the log should never prevent
 						// app from working
 					}
-
+                    */
 				} finally {
-					if (list != null) {
-						AndmoreEventManager.asyncRemoveClientChangeListener(list);
+					if (clientUpdateHandler != null) {
+						AndmoreEventManager.asyncRemoveClientChangeListener(clientUpdateHandler);
 					}
 					AndmoreEventManager.asyncAddClientChangeListener(AndroidLaunchController.getInstance());
 				}
@@ -475,8 +470,7 @@ public class StudioAndroidConfigurationDelegate extends LaunchConfigDelegate {
 	}
 
 	/**
-	 * @param project
-	 * @param emuInstance
+	 * @param configuration
 	 * @throws CoreException
 	 */
 	private boolean checkForCompatibleRunningInstances(ILaunchConfiguration configuration) throws CoreException {
@@ -630,5 +624,10 @@ public class StudioAndroidConfigurationDelegate extends LaunchConfigDelegate {
 				AndmoreLogger.info("Could not wait: ", e.getMessage());
 			}
 		}
+	}
+	private boolean isEmulatorReady(String avdName) {
+		DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+		String serialNum = deviceMonitor.getSerialNumberByName(avdName);
+		return DeviceMonitor.instance().isDeviceOnline(serialNum);
 	}
 }

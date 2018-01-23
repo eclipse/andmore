@@ -20,7 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.eclipse.andmore.android.AndroidPlugin;
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.remote.i18n.RemoteDeviceNLS;
 import org.eclipse.andmore.android.remote.instance.RemoteDeviceInstance;
@@ -82,7 +82,7 @@ public class SwitchFromUSBAndConnectToWirelessRunnable implements IRunnableWithP
 			if (!subMonitor.isCanceled()) {
 				// switch device connection from USB to TCP/IP
 				try {
-					status = DDMSFacade.switchUSBtoTcpIp(this.wirelessWizard.getInstance().getDeviceName(),
+					status = DeviceMonitor.instance().switchUSBtoTcpIp(this.wirelessWizard.getInstance().getDeviceName(),
 							this.wirelessWizard.getInstance().getSerialNumber(), this.wirelessWizard.getProperties()
 									.getProperty(RemoteDeviceInstance.PROPERTY_PORT), connectionTimeout, subMonitor
 									.newChild(300));
@@ -138,11 +138,12 @@ public class SwitchFromUSBAndConnectToWirelessRunnable implements IRunnableWithP
 				// after the adb mode is switched to tcpip the handset takes a
 				// while to
 				// be available for connection, that is why this while exists
-				while ((!DDMSFacade.isDeviceOnline(remoteDeviceInstance.getSerialNumber()))
+				DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+				while ((!deviceMonitor.isDeviceOnline(remoteDeviceInstance.getSerialNumber()))
 						&& (System.currentTimeMillis() < timeoutLimit)) {
 					// connect the remote device via TCP/IP
 					try {
-						status = DDMSFacade.connectTcpIp(remoteDeviceInstance, this.wirelessWizard.getProperties()
+						status = deviceMonitor.connectTcpIp(remoteDeviceInstance, this.wirelessWizard.getProperties()
 								.getProperty(RemoteDeviceInstance.PROPERTY_HOST), this.wirelessWizard.getProperties()
 								.getProperty(RemoteDeviceInstance.PROPERTY_PORT), connectionTimeout, subMonitor
 								.newChild(300));

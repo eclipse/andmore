@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>   
+   <extension
+         id="qemureactDevice"
+         name="qemureactDevice"
+         point="org.eclipse.sequoyah.device.framework.deviceTypes">
+      <deviceType
+            handler="org.eclipse.sequoyah.device.qemureact.handler.QEmuReactDeviceHandler"
+            icon="icons/full/obj16/device.gif"
+            id="org.eclipse.sequoyah.device.qemureact.qemureactDevice"
+            isPersistent="true"
+            label="QEmuReact Mobile Device"
+            name="QEmuReact Mobile Device">
+            <property
+               name="icon"
+               value="icons/full/obj16/qemu.gif">
+         	</property>
+         </deviceType>
+   </extension>
+   
+  <extension
+          point="org.eclipse.sequoyah.device.framework.ui.newDeviceWizardPages">
+       <wizardPage
+             id="org.eclipse.sequoyah.device.qemuarm.wizardPage1"
+             pageClass="org.eclipse.sequoyah.device.framework.ui.wizard.DefaultConnectionInfoWizardPage">
+          <deviceType
+                deviceTypeId="org.eclipse.sequoyah.device.qemureact.qemureactDevice">
+          </deviceType>
+       </wizardPage>
+ </extension>
+   
+   <extension
+         id="org.eclipse.sequoyah.device.qemureact.qemureactDevice"
+         name="startService"
+         point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service
+            handler="org.eclipse.sequoyah.device.qemureact.handler.StartServiceHandler"
+            id="org.eclipse.sequoyah.service.start.startService">
+         <status
+               endId="IDLE"
+               haltId="OFF"
+               startId="OFF">
+         </status>
+      </service>
+   </extension>
+    <extension
+         id="org.eclipse.sequoyah.device.qemureact.qemureactDevice"
+         name="stopService"
+         point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+      <service
+            handler="org.eclipse.sequoyah.device.qemureact.handler.StopServiceHandler"
+            id="org.eclipse.sequoyah.service.stop.stopService">
+         <status
+               endId="OFF"
+               haltId="IDLE"
+               startId="IDLE">
+         </status>
+         <status
+               endId="OFF"
+               haltId="IDLE-VNC"
+               startId="IDLE-VNC">
+         </status>
+      </service>
+   </extension>
+  
+<extension
+
+          id="org.eclipse.sequoyah.device.qemureact.qemureactDevice"
+
+          name="vncViewerService"
+
+          point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+
+       <service
+
+             id="org.eclipse.sequoyah.service.vncviewer.vncViewerService">
+
+          <status
+
+                endId="IDLE-VNC"
+
+                haltId="IDLE"
+    startId="IDLE">
+
+          </status>
+          <status
+                endId="IDLE-VNC"
+                haltId="IDLE-VNC"
+                startId="IDLE-VNC">
+          </status></service>
+
+    </extension>
+    <extension
+
+          id="org.eclipse.sequoyah.device.qemureact.qemureactDevice"
+
+          name="unplugVncViewerService"
+
+          point="org.eclipse.sequoyah.device.framework.serviceDefinition">
+
+       <service
+
+             id="org.eclipse.sequoyah.service.vncviewer.unplugVncViewerService">
+
+          <status
+
+                endId="IDLE"
+
+                haltId="IDLE-VNC"
+
+                startId="IDLE-VNC">
+
+          </status></service>
+
+    </extension>
+    
+    
+    
+    
+
+</plugin>

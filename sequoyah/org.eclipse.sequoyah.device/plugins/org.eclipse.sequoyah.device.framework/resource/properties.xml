@@ -1,0 +1,11 @@
+<properties>
+	<device>
+		<DEVICE_PATH>/temp/qemu</DEVICE_PATH>
+	</device>
+	<instance>
+		<HOST>127.0.0.1</HOST>
+	</instance>
+	<service>
+		<PORT>5900</PORT>
+	</service>
+</properties>

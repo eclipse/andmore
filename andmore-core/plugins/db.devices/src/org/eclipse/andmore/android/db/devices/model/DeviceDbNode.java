@@ -21,8 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.andmore.android.DDMSFacade;
 import org.eclipse.andmore.android.DDMSUtils;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.common.utilities.EclipseUtils;
 import org.eclipse.andmore.android.common.utilities.FileUtil;
@@ -376,12 +376,12 @@ public class DeviceDbNode extends DbNode implements IDbNode {
 		IStatus status = null;
 		try {
 			closeAssociatedEditors(true, forceCloseEditors);
-			DDMSFacade.deleteFile(serialNumber, remoteDbPath.toString());
+			DeviceMonitor.instance().deleteFile(serialNumber, remoteDbPath.toString());
 			disconnect();
 		} catch (IOException e) {
 			status = new Status(IStatus.ERROR, DbDevicesPlugin.PLUGIN_ID, NLS.bind(
 					DbDevicesNLS.DeviceDbNode_Delete_Remote_File_Failed, remoteDbPath.toString(),
-					DDMSFacade.getNameBySerialNumber(serialNumber)));
+					DeviceMonitor.instance().getNameBySerialNumber(serialNumber)));
 		}
 		return status != null ? status : Status.OK_STATUS;
 	}
@@ -455,7 +455,7 @@ public class DeviceDbNode extends DbNode implements IDbNode {
 			List<String> remoteList = Arrays.asList(new String[] { remoteDbPath.toString() });
 
 			stream = EclipseUtils.getStudioConsoleOutputStream(false);
-			status = DDMSFacade.pullFiles(serialNumber, localList, remoteList, REMOTE_OPERATIONS_TIMEOUT,
+			status = DeviceMonitor.instance().pullFiles(serialNumber, localList, remoteList, REMOTE_OPERATIONS_TIMEOUT,
 					new NullProgressMonitor(), stream);
 		} catch (Exception e) {
 			status = new Status(IStatus.ERROR, DbDevicesPlugin.PLUGIN_ID,
@@ -503,7 +503,7 @@ public class DeviceDbNode extends DbNode implements IDbNode {
 			List<File> localList = Arrays.asList(new File[] { localDbFile });
 			List<String> remoteList = Arrays.asList(new String[] { remoteDbPath.toString() });
 			stream = EclipseUtils.getStudioConsoleOutputStream(false);
-			status = DDMSFacade.pushFiles(serialNumber, localList, remoteList, REMOTE_OPERATIONS_TIMEOUT,
+			status = DeviceMonitor.instance().pushFiles(serialNumber, localList, remoteList, REMOTE_OPERATIONS_TIMEOUT,
 					new NullProgressMonitor(), stream);
 			if (status.isOK()) {
 				isDirty = false;
@@ -515,7 +515,7 @@ public class DeviceDbNode extends DbNode implements IDbNode {
 
 			String appName = getParent().getName();
 			if (warnUser) {
-				boolean applicationRunning = DDMSFacade.isApplicationRunning(serialNumber, appName);
+				boolean applicationRunning = DeviceMonitor.instance().isApplicationRunning(serialNumber, appName);
 
 				if (applicationRunning) {
 					EclipseUtils.showInformationDialog(DbDevicesNLS.DeviceDbNode_Application_Running_Msg_Title,
@@ -606,7 +606,7 @@ public class DeviceDbNode extends DbNode implements IDbNode {
 	 */
 	@Override
 	public void cleanUp() {
-		if (DDMSFacade.isDeviceOnline(serialNumber)) {
+		if (DeviceMonitor.instance().isDeviceOnline(serialNumber)) {
 			super.cleanUp();
 		} else {
 			closeAssociatedEditors(true, forceCloseEditors);

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.DdmsRunnable;
 import org.eclipse.andmore.android.AndmoreEventManager;
 import org.eclipse.andmore.android.AndmoreEventManager.EventType;
@@ -80,7 +80,7 @@ public class DeviceNode extends AbstractTreeNode implements IDeviceNode, ISaveSt
 	 *            this node parent.
 	 */
 	public DeviceNode(String serialNumber, ITreeNode parent) {
-		super(serialNumber, DDMSFacade.getNameBySerialNumber(serialNumber), parent);
+		super(serialNumber, DeviceMonitor.instance().getNameBySerialNumber(serialNumber), parent);
 		this.serialNumber = serialNumber;
 		this.deviceName = getName();
 		ImageDescriptor icon = AbstractUIPlugin.imageDescriptorFromPlugin(DbDevicesPlugin.PLUGIN_ID, ICON_PATH);
@@ -148,7 +148,7 @@ public class DeviceNode extends AbstractTreeNode implements IDeviceNode, ISaveSt
 
 		List<ITreeNode> childNodes = new ArrayList<ITreeNode>(loadedApps != null ? loadedApps.size() + 1 : 1);
 		try {
-			if (DDMSFacade.hasSDCard(serialNumber)) {
+			if (DeviceMonitor.instance().hasSDCard(serialNumber)) {
 				ExtStorageNode extStorageNode = new ExtStorageNode(this);
 				childNodes.add(extStorageNode);
 			}

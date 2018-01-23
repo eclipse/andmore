@@ -18,7 +18,7 @@ package org.eclipse.andmore.android.remote.instance;
 import java.util.Collection;
 import java.util.Properties;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.remote.RemoteDevicePlugin;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -56,7 +56,7 @@ public class RemoteDeviceInstance extends AbstractMobileInstance implements ISer
 			String port = prop.getProperty(PROPERTY_PORT);
 			String candidateSerial = host + ":" + port;
 
-			Collection<String> allSerialNumbers = DDMSFacade.getConnectedSerialNumbers();
+			Collection<String> allSerialNumbers = DeviceMonitor.instance().getConnectedSerialNumbers();
 			if (allSerialNumbers.contains(candidateSerial)) {
 				serialNumber = candidateSerial;
 			}
