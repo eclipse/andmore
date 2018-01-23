@@ -2,7 +2,7 @@ Code completion in completion8.xml for android:layo^ut_width="fill_parent":
 android:layout_width : Specifies the basic width of the view.  [dimension, enum]
 android:layout_height : Specifies the basic height of the view.  [dimension, enum]
 android:layout_weight : [float]
-android:layout_gravity : Standard gravity constant that a child can supply to its parent.  [flag]
+android:layout_gravity : Standard gravity constant that a child supplies to its parent.  [flag]
 android:layout_margin : Specifies extra space on the left, top, right and bottom sides  of this view.  [dimension]
 android:layout_marginLeft : Specifies extra space on the left side of this view.  [dimension]
 android:layout_marginTop : Specifies extra space on the top side of this view.  [dimension]

@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.andmore.android.DDMSFacade;
 import org.eclipse.andmore.android.DdmsRunnable;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.AndmoreEventManager;
 import org.eclipse.andmore.android.db.core.CanRefreshStatus;
 import org.eclipse.andmore.android.db.core.ui.AbstractTreeNode;
@@ -85,7 +85,7 @@ public class DevicesRootNode extends AbstractTreeNode implements IRootNode {
 	@Override
 	public void refresh() {
 		clear();
-		Collection<String> connectedSerialNumbers = DDMSFacade.getConnectedSerialNumbers();
+		Collection<String> connectedSerialNumbers = DeviceMonitor.instance().getConnectedSerialNumbers();
 		List<ITreeNode> deviceNodes = new ArrayList<ITreeNode>();
 		for (String serialNumber : connectedSerialNumbers) {
 			DeviceNode deviceNode = new DeviceNode(serialNumber, this);

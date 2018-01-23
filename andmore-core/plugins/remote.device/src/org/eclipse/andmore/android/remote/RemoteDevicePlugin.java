@@ -21,8 +21,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.andmore.android.AndroidPlugin;
-import org.eclipse.andmore.android.DDMSFacade;
 import org.eclipse.andmore.android.DdmsRunnable;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.AndmoreEventManager;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.remote.instance.RemoteDeviceInstance;
@@ -79,7 +79,7 @@ public class RemoteDevicePlugin extends AbstractUIPlugin {
 	private static final Runnable sdkLoaderListener = new Runnable() {
 		@Override
 		public void run() {
-			Collection<String> serialNumbers = DDMSFacade.getConnectedSerialNumbers();
+			Collection<String> serialNumbers = DeviceMonitor.instance().getConnectedSerialNumbers();
 			for (String serial : serialNumbers) {
 				RemoteDeviceUtils.connectDevice(serial);
 			}

@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.sequoyah.vnc.protocol;singleton:=true
+Bundle-Version: 0.5.2.qualifier
+Bundle-Activator: org.eclipse.sequoyah.vnc.protocol.ProtocolPlugin
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.sequoyah.device.common.utilities
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.sequoyah.vnc.protocol,
+ org.eclipse.sequoyah.vnc.protocol.lib,
+ org.eclipse.sequoyah.vnc.protocol.lib.exceptions,
+ org.eclipse.sequoyah.vnc.protocol.lib.msgdef,
+ org.eclipse.sequoyah.vnc.protocol.lib.msgdef.databeans
+Bundle-Vendor: %pluginProvider
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+
+

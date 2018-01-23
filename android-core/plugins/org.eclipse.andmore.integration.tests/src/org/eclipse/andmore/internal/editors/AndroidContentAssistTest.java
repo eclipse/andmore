@@ -41,6 +41,8 @@ import org.eclipse.andmore.internal.editors.values.ValuesContentAssist;
 import org.eclipse.andmore.internal.editors.AndroidContentAssist;
 import org.eclipse.andmore.internal.editors.AndroidXmlEditor;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
@@ -1024,8 +1026,29 @@ public class AndroidContentAssistTest extends AdtProjectTest {
 		// Open file
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		assertNotNull(page);
-		IEditorPart editor = IDE.openEditor(page, file, editorId);
-		assertTrue(editor instanceof AndroidXmlEditor);
+		int iterations = 0;
+		IEditorPart editor = null;
+		while (true) {
+			if (iterations == 50) {
+				fail("Couldn't get IDE to open CommonXmlEditor; ran out of time");
+			}
+		    editor = IDE.openEditor(page, file, editorId);
+			if (editor instanceof AndroidXmlEditor)
+				break;
+			editor.dispose();
+			NullProgressMonitor monitor = new NullProgressMonitor();
+			try {
+				file.delete(true, monitor);
+			} catch (CoreException e) {
+				fail("Exception deleting layout file: " + e.getMessage());
+			}
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				break;
+			}
+			iterations++;
+		}
 		AndroidXmlEditor xmlEditor = (AndroidXmlEditor) editor;
 
 		UiElementNode root = xmlEditor.getUiRootNode();
@@ -1062,7 +1085,18 @@ public class AndroidContentAssistTest extends AdtProjectTest {
 				break;
 			}
 		}
-		assertNotNull(chosen);
+		if (chosen == null) {
+			if (proposals.length == 0)
+				fail("No proposals");
+			else {
+				StringBuilder builder = new StringBuilder(match);
+				int index = 0;
+				builder.append(" in ").append(proposals[index++]);
+				while (index < proposals.length)
+					builder.append(',').append(proposals[index++]);
+				fail(builder.toString());
+			}
+		}
 		assert chosen != null; // Eclipse null pointer analysis doesn't believe
 								// the JUnit assertion
 

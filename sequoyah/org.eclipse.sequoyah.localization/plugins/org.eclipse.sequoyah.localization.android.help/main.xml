@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+<toc label="Sequoyah User Guide" topic="topics/t_localize-about.html">
+   <topic label="Tasks">
+      <topic label="Localizing Text Strings" href="topics/t_localize-about.html">
+         <topic label="Configuring the Localization Files Editor"
+                href="topics/t_localize-configuring.html"/>
+         <topic label="Creating a new locale" href="topics/t_localize-new-locale-creating.html"/>
+         <topic label="Adding new strings" href="topics/t_localize-new-string-adding.html"/>
+         <topic label="Adding new string arrays" href="topics/t_localize-new-array-adding.html"/>
+         <topic label="Translating all strings from one language to another"
+                href="topics/t_localize-all-string-translating.html"/>
+         <topic label="Translating selected strings to a new language"
+                href="topics/t_localize-selected-string-translating.html"/>
+         <topic label="Editing a localized string" href="topics/t_localize-string-editing.html"/>
+         <topic label="Editing a localized string array"
+                href="topics/t_localize-array-editing.html"/>
+      </topic>
+   </topic>
+   <topic label="Reference">
+      <topic label="Localization Files Editor"
+             href="topics/r_localization-string-editor.html"/>
+      <topic label="New Translated Column dialog"
+             href="topics/r_localization-new-translated-column.html"/>
+      <topic label="Translate Cells dialog"
+             href="topics/r_localization-translate-cells.html"/>
+   </topic>
+</toc>

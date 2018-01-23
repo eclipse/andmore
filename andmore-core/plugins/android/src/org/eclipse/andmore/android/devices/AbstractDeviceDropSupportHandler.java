@@ -19,7 +19,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.DDMSUtils;
 import org.eclipse.andmore.android.InstallPackageBean;
 import org.eclipse.andmore.android.i18n.AndroidNLS;
@@ -114,7 +114,7 @@ public abstract class AbstractDeviceDropSupportHandler implements IDeviceTypeDro
 		installBean.setCanOverwrite(INSTALL_TYPE.UNINSTALL);
 		installBean.setPackagePath(apk.getAbsolutePath());
 
-		return DDMSUtils.installPackage(DDMSFacade.getSerialNumberByName(instance.getName()), installBean);
+		return DDMSUtils.installPackage(DeviceMonitor.instance().getSerialNumberByName(instance.getName()), installBean);
 
 	}
 

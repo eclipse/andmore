@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeoutException;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.devices.DevicesManager;
@@ -51,7 +51,7 @@ public class RemoteDeviceUtils {
 				/*
 				 * Check if it's a remote device
 				 */
-				if (DDMSFacade.isRemote(serialNumber)) {
+				if (DeviceMonitor.instance().isRemote(serialNumber)) {
 
 					ISerialNumbered instance = DevicesManager.getInstance().getDeviceBySerialNumber(serialNumber);
 
@@ -122,7 +122,7 @@ public class RemoteDeviceUtils {
 	 *            the serial number of the disconnected device
 	 */
 	public static void disconnectDevice(String serialNumber) {
-		if (DDMSFacade.isRemote(serialNumber)) {
+		if (DeviceMonitor.instance().isRemote(serialNumber)) {
 
 			ISerialNumbered instance = DevicesManager.getInstance().getDeviceBySerialNumber(serialNumber);
 
@@ -179,8 +179,8 @@ public class RemoteDeviceUtils {
 			timeoutLimit = System.currentTimeMillis() + (RemoteDeviceConstants.DEFAULT_TIMEOUT * 1000);
 
 		}
-
-		while ((instanceOnline = DDMSFacade.isDeviceOnline(serialNumber)) == false) {
+        DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+		while ((instanceOnline = deviceMonitor.isDeviceOnline(serialNumber)) == false) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {

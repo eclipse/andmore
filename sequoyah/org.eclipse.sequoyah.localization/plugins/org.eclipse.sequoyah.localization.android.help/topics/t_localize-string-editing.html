@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="DC.Type" content="task"/>
+<meta name="DC.Title" content="Editing a localized string"/>
+<meta name="abstract" content="Use the Localization Files Editor to create localized versions of text strings used in your applications."/>
+<meta name="description" content="Use the Localization Files Editor to create localized versions of text strings used in your applications."/>
+<meta name="DC.Relation" scheme="URI" content="../topics/t_localize-about.html"/>
+<meta name="DC.Relation" scheme="URI" content="http://developer.android.com/guide/topics/resources/localization.html#resource-precedence"/>
+<meta name="DC.Relation" scheme="URI" content="../topics/r_localization-string-editor.html"/>
+<meta name="DC.Relation" scheme="URI" content="../topics/t_localize-array-editing.html"/>
+<meta name="DC.Relation" scheme="URI" content="../topics/t_localize-new-string-adding.html"/>
+<meta name="copyright" content="Motorola Mobility, Inc. 2009-2012" type="primary"/>
+<meta name="DC.Rights.Owner" content="Motorola Mobility, Inc. 2009-2012" type="primary"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="t_localize-string-editing"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="../commonltr.css"/>
+<title>Editing a localized string</title>
+</head>
+<body id="t_localize-string-editing"><a name="t_localize-string-editing"><!-- --></a>
+<a class="hdr-none"/>
+
+  <h1 class="topictitle1">Editing a localized string</h1>
+
+  
+  
+  <div><p>Use the Localization Files Editor to create localized versions of text strings used in your applications.</p>
+
+    <ol>
+      <li>
+        <span>Launch the Localization Files Editor using one of the following methods:</span>
+        <ul>
+          <li>Double-click <span class="filepath">res/values/strings.xml</span> (or any of the localized <span class="filepath">strings.xml</span> files in your project).</li>
+
+          <li>Right-click <span class="filepath">res/values/strings.xml</span> (or any of the localized <span class="filepath">strings.xml</span> files in your project) and select <span class="menucascade"><span class="uicontrol">Open
+                With</span> &gt; <span class="uicontrol">Other</span></span>. From the Editor Selection dialog, select
+              <span class="uicontrol">Localization Files Editor</span> and click OK.</li>
+
+        </ul>
+
+         The Localization Files Editor appears, showing the base (or default) strings file and any localized
+          strings files. If it does not exist, the default strings file (<samp class="codeph">values/strings.xml</samp>) will be
+          created. Within the editor each column (other than the <span class="uicontrol">Key</span> column) represents a unique
+          locale. Each row represents a single text string, identified by a key (or, in the case of a string array, a
+          key and an index value). A cell contains the version of the row's string localized for the column's locale. In
+          Android, if a given cell is blank, at runtime the operating system picks the column that best matches the
+          current locale (and has a value for the row), falling back on the default string value for that key if
+          necessary (the column labeled <span class="uicontrol">values</span> contains these default string values). See the
+          Android documentation for a complete description of the algorithm the operating system uses to determine the
+          resource file that best matches the device's current locale.
+      </li>
+
+      <li>
+        <span>If desired, hide columns to simplify the editing process. </span>
+         To hide a column, right-click anywhere within the Localization Files Editor table, select <span class="uicontrol">Show
+            Columns</span>, and then select the column to be hidden. (Repeat this step to show a previously hidden
+          column.)
+      </li>
+
+      <li>
+        <span>Edit or enter text strings into the table cells as appropriate. Note that by looking across a given row you
+          can see which locales have unique translations and which rely on the default string value. By looking down a
+          given column you can see which strings are localized for that column's locale, and which rely on the default
+          string value. Also note that you can enter multi-line string values by pressing the Return key between
+        lines.</span>
+      </li>
+
+      <li>
+        <span>Select <span class="menucascade"><span class="uicontrol">File</span> &gt; <span class="uicontrol">Save</span></span> to save your
+          changes.</span>
+      </li>
+
+    </ol>
+
+  </div>
+
+<div>
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a href="../topics/t_localize-about.html" title="Using the Localization Files Editor, you can easily create text string files for new locales, see which strings will be used in a given locale, and identify strings that have yet to be translated, all without having to work directly in XML-formatted files. It makes it easy to add new strings across multiple locales, and edit localized strings.">Localizing Text Strings</a></div>
+</div>
+<div class="relinfo"><strong>Related tasks</strong><br/>
+<div><a href="../topics/t_localize-array-editing.html" title="Use the Localization Files Editor to create localized versions of text string arrays used in your applications.">Editing a localized string array</a></div>
+<div><a href="../topics/t_localize-new-string-adding.html" title="Create a new string using the Localization Files Editor by adding a new row.">Adding new strings</a></div>
+</div>
+<div class="relinfo"><strong>Related reference</strong><br/>
+<div><a href="../topics/r_localization-string-editor.html" title="Allows you to easily create text string files for new locales, to see which strings will be used in a given locale, and to identify strings that have yet to be translated, all without having to work directly in XML-formatted files.">Localization Files Editor</a></div>
+</div>
+<div class="relinfo"><strong>Related information</strong><br/>
+<div><a href="http://developer.android.com/guide/topics/resources/localization.html#resource-precedence" target="_blank">Which Resources Take Precedence?</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -19,7 +19,7 @@ import static org.eclipse.andmore.android.common.log.AndmoreLogger.info;
 
 import java.util.Properties;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.emulator.core.model.IAndroidEmulatorInstance;
 import org.eclipse.andmore.android.emulator.core.model.IInputLogic;
 import org.eclipse.andmore.android.emulator.logic.AndroidLogicUtils;
@@ -120,7 +120,7 @@ public class MainDisplayComposite extends Composite implements IAndroidComposite
 	}
 
 	private void hideEmulatorWindow() {
-		int port = AndroidLogicUtils.getEmulatorPort(DDMSFacade.getSerialNumberByName(androidInstance.getName()));
+		int port = AndroidLogicUtils.getEmulatorPort(DeviceMonitor.instance().getSerialNumberByName(androidInstance.getName()));
 		long windowHandle = NativeUIUtils.getWindowHandle(androidInstance.getName(), port);
 		androidInstance.setWindowHandle(windowHandle);
 

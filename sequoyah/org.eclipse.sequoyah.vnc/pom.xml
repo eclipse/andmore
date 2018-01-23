@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+      <groupId>org.eclipse.andmore</groupId>
+      <artifactId>sequoyah-parent</artifactId>
+      <version>0.5.2-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>sequoyah-vnc-parent</artifactId>
+    <packaging>pom</packaging>
+    <name>VNC parent</name>
+
+    <!-- Common properties used in all modules -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <modules>
+        <module>plugins/org.eclipse.sequoyah.vnc.protocol</module>
+        <module>plugins/org.eclipse.sequoyah.vnc.vncviewer</module>
+        <module>plugins/org.eclipse.sequoyah.vnc.vncviewer.vncviews</module>
+        <module>features/org.eclipse.sequoyah.vnc.feature</module>
+        <module>features/org.eclipse.sequoyah.vnc.protocol.feature</module>
+        <module>features/org.eclipse.sequoyah.vnc.vncviewer.feature</module>
+    </modules>
+</project>

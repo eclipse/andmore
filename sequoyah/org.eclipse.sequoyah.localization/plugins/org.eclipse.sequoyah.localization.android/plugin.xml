@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.sequoyah.localization.tools.localizationSchema">
+      <localizationSchema
+            class="org.eclipse.sequoyah.localization.android.AndroidLocalizationSchema"
+            name="Android"
+            nature="com.android.ide.eclipse.adt.AndroidNature"
+            naturePrecedence="org.eclipse.jdt.core.javanature">
+      </localizationSchema>
+   </extension>
+
+</plugin>

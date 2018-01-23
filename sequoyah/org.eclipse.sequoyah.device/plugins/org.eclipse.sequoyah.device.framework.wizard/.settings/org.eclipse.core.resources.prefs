@@ -1,0 +1,18 @@
+#Wed Dec 17 13:18:10 ACT 2008
+eclipse.preferences.version=1
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/DeviceWizardConstants.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/DeviceWizardResources.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/DeviceWizardResources.properties=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/exception/DeviceWizardExceptionHandler.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/exception/DeviceWizardExceptionStatus.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/model/DefaultInstanceBuilder.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/model/DeviceWizardBean.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/model/DeviceWizardExtensionManager.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/model/IWizardCustomizer.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/model/IWizardProjectPage.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/model/IWizardPropertyPage.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/ui/AbstractNewEmulatorInstanceWizard.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/ui/AbstractWizardCustomizer.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/ui/WizardNewProjectPage.java=UTF-8
+encoding//src/org/eclipse/sequoyah/framework/device/wizard/ui/WizardNewPropertyPage.java=UTF-8
+encoding/<project>=UTF-8

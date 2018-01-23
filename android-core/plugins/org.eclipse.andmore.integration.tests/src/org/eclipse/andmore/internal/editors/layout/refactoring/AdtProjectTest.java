@@ -103,10 +103,21 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 		assertNotNull(current);
 		LoadStatus sdkStatus = AndmoreAndroidPlugin.getDefault().getSdkLoadStatus();
 		assertSame(LoadStatus.LOADED, sdkStatus);
-		IAndroidTarget target = current.getTarget(getProject());
+		IAndroidTarget target = null;
+		int iterations = 0;
+		while (true) {
+			if (iterations == 100) {
+				fail("Couldn't get project target; ran out of time");
+			}
+			target = current.getTarget(getProject());
+			if (target != null)
+				break;
+			Thread.sleep(250);
+			iterations++;
+		}
 		IJavaProject javaProject = BaseProjectHelper.getJavaProject(getProject());
 		assertNotNull(javaProject);
-		int iterations = 0;
+		iterations = 0;
 		while (true) {
 			if (iterations == 100) {
 				fail("Couldn't load target; ran out of time");
@@ -141,14 +152,27 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 	@After
 	public void tearDownProjects() throws Exception {
 		IProject project = getProject();
+		NullProgressMonitor monitor = new NullProgressMonitor();
         System.out.println("Deleting project " + project.getName());
         try
         {
-            project.delete(true, new NullProgressMonitor());
+        	project.close(monitor);
         }
         catch(ResourceException e)
         {
             e.printStackTrace();
+        }
+        finally {
+            try
+            {
+                project.delete(true, monitor);
+            }
+            catch(ResourceException e)
+            {
+                e.printStackTrace();
+            } finally {
+            	dialogMonitor.stopMonitoring();
+            }
         }
 		super.tearDownProjects();
 	}
@@ -277,7 +301,12 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 			}
 		}
 		if (!file.exists()) {
-			String xml = readTestFile(sourceName, true);
+			String xml = readTestFile(project, sourceName, true);
+			// Remove any references to the project name such that we are isolated
+			// from
+			// that in golden file.
+			// Appears in strings.xml etc.
+			xml = removeSessionData(project, xml);
 			InputStream bstream = new ByteArrayInputStream(xml.getBytes("UTF-8")); //$NON-NLS-1$
 			NullProgressMonitor monitor = new NullProgressMonitor();
 			file.create(bstream, false /* force */, monitor);
@@ -421,6 +450,12 @@ public abstract class AdtProjectTest extends SdkLoadingTestCase {
 			data = data.replace(getProject().getName(), "PROJECTNAME");
 		}
 
+		return data;
+	}
+
+	protected String removeSessionData(IProject project, String data) {
+		data = super.removeSessionData(data);
+		data = data.replace(project.getName(), "PROJECTNAME");
 		return data;
 	}
 

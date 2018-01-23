@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="stopService"
+         name="stopService"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="Motorola Inc. 2007"
+            description="Service to Stop a mobile device"
+            handler="org.eclipse.sequoyah.device.service.stop.handler.StopServiceHandler"
+            icon="icons/full/obj16/stop.png"
+            id="org.eclipse.sequoyah.device.service.stop.stopService"
+            name="%serviceName"
+            provider="Eclipse.org"
+            version="0.2.0"
+            visible="true">
+      </service>
+   </extension>
+   <extension
+         id="refreshService"
+         name="refreshService"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="Motorola Inc. 2007"
+            description="Service to Refresh a mobile device"
+            handler="org.eclipse.sequoyah.device.service.stop.handler.RefreshServiceHandler"
+            icon="icons/full/obj16/refresh.gif"
+            id="org.eclipse.sequoyah.device.service.stop.refreshService"
+            name="Refresh Service"
+            provider="Eclipse.org"
+            version="0.2.0"
+            visible="true">
+      </service>
+   </extension>
+
+</plugin>

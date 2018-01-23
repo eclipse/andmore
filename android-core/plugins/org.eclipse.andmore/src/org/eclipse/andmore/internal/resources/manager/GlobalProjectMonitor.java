@@ -226,7 +226,10 @@ public final class GlobalProjectMonitor {
             if (type == IResource.FILE) {
                 int kind = delta.getKind();
                 // notify the listeners.
-                for (FileListenerBundle bundle : mFileListeners) {
+                // Avoid possible concurrent modification error
+                ArrayList<FileListenerBundle> fileListenersCopy = new ArrayList<>(mFileListeners.size());
+                fileListenersCopy.addAll(mFileListeners);
+                for (FileListenerBundle bundle : fileListenersCopy) {
                     if (bundle.kindMask == ListenerBundle.MASK_NONE
                             || (bundle.kindMask & kind) != 0) {
                         try {

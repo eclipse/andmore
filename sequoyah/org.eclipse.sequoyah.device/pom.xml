@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+      <groupId>org.eclipse.andmore</groupId>
+      <artifactId>sequoyah-parent</artifactId>
+      <version>0.5.2-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>sequoyah-device-parent</artifactId>
+    <packaging>pom</packaging>
+    <name>Device parent</name>
+
+    <!-- Common properties used in all modules -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <modules>
+        <module>plugins/org.eclipse.sequoyah.device.common.utilities</module>
+        <module>plugins/org.eclipse.sequoyah.device.framework</module>
+        <module>plugins/org.eclipse.sequoyah.device.framework.ui</module>
+        <module>plugins/org.eclipse.sequoyah.device.framework.wizard</module>
+        <module>plugins/org.eclipse.sequoyah.device.service.start</module>
+        <module>plugins/org.eclipse.sequoyah.device.service.stop</module>
+        <module>plugins/org.eclipse.sequoyah.device.service.vncviewer</module>
+        <module>features/org.eclipse.sequoyah.device.common.feature</module>
+        <module>features/org.eclipse.sequoyah.device.feature</module>
+        <!--<module>features/org.eclipse.sequoyah.feature</module>-->
+    </modules>
+</project>

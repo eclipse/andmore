@@ -18,7 +18,7 @@ package org.eclipse.andmore.android.emulator.device.sync;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.emulator.EmulatorPlugin;
 import org.eclipse.andmore.android.emulator.core.devfrm.DeviceFrameworkManager;
@@ -255,7 +255,7 @@ public class DeviceViewsSync {
 	@SuppressWarnings("unused")
 	private void syncDDMSView(String instanceName) {
 		try {
-			IDevice device = DDMSFacade.getDeviceWithVmName(instanceName);
+			IDevice device = DeviceMonitor.instance().getDeviceWithVmName(instanceName);
 			if (device != null) {
 				DdmsPlugin.getDefault().selectionChanged(device, null);
 			} else {

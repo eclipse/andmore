@@ -18,7 +18,7 @@ package org.eclipse.andmore.android.remote.handlers;
 import java.net.InetAddress;
 import java.util.Map;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.common.utilities.EclipseUtils;
@@ -67,7 +67,7 @@ public class WirelessServiceHandler extends ServiceHandler {
 
 		int deviceSdkVersion = -1;
 		try {
-			deviceSdkVersion = Integer.parseInt(DDMSFacade.getDeviceProperty(device.getSerialNumber(),
+			deviceSdkVersion = Integer.parseInt(DeviceMonitor.instance().getDeviceProperty(device.getSerialNumber(),
 					"ro.build.version.sdk"));
 
 			subMonitor.worked(100);
@@ -87,7 +87,7 @@ public class WirelessServiceHandler extends ServiceHandler {
 				subMonitor.setTaskName(RemoteDeviceNLS.WirelessServiceHandler_MsgRetrievingDeviceIPNumber);
 
 				// retrieve the IP and validate it
-				final String host = DDMSFacade.getWirelessIPfromHandset(device.getSerialNumber(), monitor);
+				final String host = DeviceMonitor.instance().getWirelessIPfromHandset(device.getSerialNumber(), monitor);
 
 				subMonitor.worked(300);
 				if (host == null) {

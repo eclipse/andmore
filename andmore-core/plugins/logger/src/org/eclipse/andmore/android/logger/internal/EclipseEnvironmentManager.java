@@ -38,6 +38,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.core.runtime.Status;
 import org.osgi.framework.Bundle;
 
@@ -189,7 +190,7 @@ public class EclipseEnvironmentManager implements EnvironmentManager {
 	 *            Map to append properties keys and values.
 	 */
 	private void getExtensionsConfiguration(Map<String, String> log4jPropertiesMap) {
-		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IExtensionRegistry registry = RegistryFactory.getRegistry();
 		IExtensionPoint extPoint = registry.getExtensionPoint(Activator.PLUGIN_ID, CONFIGURATION);
 		IExtension[] exts = extPoint.getExtensions();
 
