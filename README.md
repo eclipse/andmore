@@ -139,19 +139,25 @@ to that version of the JDK.
 To build from Eclipse, use the Eclipse SDK. You will need to add the m2e plugins after the
 SDK is installed.  Java 1.7 or 1.8 are supported.
 
-1. Choose _File>Import>Maven>Existing Maven Projects_
-1. Choose the pom.xml in the root directory of Andmore project
+1. Choose _File > Import > Maven > Existing Maven Projects_
+1. Choose the `pom.xml` in the root directory of Andmore project
 1. When the projects are imported, there will be some errors. Ignore them for now.
-1. Choose _Preferences>Plug-in Development>Target Platform_
-1. Choose the target that ends with andmore.target. If there are other Andmore targets with different names, ignore them.
+1. Choose _Preferences > Plug-in Development > Target Platform_
+1. Choose the target that ends with `andmore.target`. If there are other Andmore targets with different names, ignore them.
 1. There will be some sub-projects that do not need to be in the workspace. They will have compile errors because they are for a different OS than you are using. It is alright to close them in Eclipse, but don't delete them from the filesystem as the Maven build compiles them properly.
 1. Create a run configuration. You will probably need to add *-XX:MaxPermSize=256m* or higher to the VM Arguments setting on the Arguments tab.
 
 ### Eclipse Project set
 
 There is a project set that can be imported as an alternative to using Maven. This file
-is in android-core/plugins/org.eclipse.andmore/projectSet.psf.  The project set file is
+is in `android-core/plugins/org.eclipse.andmore/projectSet.psf`.  The project set file is
 not guaranteed to be always updated, so if dependency issues arise, use the Maven import.
+
+1. Choose _File > Import... > Team > Team Project Set_
+1. Set _URL_ to
+https://raw.githubusercontent.com/eclipse/andmore/develop/android-core/plugins/org.eclipse.andmore/projectSet.psf
+1. Click _Finish_ to complete the import.
+1. Follow steps 3 to 7 from section above.
 
 # Hudson Builds
 
