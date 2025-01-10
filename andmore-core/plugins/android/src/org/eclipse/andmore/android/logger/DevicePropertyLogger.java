@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.andmore.android.AndroidPlugin;
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.logger.collector.core.ILogFile;
 import org.eclipse.core.runtime.IPath;
@@ -44,13 +44,14 @@ public class DevicePropertyLogger implements ILogFile {
 	private final Map<String, Map<String, String>> properties;
 
 	public DevicePropertyLogger() {
-		serialNumbers = DDMSFacade.getConnectedSerialNumbers();
+		DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+		serialNumbers = deviceMonitor.getConnectedSerialNumbers();
 		properties = new HashMap<String, Map<String, String>>(serialNumbers.size());
 		for (String serialNumber : serialNumbers) {
 			Map<String, String> propertiesMap = new HashMap<String, String>(140);
-			String deviceName = DDMSFacade.getNameBySerialNumber(serialNumber);
+			String deviceName = deviceMonitor.getNameBySerialNumber(serialNumber);
 			try {
-				Collection<String> lines = DDMSFacade.execRemoteApp(serialNumber, "getprop", new NullProgressMonitor());
+				Collection<String> lines = DeviceMonitor.instance().execRemoteApp(serialNumber, "getprop", new NullProgressMonitor());
 				for (String line : lines) {
 					String[] split = line.split(":");
 					StringBuffer buffer = new StringBuffer();

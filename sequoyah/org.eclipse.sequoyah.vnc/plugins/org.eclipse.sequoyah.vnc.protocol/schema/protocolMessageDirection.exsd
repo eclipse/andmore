@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.eclipse.sequoyah.vnc.protocol" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="org.eclipse.sequoyah.vnc.protocol" id="protocolMessageDirection" name="Protocol Message Direction"/>
+      </appInfo>
+      <documentation>
+         The protocol direction extension is used to define which part (client or server) owns a message. In the protocol framework context, the message owner is the part that sends a message.&lt;br&gt;&lt;br&gt;
+&lt;b&gt;Example: &lt;/b&gt;If the message X is declared as &lt;samp&gt;clientMessage&lt;/samp&gt;, the client is the one that sends X to the server. On the other hand, if message Y is declared as &lt;samp&gt;serverMessage&lt;/samp&gt;, the server is the one that sends Y to the client.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="clientMessage" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="serverMessage" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A fully qualified identifier of the target extension point.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  An optional identifier of the extension instance.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  An optional name of the extension instance.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="clientMessage">
+      <annotation>
+         <documentation>
+            This element is used to define what messages defined by the &lt;samp&gt;ProtocolMessage&lt;/samp&gt; extensions must be considered as client messages. In the context of the protocol framework, a client message is a message that is sent by the client part of the protocol.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="protocolId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of the protocol that owns the message identified by the &lt;i&gt;messageId&lt;/i&gt; attribute in this element.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="messageId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of the message which is to be declared as a client message
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="serverMessage">
+      <annotation>
+         <documentation>
+            This element is used to define what messages defined by the &lt;samp&gt;ProtocolMessage&lt;/samp&gt; extensions must be considered as server messages. In the context of the protocol framework, a server message is a message that is sent by the server part of the protocol.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="protocolId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of the protocol that owns the message identified by the &lt;i&gt;messageId&lt;/i&gt; attribute in this element.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="messageId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of the message which is to be declared as a server message
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         0.4.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         The following is an example of the extension point:
+&lt;p&gt;
+&lt;pre&gt;
+   &lt;extension
+         point=&quot;org.eclipse.sequoyah.vnc.protocol.protocolMessageOrientation&quot;&gt;
+      &lt;serverMessage
+            messageId=&quot;messageY&quot;
+            protocolId=&quot;xyz&quot;&gt;
+      &lt;/serverMessage&gt;
+      &lt;clientMessage
+            messageId=&quot;messageX&quot;
+            protocolId=&quot;xyz&quot;&gt;
+      &lt;/clientMessage&gt;
+   &lt;/extension&gt;
+&lt;/pre&gt;
+&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         This extension point does not demand implementation or extension.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         Every message declared through the &lt;samp&gt;ProtocolMessage&lt;/samp&gt; extension point should have a &lt;samp&gt;ProtocolMessageOrientation&lt;/samp&gt; declaration associated. If a message does not have its orientation defined, it will not be used by the protocol framework.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         Copyright (c) 2007-2010 Motorola Inc. All rights reserved.
+ This program and the accompanying materials are made available under the terms
+ of the Eclipse Public License v1.0 which accompanies this distribution, and is
+ available at http://www.eclipse.org/legal/epl-v10.html
+      </documentation>
+   </annotation>
+
+</schema>

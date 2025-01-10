@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.sequoyah.vnc.feature"
+      label="%featureName"
+      version="0.5.2.qualifier"
+      provider-name="%providerName"
+      plugin="org.eclipse.sequoyah.vnc.vncviewer"
+      license-feature="org.eclipse.license"
+      license-feature-version="0.0.0">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license>
+      %license
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.sequoyah.vnc.vncviewer"/>
+      <import plugin="org.eclipse.sequoyah.vnc.protocol"/>
+      <import feature="org.eclipse.sequoyah.vnc.vncviewer.feature"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.sequoyah.vnc.vncviewer.vncviews"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

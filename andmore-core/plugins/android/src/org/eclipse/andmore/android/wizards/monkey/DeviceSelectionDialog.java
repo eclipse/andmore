@@ -19,7 +19,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import org.eclipse.andmore.android.AndroidPlugin;
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.devices.DevicesManager;
 import org.eclipse.andmore.android.i18n.AndroidNLS;
@@ -71,9 +71,9 @@ public class DeviceSelectionDialog extends ElementListSelectionDialog {
 		if ((instances != null) && (instances.size() > 0)) {
 
 			Collection<ISerialNumbered> filteredInstances = new LinkedList<ISerialNumbered>();
-
+            DeviceMonitor deviceMonitor = DeviceMonitor.instance();
 			for (ISerialNumbered instance : instances) {
-				if (DDMSFacade.isDeviceOnline(instance.getSerialNumber())) {
+				if (deviceMonitor.isDeviceOnline(instance.getSerialNumber())) {
 					filteredInstances.add(instance);
 				}
 			}

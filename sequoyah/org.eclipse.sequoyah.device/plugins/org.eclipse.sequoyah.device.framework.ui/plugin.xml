@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+<extension-point 
+	id="org.eclipse.sequoyah.device.framework.ui.newDeviceWizardPages" 
+	name="newDeviceWizardPages definition" 
+	schema="schema/org.eclipse.sequoyah.device.framework.ui.newDeviceWizardPages.exsd"/>  
+<extension
+      id="org.eclipse.sequoyah.device.framework.ui.views"
+      name="Device Framework Views"
+      point="org.eclipse.ui.views">
+   <view
+         category="org.eclipse.sequoyah.device.framework.ui.category"
+         class="org.eclipse.sequoyah.device.framework.ui.view.InstanceMgtView"
+         icon="icons/full/obj16/device.gif"
+         id="org.eclipse.sequoyah.device.framework.ui.InstanceMgtView"
+         name="%viewName">
+   </view>
+   <category
+         id="org.eclipse.sequoyah.device.framework.ui.category"
+         name="%categoryName">
+   </category>
+</extension>
+
+<extension
+      point="org.eclipse.ui.perspectives">
+   <perspective
+         class="org.eclipse.sequoyah.device.framework.ui.DevicePerspectiveFactory"
+         id="org.eclipse.sequoyah.device.framework.ui.perspective"
+         name="%perspectiveName">
+   </perspective>
+</extension>
+<extension
+      point="org.eclipse.ui.propertyPages">
+   <page
+         class="org.eclipse.sequoyah.device.framework.ui.editors.InstancePropertyEditor"
+         id="org.eclipse.sequoyah.device.framework.ui.editors.InstancePropertyEditorDefault"
+         name="%devicePropertiesPageName">
+      <enabledWhen>
+         <instanceof
+               value="org.eclipse.sequoyah.device.framework.internal.model.MobileInstance">
+         </instanceof>
+      </enabledWhen>
+   </page>
+</extension>  
+<extension-point
+	id="org.eclipse.sequoyah.device.framework.ui.wizard"
+	name="%extensionPointName1"
+	schema="schema/org.eclipse.sequoyah.device.framework.ui.wizard.exsd"/>
+<extension-point 
+	id="org.eclipse.sequoyah.device.framework.ui.deviceManagerView" 
+	name="%extensionPointName2" 
+	schema="schema/org.eclipse.sequoyah.device.framework.ui.deviceManagerView.exsd"/>
+</plugin>

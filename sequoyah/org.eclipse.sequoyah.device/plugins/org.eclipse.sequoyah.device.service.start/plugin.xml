@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="startService"
+         name="startService"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="Motorola Inc. 2007"
+            description="Service to Start a mobile device"
+            handler="org.eclipse.sequoyah.device.service.start.handler.StartServiceHandler"
+            icon="icons/full/obj16/start.png"
+            id="org.eclipse.sequoyah.device.service.start.startService"
+            name="%serviceName"
+            provider="Eclipse.org"
+            version="0.2.0"
+            visible="true">
+      </service>
+   </extension>
+   
+   <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+    <launchConfigurationType
+          delegate="org.eclipse.sequoyah.device.service.start.launcher.DeviceInstanceLaunchConfigurationDelegate"
+          id="org.eclipse.sequoyah.device.service.start.launcher"
+          modes="run, debug"
+          name="Emulator Instance"
+          public="false">        
+    </launchConfigurationType>
+   </extension>
+
+</plugin>

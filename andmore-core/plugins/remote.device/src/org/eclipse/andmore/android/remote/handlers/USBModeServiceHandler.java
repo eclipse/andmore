@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.common.utilities.EclipseUtils;
@@ -64,7 +64,7 @@ public class USBModeServiceHandler extends ServiceHandler {
 
 		int deviceSdkVersion = -1;
 		try {
-			deviceSdkVersion = Integer.parseInt(DDMSFacade.getDeviceProperty(device.getSerialNumber(),
+			deviceSdkVersion = Integer.parseInt(DeviceMonitor.instance().getDeviceProperty(device.getSerialNumber(),
 					"ro.build.version.sdk")); //$NON-NLS-1$
 
 			subMonitor.worked(100);
@@ -101,7 +101,7 @@ public class USBModeServiceHandler extends ServiceHandler {
 						// switch the device from connection mode from TCP/IP to
 						// USB
 						try {
-							IStatus status = DDMSFacade.switchFromTCPConnectionModeToUSBConnectionMode(device, host,
+							IStatus status = DeviceMonitor.instance().switchFromTCPConnectionModeToUSBConnectionMode(device, host,
 									port, Integer.parseInt(timeout), subMonitor.newChild(300));
 
 							// in case the status is not OK, show an error

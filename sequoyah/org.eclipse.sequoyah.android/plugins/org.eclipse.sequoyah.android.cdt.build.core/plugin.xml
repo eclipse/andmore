@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.cdt.managedbuilder.core.buildDefinitions">
+      <toolChain
+            archList="all"
+            configurationEnvironmentSupplier="org.eclipse.sequoyah.android.cdt.internal.build.core.AndroidEnvironmentSupplier"
+            id="com.android.toolchain.gcc"
+            name="Android GCC"
+            osList="all"
+            superClass="cdt.managedbuild.toolchain.gnu.base"
+            supportsManagedBuild="false">
+         <targetPlatform
+		       id="com.android.targetPlatform"
+		       name="Android Platform"
+               binaryParser="org.eclipse.cdt.core.ELF"
+		       osList="all"
+		       archList="all">
+         </targetPlatform>
+         <builder
+               cleanBuildTarget="clean"
+               command="ndk-build"
+               errorParsers="org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.GmakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser"
+               id="com.android.builder"
+               incrementalBuildTarget="V=1">
+		 </builder>
+	 	 <tool
+               id="com.android.tool.compiler.g++"
+               name="Android G++"
+               superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
+            <inputType
+                  id="com.android.tool.compiler.g++.input"
+                  scannerConfigDiscoveryProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerFileProfile"
+                  superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input">
+            </inputType>                          
+         </tool>
+         <tool
+               id="com.android.tool.compiler.c"
+               name="Android GCC"
+               superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
+            <inputType
+                  id="com.android.tool.compiler.c.input"
+                  scannerConfigDiscoveryProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerFileProfile"
+                  superClass="cdt.managedbuild.tool.gnu.c.compiler.input">
+            </inputType>                          
+		 </tool>
+      </toolChain>
+   </extension>
+
+</plugin>

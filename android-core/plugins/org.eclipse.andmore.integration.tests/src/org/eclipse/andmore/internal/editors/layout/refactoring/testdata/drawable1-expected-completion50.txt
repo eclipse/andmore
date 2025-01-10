@@ -3,7 +3,7 @@ Code completion in drawable1.xml for <item >^</item>:
 <bitmap /> : Drawable used to draw bitmaps.
 <clip />
 <color /> : Drawable used to draw a single color.
-<inset />
+<inset /> : Drawable used to wrap and inset another drawable.
 <layer-list ></layer-list> : Drawable used to render several drawables stacked on top of each  other.
 <nine-patch /> : Drawable used to draw 9-patches.
 <rotate /> : Drawable used to rotate another drawable.

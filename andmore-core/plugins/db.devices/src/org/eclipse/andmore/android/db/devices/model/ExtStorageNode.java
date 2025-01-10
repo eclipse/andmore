@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.db.core.CanRefreshStatus;
 import org.eclipse.andmore.android.db.core.DbCoreActivator;
@@ -241,7 +241,7 @@ public class ExtStorageNode extends AbstractTreeNode implements IDbDeviceMapperN
 	@Override
 	public void saveState(IEclipsePreferences preferences) {
 		Preferences node = preferences.node(MEMENTO_EXTERNAL_STORAGE);
-		Preferences serialNode = node.node(DDMSFacade.getNameBySerialNumber(serialNumber));
+		Preferences serialNode = node.node(DeviceMonitor.instance().getNameBySerialNumber(serialNumber));
 
 		int i = 1;
 		List<ITreeNode> children = getChildren();
@@ -278,7 +278,7 @@ public class ExtStorageNode extends AbstractTreeNode implements IDbDeviceMapperN
 			try {
 				if (preferences.nodeExists(MEMENTO_EXTERNAL_STORAGE)) {
 					Preferences node = preferences.node(MEMENTO_EXTERNAL_STORAGE);
-					String deviceName = DDMSFacade.getNameBySerialNumber(serialNumber);
+					String deviceName = DeviceMonitor.instance().getNameBySerialNumber(serialNumber);
 					if (node.nodeExists(deviceName)) {
 						Preferences deviceNode = node.node(deviceName);
 						String[] attributeKeys = deviceNode.keys();

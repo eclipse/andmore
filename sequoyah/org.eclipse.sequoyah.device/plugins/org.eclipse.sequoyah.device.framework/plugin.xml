@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="org.eclipse.sequoyah.device.framework.deviceTypes" name="Device Type definition" schema="schema/org.eclipse.sequoyah.device.framework.deviceTypes.exsd"/>      
+   <extension-point id="org.eclipse.sequoyah.device.framework.service" name="Service definition" schema="schema/org.eclipse.sequoyah.device.framework.service.exsd"/>
+   <extension-point id="org.eclipse.sequoyah.device.framework.serviceDefinition" name="Service Definition customized for Mobile Device" schema="schema/org.eclipse.sequoyah.device.framework.serviceDefinition.exsd"/>
+   <extension-point id="org.eclipse.sequoyah.device.framework.status" name="Status" schema="schema/org.eclipse.sequoyah.device.framework.status.exsd"/>   
+   <extension
+         id="INACTIVE"
+         point="org.eclipse.sequoyah.device.framework.status">
+      <status
+            canDeleteInstance="true"
+            canEditProperties="true"
+            id="INACTIVE"
+            image="icons/full/obj16/inactive.gif"
+            name="INACTIVE">
+      </status>
+   </extension>
+    <extension
+          id="OFF"
+          point="org.eclipse.sequoyah.device.framework.status">
+      <status
+            canDeleteInstance="true"
+            canEditProperties="true"
+            id="OFF"
+            image="icons/full/obj16/stop.png"
+            name="OFF">
+      </status>
+   </extension>
+    <extension
+          id="IDLE"
+          point="org.eclipse.sequoyah.device.framework.status">
+      <status
+            canDeleteInstance="false"
+            canEditProperties="false"
+            id="IDLE"
+            image="icons/full/obj16/start.png"
+            name="IDLE">
+      </status>
+   </extension>
+  
+</plugin>

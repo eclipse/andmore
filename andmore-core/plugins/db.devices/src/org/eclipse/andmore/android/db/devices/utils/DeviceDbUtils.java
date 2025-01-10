@@ -20,8 +20,8 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.andmore.android.DDMSFacade;
 import org.eclipse.andmore.android.DDMSUtils;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -81,13 +81,12 @@ public class DeviceDbUtils {
 
 		if (filterDBbApplications) {
 			Map<String, String> filteredPackages = new LinkedHashMap<String, String>();
-
-			Collection<String> appDataDirs = DDMSFacade.execRemoteApp(serialNumber,
+			DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+			Collection<String> appDataDirs = deviceMonitor.execRemoteApp(serialNumber,
 					"ls /data/data/", new NullProgressMonitor()); //$NON-NLS-1$
-
 			for (String appPackage : appDataDirs) {
 				IPath remoteDbFolder = getRemoteDbFolder(appPackage);
-				Collection<String> databases = DDMSFacade.execRemoteApp(serialNumber,
+				Collection<String> databases = deviceMonitor.execRemoteApp(serialNumber,
 						"ls " + remoteDbFolder.toString(), new NullProgressMonitor()); //$NON-NLS-1$
 
 				for (String commandOutline : databases) {

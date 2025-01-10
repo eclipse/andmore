@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="qemuarmDevice"
+         name="qemuarmDevice"
+         point="org.eclipse.sequoyah.device.framework.deviceTypes">
+       <deviceType
+            handler="org.eclipse.sequoyah.device.qemuarm.handler.QEmuARMDeviceHandler"
+            icon="icons/full/obj16/qemuarm.gif"
+            id="org.eclipse.sequoyah.device.qemuarm.qemuarmDevice"
+            isAbstract="false"
+            isPersistent="true"
+            label="QEmuARM Mobile Device"
+            name="QEmuARM Mobile Device"
+            superClass="org.eclipse.sequoyah.device.qemu.abstract"/>
+   </extension>
+   <extension
+          point="org.eclipse.sequoyah.device.framework.ui.newDeviceWizardPages">
+       <wizardPage
+             id="org.eclipse.sequoyah.device.wizardPage1"
+             pageClass="org.eclipse.sequoyah.device.framework.ui.wizard.DefaultConnectionInfoWizardPage">
+          <deviceType
+                deviceTypeId="org.eclipse.sequoyah.device.qemuarm.qemuarmDevice">
+          </deviceType>
+       </wizardPage>
+   </extension>
+
+   
+    
+</plugin>

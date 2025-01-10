@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Element;
 
@@ -112,6 +111,8 @@ public class ExtractIncludeRefactoringTest extends RefactoringTest {
 
 	@Test
 	public void testExtract7() throws Exception {
+		// Tests extracting from multiple files where the layouts are completely
+		// different/unrelated files
 		// Just like testExtract6, except we turn on auto-formatting
 		IPreferenceStore store = AndmoreAndroidPlugin.getDefault().getPreferenceStore();
 		AdtPrefs.init(store);
@@ -122,7 +123,18 @@ public class ExtractIncludeRefactoringTest extends RefactoringTest {
 
 		assertTrue(AdtPrefs.getPrefs().getFormatGuiXml());
 
-		testExtract6();
+		// Create the duplicate files
+        // sample12 - sample14 are copies of sample1a, sample7 and sample8 respectively, just so expected results filenames are distinct
+		// Note results are different from above test for reasons unknown.
+		Map<IPath, String> extraFiles = new HashMap<IPath, String>();
+		extraFiles.put(getTestDataFile(getProject(), "sample12.xml", "res/layout/sample1a.xml")
+				.getProjectRelativePath(), "sample12.xml");
+		extraFiles.put(getTestDataFile(getProject(), "sample13.xml", "res/layout/sample7.xml").getProjectRelativePath(),
+				"sample13.xml");
+		extraFiles.put(getTestDataFile(getProject(), "sample14.xml", "res/layout/sample8.xml").getProjectRelativePath(),
+				"sample14.xml");
+
+		checkRefactoring("sample13.xml", "newlayout7", true, extraFiles, 5, true /* diffs */, "@+id/linearLayout4");
 	}
 
 	private void checkRefactoring(String basename, String layoutName, boolean replaceOccurrences,

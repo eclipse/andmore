@@ -1,0 +1,16 @@
+
+XK_Return=0xFF0D
+XK_KP_Enter=0xFF8D
+
+XK_Alt_L=0xFFE9
+XK_Control_L=0xFFE3
+XK_Shift_L=0xFFE1
+
+
+XK_Left=0xFF51
+XK_Up=0xFF52
+XK_Right=0xFF53
+XK_Down=0xFF54
+
+XK_Tab=0xFF09
+XK_Backspace=0xFF08

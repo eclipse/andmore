@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//src/org/eclipse/tml/framework/device/ui/wizard/AbstractWizardCustomizer.java=UTF-8
+encoding//src/org/eclipse/tml/framework/device/ui/wizard/DefaultInstanceBuilder.java=UTF-8
+encoding//src/org/eclipse/tml/framework/device/ui/wizard/DeviceWizardBean.java=UTF-8
+encoding//src/org/eclipse/tml/framework/device/ui/wizard/DeviceWizardConstants.java=UTF-8
+encoding//src/org/eclipse/tml/framework/device/ui/wizard/DeviceWizardExtensionManager.java=UTF-8
+encoding//src/org/eclipse/tml/framework/device/ui/wizard/DeviceWizardResources.java=UTF-8
+encoding//src/org/eclipse/tml/framework/device/ui/wizard/DeviceWizardResources.properties=UTF-8
+encoding//src/org/eclipse/tml/framework/device/ui/wizard/IWizardCustomizer.java=UTF-8
+encoding//src/org/eclipse/tml/framework/device/ui/wizard/IWizardProjectPage.java=UTF-8
+encoding//src/org/eclipse/tml/framework/device/ui/wizard/IWizardPropertyPage.java=UTF-8
+encoding//src/org/eclipse/tml/framework/device/ui/wizard/WizardNewProjectPage.java=UTF-8
+encoding//src/org/eclipse/tml/framework/device/ui/wizard/WizardNewPropertyPage.java=UTF-8
+encoding/<project>=UTF-8

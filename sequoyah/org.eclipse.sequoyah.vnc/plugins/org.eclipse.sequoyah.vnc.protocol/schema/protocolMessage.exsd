@@ -1,0 +1,401 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.eclipse.sequoyah.vnc.protocol" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="org.eclipse.sequoyah.vnc.protocol" id="protocolMessage" name="Protocol Message"/>
+      </appInfo>
+      <documentation>
+         A protocol message is a set of bytes, structured as defined by the protocol rules, which is sent through a communication channel and has meaning to both sender and receiver parts.&lt;p&gt;
+In Sequoyah, the message structure is defined by the &lt;samp&gt;protocolMessage&lt;/samp&gt; extension point and associated to a protocol by means of the &lt;samp&gt;protocolId&lt;/samp&gt; defined by a protocolDefinition extension (see &lt;samp&gt;protocolDefinition&lt;/samp&gt; extension point). Once the message structure is known by the framework, it is able to serialize and send a set of provided data through the communication channel (if it is an outgoing message), as well as receive and deserialize messages data from the communication channel, providing a handler with meaningful data (if it is an incoming message).&lt;p&gt;
+Finally, it is possible to have pre-defined structures for the message fields, including the &lt;i&gt;fixed size field&lt;/i&gt; (when the field fits within a pre-defined number of bytes), the &lt;i&gt;variable size field&lt;/i&gt; (when a size field right before determines the field size) and the &lt;i&gt;raw field&lt;/i&gt; (when the field has an unusual format that needs to be handled by a provided handler). It is also possible to group a set of the previous fields into an &lt;i&gt;iteratable block&lt;/i&gt;, which allows a set of fields to be read multiple times.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <choice minOccurs="0" maxOccurs="unbounded">
+            <element ref="message"/>
+         </choice>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A fully qualified identifier of the target extension point.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  An optional identifier of the extension instance.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  An optional name of the extension instance.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="message">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="messageName"/>
+         </appInfo>
+      </annotation>
+      <complexType>
+         <choice minOccurs="0" maxOccurs="unbounded">
+            <element ref="fixedSizeData" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="variableSizeData" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="rawDataHandler" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="iteratableBlock" minOccurs="0" maxOccurs="unbounded"/>
+         </choice>
+         <attribute name="protocolId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of the protocol that owns this message. Its value shall be the same as declared in a &lt;samp&gt;protocolDefinition&lt;/samp&gt; extension.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="messageId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  An unique identifier of the message.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="messageName" type="string">
+            <annotation>
+               <documentation>
+                  An optional message name, used to organize the messages in the extension point.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="messageCode" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The code that identifies the message. Declare the message code as an hexadecimal value (e.g. 0x01)
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="isMessageCodeSigned" type="boolean" use="required">
+            <annotation>
+               <documentation>
+                  Determines if the code value is a signed number or not. If signed, it is applied a two-complement transformation on its value if it is negative before sending through the socket.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="messageCodeSizeInBytes" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Determines in how many bytes the message code shall be converted at serialization time.&lt;br&gt;Assure that the contents of the &lt;samp&gt;messageCode&lt;/samp&gt; attribute fits into the number of bytes declared by this attribute. Otherwise, the code will be truncated and the protocol will not run correctly.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="messageHandler" type="string">
+            <annotation>
+               <documentation>
+                  The fully qualified name of the class that handles this message.&lt;br&gt;&lt;i&gt;Note: &lt;/i&gt;If you are developing only one part of the protocol and the message belongs to the other part (in which case it is not needed to provide a handler to the message), leave the field blank.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.sequoyah.vnc.protocol.lib.IMessageHandler"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="fixedSizeData">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="fieldName"/>
+         </appInfo>
+         <documentation>
+            This is the element that defines a field with known size. It is usually used for transmitting number types, such as integers, longs, shorts or bytes.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="fieldName" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The name of the field. When creating the &lt;samp&gt;IProtocolMessage&lt;/samp&gt; instance, the &lt;samp&gt;fieldName&lt;/samp&gt; is used as the key that maps to the value read from socket (if it is an incoming message). If this is an outgoing message, it is expected that the provided message contains a value named like this attribute for the framework to retrieve which value to serialize.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="isFieldSigned" type="boolean" use="required">
+            <annotation>
+               <documentation>
+                  Indicates if the field shall be interpreted as a signed field. In other words, indicates if a two-complement shall be applied to the value read/written from/to the socket after deserializing/serializing if the number is negative.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="fieldSizeInBytes" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Determines what is the length of this field. In other words, how many bytes this field has.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="value" type="string">
+            <annotation>
+               <documentation>
+                  Optional. It needs to be filled if this field has a constant value that shall be written to the socket regardless of having a value in the &lt;samp&gt;IProtocolMessage&lt;/samp&gt; instance provided to &lt;code&gt;sendMessage()&lt;/code&gt; method. This attribute is ignored on incoming messages.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="variableSizeData">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="valueFieldName"/>
+         </appInfo>
+         <documentation>
+            This is the element that defines a field with unknown size. It is usually used for transmitting alphanumeric strings. Before the string field itself, a numeric field tells the framework what is the size of the string field.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="sizeFieldName" type="string">
+            <annotation>
+               <documentation>
+                  An optional name for the numeric size field that indicates the how many bytes the string field has.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="isSizeFieldSigned" type="boolean" use="required">
+            <annotation>
+               <documentation>
+                  Indicates if the numeric size field shall be interpreted as a signed field. In other words, indicates if a two-complement shall be applied to the value read/written from/to the socket after deserializing/serializing if it is negative.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="sizeFieldSizeInBytes" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Determines the length of the numeric size field. In other words, how many bytes that field has.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="valueFieldName" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The name of the field. When creating the &lt;samp&gt;IProtocolMessage&lt;/samp&gt; instance, the &lt;samp&gt;valueFieldName&lt;/samp&gt; is used as the key that maps to the value read from socket (if it is an incoming message). If this is an outgoing message, it is expected that the provided message contains a value named like this attribute for the framework to retrieve which value to serialize.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="charsetName" use="default" value="US-ASCII">
+            <annotation>
+               <documentation>
+                  The charset that must be used to encode/decode the string bytes that compose this field
+               </documentation>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <enumeration value="US-ASCII">
+                  </enumeration>
+                  <enumeration value="ISO-8859-1">
+                  </enumeration>
+                  <enumeration value="UTF-8">
+                  </enumeration>
+                  <enumeration value="UTF-16BE">
+                  </enumeration>
+                  <enumeration value="UTF-16LE">
+                  </enumeration>
+                  <enumeration value="UTF-16">
+                  </enumeration>
+               </restriction>
+            </simpleType>
+         </attribute>
+         <attribute name="value" type="string">
+            <annotation>
+               <documentation>
+                  Optional. It needs to be filled if this field has a constant value that shall be written to the socket regardless of having a correspondent value in the &lt;samp&gt;IProtocolMessage&lt;/samp&gt; instance provided to &lt;code&gt;sendMessage()&lt;/code&gt; method. This attribute is ignored on incoming messages.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="rawDataHandler">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="fieldName"/>
+         </appInfo>
+         <documentation>
+            This is the element that defines a handler for a field which format the framework cannot handle. It is often used when the data format cannot be represented either by a fixed size field or by a variable size field.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="fieldName" type="string">
+            <annotation>
+               <documentation>
+                  An optional name for the field.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="rawDataHandler" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The fully qualified name of the class that is able to handle the contents of this raw data field.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.sequoyah.vnc.protocol.lib.IRawDataHandler"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="iteratableBlock">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="iterableBlockId"/>
+         </appInfo>
+         <documentation>
+            This is the element that defines a block of fields that shall be read/written multiple times. The iteration quantity is defined by the value of a fixed size field which value has already been determined and registered at the &lt;samp&gt;IProtocolMessage&lt;/samp&gt; being used.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="fixedSizeData" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="variableSizeData" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="rawDataHandler" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="iterableBlockId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The iteratable block id is used as a part of a composite key for the fields that are internal to the block. The id is often used internally by the framework, but can be used externally if an internal field of a protocol message must be accessed by the message handler.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="iterateOn" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The name of a fixed size data field that is already known at iteratable block handling time (because it is present in the protocol message being read/written). The value associated to that field represents how many times the whole iteratable block will be executed when serializing/deserializing the internal fields.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         0.4.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         The following is an example of the extension point:
+&lt;p&gt;
+&lt;pre&gt;
+&lt;extension
+         point=&quot;org.eclipse.sequoyah.vnc.protocol.protocolMessage&quot;&gt;
+      &lt;incomingMessage
+            messageCode=&quot;0x00&quot;
+            messageHandler=&quot;org.xyz.IncomingMessageHandler&quot;
+            messageName=&quot;INCOMING_MSG&quot;
+            protocolId=&quot;xyz&quot;&gt;
+         &lt;fixedSizeData
+               fieldName=&quot;fName1&quot;
+               fieldSizeInBytes=&quot;1&quot;
+               isFieldSigned=&quot;false&quot;&gt;
+         &lt;/fixedSizeData&gt;
+         &lt;variableSizeData
+               isSizeFieldSigned=&quot;true&quot;
+               sizeFieldName=&quot;sizeFieldName&quot;
+               sizeFieldSizeInBytes=&quot;2&quot;
+               valueFieldName=&quot;vName2&quot;&gt;
+         &lt;/variableSizeData&gt;
+         &lt;iteratableBlock
+               iterableBlockId=&quot;blockId&quot;
+               iterateOn=&quot;fName1&quot;&gt;
+            &lt;fixedSizeData
+                  fieldName=&quot;thisWillBeRead_fName1_Times&quot;
+                  fieldSizeInBytes=&quot;2&quot;
+                  isFieldSigned=&quot;false&quot;&gt;
+            &lt;/fixedSizeData&gt;            
+         &lt;/iteratableBlock&gt;
+         &lt;rawDataReader
+               fieldName=&quot;rReader&quot;
+               rawDataReader=&quot;org.xvz.MyReader&quot;&gt;
+         &lt;/rawDataReader&gt;
+      &lt;/incomingMessage&gt;
+      &lt;outgoingMessage
+            isMessageCodeSigned=&quot;false&quot;
+            messageCode=&quot;0x01&quot;
+            messageCodeSizeInBytes=&quot;1&quot;
+            messageName=&quot;OUTGOING_MSG&quot;
+            protocolId=&quot;xyz&quot;&gt;
+         &lt;fixedSizeData
+               fieldName=&quot;fName3&quot;
+               fieldSizeInBytes=&quot;1&quot;
+               isFieldSigned=&quot;false&quot;&gt;
+         &lt;/fixedSizeData&gt;
+         &lt;rawDataWriter
+               fieldName=&quot;rWriter&quot;
+               rawDataWriter=&quot;org.xyz.MyWriter&quot;&gt;
+         &lt;/rawDataWriter&gt;
+      &lt;/outgoingMessage&gt;
+   &lt;/extension&gt;
+&lt;/pre&gt;
+&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         Incoming messages needs a handler class to be declared. That class must implement interface &lt;samp&gt;org.eclipse.sequoyah.vnc.protocol.framework.IMessageHandler&lt;/samp&gt;.&lt;p&gt;
+The message representation is defined by the interface &lt;samp&gt;org.eclipse.sequoyah.vnc.protocol.framework.IProtocolMessage&lt;/samp&gt;. When creating a message to be sent, an instance of the class &lt;samp&gt;org.eclipse.sequoyah.vnc.protocol.framework.ProtocolMessage&lt;/samp&gt; can be constructed.&lt;p&gt;
+Raw data readers require that reader classes are declared. The raw data readers must implement interface &lt;samp&gt;org.eclipse.sequoyah.vnc.protocol.framework.IRawDataReader&lt;/samp&gt;.&lt;p&gt;
+The same applies to raw data writers, which must implement interface &lt;samp&gt;org.eclipse.sequoyah.vnc.protocol.framework.IRawDataWriter&lt;/samp&gt;.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         After the protocol is started (by means of the method &lt;code&gt;startProtocol()&lt;/code&gt; of the protocol init class), the socket starts to be monitored by a consumer thread. Once a message arrives and is deserialized by the implementor, the message handler is invoked and all field values read as defined in &lt;samp&gt;protocolMessage&lt;/samp&gt; extension is provided to that handler.&lt;p&gt;
+On the other hand, when a message needs to be serialized and sent through the socket, one should:&lt;br&gt;
+1) Create a &lt;samp&gt;ProtocolMessage&lt;/samp&gt; object containing the field values to be serialized. This message object shall have all data as defined by the &lt;samp&gt;protocolMessage&lt;/samp&gt; extension.&lt;br&gt;
+2) Call the protocol&apos;s &lt;code&gt;sendMessage()&lt;/code&gt;. The framework will serialize the field values and send through the socket.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         Copyright (c) 2007-2010 Motorola Inc. All rights reserved.
+ This program and the accompanying materials are made available under the terms
+ of the Eclipse Public License v1.0 which accompanies this distribution, and is
+ available at http://www.eclipse.org/legal/epl-v10.html
+      </documentation>
+   </annotation>
+
+</schema>

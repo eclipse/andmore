@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.andmore.android.AndroidPlugin;
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.devices.DevicesManager;
@@ -402,7 +402,7 @@ public class MonkeyConfigurationTab extends AbstractLaunchConfigurationTab {
 	private boolean validDevice(String deviceName) {
 		boolean valid = false;
 		ISerialNumbered sequoyahInstance = DevicesManager.getInstance().getDeviceByName(deviceName);
-		if ((sequoyahInstance != null) && DDMSFacade.isDeviceOnline(sequoyahInstance.getSerialNumber())) {
+		if ((sequoyahInstance != null) && DeviceMonitor.instance().isDeviceOnline(sequoyahInstance.getSerialNumber())) {
 			valid = true;
 		}
 		return valid;

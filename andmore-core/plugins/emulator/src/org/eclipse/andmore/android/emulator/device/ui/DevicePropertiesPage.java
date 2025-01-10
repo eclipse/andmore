@@ -17,7 +17,7 @@ package org.eclipse.andmore.android.emulator.device.ui;
 
 import java.util.Properties;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.devices.AbstractDevicePropertyPage;
 import org.eclipse.core.runtime.IAdaptable;
@@ -37,6 +37,6 @@ public class DevicePropertiesPage extends AbstractDevicePropertyPage implements 
 
 	@Override
 	protected Properties getDeviceProperties() {
-		return DDMSFacade.getDeviceProperties(androidIntance.getSerialNumber());
+		return DeviceMonitor.instance().getDeviceProperties(androidIntance.getSerialNumber());
 	}
 }

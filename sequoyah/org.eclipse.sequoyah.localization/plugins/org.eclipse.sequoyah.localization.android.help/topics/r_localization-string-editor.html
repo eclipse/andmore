@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="DC.Type" content="reference"/>
+<meta name="DC.Title" content="Localization Files Editor"/>
+<meta name="abstract" content="Allows you to easily create text string files for new locales, to see which strings will be used in a given locale, and to identify strings that have yet to be translated, all without having to work directly in XML-formatted files."/>
+<meta name="description" content="Allows you to easily create text string files for new locales, to see which strings will be used in a given locale, and to identify strings that have yet to be translated, all without having to work directly in XML-formatted files."/>
+<meta name="DC.Relation" scheme="URI" content="../topics/t_localize-new-locale-creating.html"/>
+<meta name="DC.Relation" scheme="URI" content="../topics/t_localize-new-string-adding.html"/>
+<meta name="DC.Relation" scheme="URI" content="../topics/t_localize-new-array-adding.html"/>
+<meta name="DC.Relation" scheme="URI" content="../topics/t_localize-string-editing.html"/>
+<meta name="DC.Relation" scheme="URI" content="../topics/t_localize-array-editing.html"/>
+<meta name="copyright" content="Motorola Mobility, Inc. 2009-2012" type="primary"/>
+<meta name="DC.Rights.Owner" content="Motorola Mobility, Inc. 2009-2012" type="primary"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="r_localization-string-editor"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="../commonltr.css"/>
+<title>Localization Files Editor</title>
+</head>
+<body id="r_localization-string-editor"><a name="r_localization-string-editor"><!-- --></a>
+<a class="hdr-none"/>
+
+  <h1 class="topictitle1">Localization Files Editor</h1>
+
+  
+  
+  <div><p>Allows you to easily create text string files for new locales, to see which strings will be used in a given
+    locale, and to identify strings that have yet to be translated, all without having to work directly in XML-formatted
+    files.</p>
+
+    <div class="section">
+      <p>To start the Localization Files Editor, simply double-click one of the XML files containing the strings to be
+        localized (or an XML file containing the localized strings). Within an Android project, the base strings file is
+        res/values/strings.xml. </p>
+
+      <div class="p">The Localization Files Editor should open, showing all of the strings and string arrays defined in each of the
+          <span class="filepath">strings.xml</span> files in your project's resources directory. If it does not, open it as
+          follows:<ol>
+          <li>Right-click one of the the XML files containing localized strings.</li>
+
+          <li>From the context-sensitive menu select <span class="menucascade">
+              <span class="uicontrol">Open With</span> &gt; <span class="uicontrol">Other</span>
+            </span>.</li>
+
+          <li>In the Editor Selection dialog select <span class="uicontrol">Localization Files Editor</span>.</li>
+
+        </ol>
+<div class="note"><span class="notetitle">Note:</span> The Localization Files Editor forces every project to have a default values file (values.xml). If
+          your project doesn't have one, when you open the editor this file will be created with empty keys.</div>
+</div>
+
+    </div>
+
+    <div class="section"><h2 class="sectiontitle">The editor</h2>
+      
+      <p>The Localization Files Editor consists primarily of a table in which each row is identified by a key (or, for
+        an array entry, a key and an array index) and each column (except the first, which contains the keys and
+        indexes) represents a locale. Each locale column corresponds to a <span class="filepath">strings.xml</span> file within a
+        directory named for that locale. The table cells represent key/value pairs within the <span class="filepath">strings.xml</span> files. Wherever a cell contains a value, the <span class="filepath">strings.xml</span> file
+        corresponding to the cell's column defines that value for the key corresponding to the cell's row. This tabular
+        presentation allows you to quickly see, for a single key, the strings that will be displayed in each supported
+        locale. It also makes evident those strings that don't have a value defined specifically for that locale.</p>
+
+      <p>The following actions can be performed by clicking the icons arrayed across the top of the table:</p>
+
+      <table cellpadding="4" cellspacing="0" summary="" border="1" class="simpletableborder">
+        <tr>
+          <td valign="top">
+            <img src="../images/loc_editor-add-string-button.png"/></td>
+
+          <td valign="top">Adds a new table row (or rows, if you click the downward-pointing arrow to the right of the icon and
+            specify a number of rows to be added) representing a string to be localized. Each new row will initially
+            have a default key value; replace this value with the key by which the string should be
+          referenced.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top"><img src="../images/loc_editor-add-array-button.png"/></td>
+
+          <td valign="top">Adds to the table a string array (an array of strings collectively identified by a single key; each
+            string is then accessed using an integer index value). Click the downward-pointing arrow to the right of the
+            icon and specify a number to add multiple arrays at once. Each new array will initially have a default key
+            value; replace this value with the key by which the array should be referenced. As created an array will
+            only have a single entry; use <img src="../images/loc_editor-add-array-item-button.png"/> (Add Array
+            Item) to add additional entries to the array.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top"><img src="../images/loc_editor-add-array-item-button.png"/></td>
+
+          <td valign="top">Available only when you have selected an array, this command adds a new entry to the end of the
+            array. Click the downward-pointing arrow to the right of the icon and specify a number to add multiple
+            entries to the array.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <img src="../images/loc_editor-remove-line-button.png"/></td>
+
+          <td valign="top">Deletes the selected keys and their associated values from each of the XML strings files in your
+            project that specify a value for those keys. Note that even locales whose corresponding columns are hidden
+            are affected. If an individual array item is selected when you issue this command, that item is deleted. If
+            the table row containing an array's key is selected, the entire array is deleted.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top"><img src="../images/loc_editor-collapse-all-button.png"/></td>
+
+          <td valign="top">Collapses all arrays to a single table row, hiding those rows corresponding to each array's entries.
+          </td>
+
+        </tr>
+
+        <tr>
+          <td valign="top"><img src="../images/loc_editor-expand-all-button.png"/></td>
+
+          <td valign="top">Expands all arrays so that all array entries are visible.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <img src="../images/loc_editor-undo-button.png"/></td>
+
+          <td valign="top">Reverts the previous command.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <img src="../images/loc_editor-redo-button.png"/></td>
+
+          <td valign="top">Re-executes the command that was reverted using <img src="../images/loc_editor-undo-button.png"/>
+            (Undo).</td>
+
+        </tr>
+
+      </table>
+
+      <p>Within an Android project, you have a file that contains base, or default, values for each key: these values
+        can be found in <span class="filepath">res/values/strings.xml</span> (if this file does not exist, it is created for you
+        with blank values when you open the Localization Files Editor). These default values are used for string
+        resources that aren't specifically defined for a given locale.</p>
+
+      <p>If you prefer, you can view and edit the <span class="filepath">strings.xml</span> files as XML: the tabs across the
+        bottom of the view containing the Android Localization Files Editor allow direct access to the files. The
+        various tabs are kept in sync, such that changes made in the Localization Files Editor appear immediately in the
+        corresponding strings.xml tab, and changes made to an XML file in one of the strings.xml tabs are immediately
+        reflected in the Android Localization Files Editor.</p>
+
+    </div>
+
+    <div class="section"><h2 class="sectiontitle">Options</h2>
+      
+      <p>The Localization Files Editor options are displayed immediately above the table. Normally these options are not
+        displayed, to allow the table to occupy most of the view. Click the disclosure triangle next to the word
+          <span class="uicontrol">Options</span> to show or hide the editor options. The Localization Files Editor has the
+        following options:</p>
+
+      <table cellpadding="4" cellspacing="0" summary="" border="1" class="simpletableborder">
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Expand row size according to number of lines</span>
+          </td>
+
+          <td valign="top">When selected, the table rows expand vertically to accommodate multiple lines of text. All table rows
+            expand to the same height: the height required by the row with the most lines of text in one cell. Clear
+            this option to view the table at its most compact, with only a single line of text showing for each row.
+            Note that this option only affects how the row is presented in the Localization Files Editor; a cell can
+            contain more text than is initially displayed.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Show Cell Comments</span>
+          </td>
+
+          <td valign="top">Causes comments attached to a given locale-specific string to be displayed when you hover over the
+            cell (without clicking) in which the string value is defined. The text box that presents the comment is
+            editable; simply click within the comment to edit it.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Highlight Changes</span>
+          </td>
+
+          <td valign="top">When selected, those cells whose values that have changed since the underlying <span class="filepath">strings.xml</span> files were last loaded or saved are highlighted. </td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Search values</span>
+          </td>
+
+          <td valign="top">Used to locate particular string values within the table. Those cells that contain the search string
+            are highlighted. Note that the search not case sensitive.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Filter by Key</span>
+          </td>
+
+          <td valign="top">Limits the rows displayed in the table to those that contain the string entered here. The match
+            between the filter string and the keys is case-insensitive.</td>
+
+        </tr>
+
+      </table>
+
+    </div>
+
+    <div class="section"><h2 class="sectiontitle">Cell comments</h2>For each key/value pair defined for a given locale, you can also add a comment.
+      If <span class="uicontrol">Show Cell Comments</span> is enabled (you may need to click <span class="uicontrol">Options</span> to
+      see or change the state of this option), simply hover over a cell (without clicking) in which a value is defined
+      and a floating text box will appear in which you can enter your comment or view the comment currently attached to
+      the cell. Note that there must be a value in the cell in order to comment on it; you cannot apply comments to
+      empty cells. Within the <span class="filepath">strings.xml</span> file, the comment is attached to the string value like
+        this:<pre class="codeblock">&lt;string name="app_name"&gt;Internationalisation Test&lt;!--This is the name of the app--&gt;&lt;/string&gt;</pre>
+<p>If you delete the contents of a cell, any comments applied to that cell are also deleted.</p>
+</div>
+
+    <div class="section"><h2 class="sectiontitle">Context-sensitive commands</h2>
+      
+      <p>Right-click within the table to bring up a menu of commands. Note that many of these commands correspond to the
+        action icons arrayed across the top of the table.</p>
+
+      <table cellpadding="4" cellspacing="0" summary="" border="1" class="simpletableborder">
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Show Columns</span>
+          </td>
+
+          <td valign="top">Show or hide value columns. Use this to hide locales that you aren't currently editing. Note that
+            this command only controls the visibility of the columns; it does not affect the underlying XML files in any
+            way. When you select this command you are presented with the set of "values" columns corresponding to the
+            XML strings files in your project; those with check marks preceding them will be shown. Below the column
+            list are two additional commands: <span class="uicontrol">Show All</span> and <span class="uicontrol">Hide All</span>, which
+            show and hide all value columns, respectively.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Undo</span>
+          </td>
+
+          <td valign="top">Reverts the previous command.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Redo</span>
+          </td>
+
+          <td valign="top">Re-executes the command that was reverted using <span class="uicontrol">Undo</span>.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Add String</span>
+          </td>
+
+          <td valign="top">Adds a new table row representing a string to be localized. The row will initially have a default key
+            value; replace this value with the key by which the string should be referenced.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top"><span class="uicontrol">Add Array</span></td>
+
+          <td valign="top">Adds to the table a string array (an array of strings collectively identified by a single key; each
+            string is then accessed using an integer index value). The array will initially have a default key value;
+            replace this value with the key by which the array should be referenced. As created the array will only have
+            a single entry; use <span class="uicontrol">Add Array Item</span> to add additional entries to the array.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top"><span class="uicontrol">Add Array Item</span></td>
+
+          <td valign="top">Available only when you have selected an array, this command adds a single new entry to the end of
+            the array.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Remove Line</span>
+          </td>
+
+          <td valign="top">Deletes the selected keys and their associated values from each of the XML strings files in your
+            project that specify a value for those keys. Note that even locales whose corresponding columns are hidden
+            are affected. If an individual array item is selected when you issue this command, that item is deleted. If
+            the table row containing an array's key is selected, the entire array is deleted.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Add Column</span>
+          </td>
+
+          <td valign="top">Creates a new column corresponding to a specific locale. You will be prompted for the column ID,
+            which must follow the pattern for a localized string directory: <samp class="codeph">values-</samp><var class="varname">locale</var>, where <var class="varname">locale</var> follows the ISO 639-1 pattern for locale names. This
+            command creates a directory named after the column ID and within it a <span class="filepath">strings.xml</span> file
+            that contains two tags: the <samp class="codeph">&lt;?xml&gt;</samp> tag that specifies the XML version and encoding
+            (UTF-8), and an empty <samp class="codeph">&lt;resources&gt;</samp> tag. Use <span class="uicontrol">Clone</span> if you want to
+            create a new locale that contains all of the keys and values defined in an existing locale.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Remove Column</span>
+          </td>
+
+          <td valign="top">Deletes the column that currently has the cursor. Because this command deletes the corresponding
+              <span class="filepath">strings.xml</span> file (and its parent directory, if it contains no other files), you are
+            prompted to confirm the action.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Revert to Saved</span>
+          </td>
+
+          <td valign="top">Reloads the column that currently has the cursor from its corresponding file. </td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Clone</span>
+          </td>
+
+          <td valign="top">Creates a new column that contains a copy of the values from an existing column. This command creates
+            a directory named after the ID of the new column and within it a <span class="filepath">strings.xml</span> file that
+            is a copy of the one from the existing column.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Translate column</span>
+          </td>
+
+          <td valign="top">Translates all of the text strings in the selected column to a different language using a selected
+            translation service. Note that a column corresponding to the language to which you are translating must not
+            already exist.</td>
+
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <span class="uicontrol">Translate cell(s)</span>
+          </td>
+
+          <td valign="top">Translates the text in the selected cell or cells to a different language (or languages) using a
+            selected translation service. This function allows you to translate a given string or strings into multiple
+            different languages at one time. Note that localization files for the target languages must already exist.
+          </td>
+
+        </tr>
+
+        <tr>
+          <td valign="top"><span class="uicontrol">Collapse All</span></td>
+
+          <td valign="top">Collapses all arrays to a single table row, hiding those rows corresponding to each array's entries.
+          </td>
+
+        </tr>
+
+        <tr>
+          <td valign="top"><span class="uicontrol">Expand All</span></td>
+
+          <td valign="top">Expands all arrays so that all array entries are visible.</td>
+
+        </tr>
+
+      </table>
+
+    </div>
+
+  </div>
+
+<div><div class="relinfo"><strong>Related tasks</strong><br/>
+<div><a href="../topics/t_localize-new-locale-creating.html" title="Create a new locale using the Localization Files Editor by adding a new column.">Creating a new locale</a></div>
+<div><a href="../topics/t_localize-new-string-adding.html" title="Create a new string using the Localization Files Editor by adding a new row.">Adding new strings</a></div>
+<div><a href="../topics/t_localize-new-array-adding.html" title="Create a new string array resource using the Localization Files Editor.">Adding new string arrays</a></div>
+<div><a href="../topics/t_localize-string-editing.html" title="Use the Localization Files Editor to create localized versions of text strings used in your applications.">Editing a localized string</a></div>
+<div><a href="../topics/t_localize-array-editing.html" title="Use the Localization Files Editor to create localized versions of text string arrays used in your applications.">Editing a localized string array</a></div>
+</div>
+</div>
+
+</body>
+</html>

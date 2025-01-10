@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="vncViewerService"
+         name="vncViewerService"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="Motorola Inc. 2007-2010"
+            description="Service to Start the VNC Viewer"
+            handler="org.eclipse.sequoyah.device.service.vncviewer.handler.VNCViewerServiceHandler"
+            icon="icons/full/obj16/vnc.gif"
+            id="org.eclipse.sequoyah.device.service.vncviewer.vncViewerService"
+            name="%serviceName1"
+            provider="Eclipse.org"
+            version="0.2.0"
+            visible="true">
+      </service>
+   </extension>
+ <extension
+         id="unplugVncViewerService"
+         name="unplugVncViewerService"
+         point="org.eclipse.sequoyah.device.framework.service">
+      <service
+            copyright="Motorola Inc. 2007-2010"
+            description="Service to stop the VNC Viewer"
+            handler="org.eclipse.sequoyah.device.service.vncviewer.handler.UnplugVNCViewerServiceHandler"
+            icon="icons/full/obj16/vnc.gif"
+            id="org.eclipse.sequoyah.device.service.vncviewer.unplugVncViewerService"
+            name="%serviceName2"
+            provider="Eclipse.org"
+            version="0.2.0"
+            visible="true">
+      </service>
+   </extension>
+    <extension
+         id="IDLE-VNC"
+         point="org.eclipse.sequoyah.device.framework.status">
+      <status
+            id="IDLE-VNC"
+            image="icons/full/obj16/vnc2.gif"
+            name="IDLE-VNC">
+      </status>
+   </extension>
+   
+   
+   
+   
+</plugin>

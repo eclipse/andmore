@@ -1,3 +1,4 @@
 Code completion in manifest.xml for android.intent.category.L^AUNCHER:
 android.intent.category.LAUNCHER
+android.intent.category.LEANBACK_LAUNCHER
 android.intent.category.LE_DESK_DOCK

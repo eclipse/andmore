@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS type="org.eclipse.help.contexts"?>
+<!-- meta name="DC.Type" content="cshelp -->
+<!-- meta name="DC.Title" content="Sequoyah CS Help" -->
+<!-- meta name="abstract" content="" -->
+<!-- meta name="description" content="" -->
+<!-- meta name="DC.Format" content="XML" -->
+<!-- meta name="DC.Identifier" content="cs_sequoyah" -->
+<!-- meta name="DC.Language" content="en-us" -->
+<contexts>
+<context id="StringEditor" title="Localization Files Editor">
+<description>Allows you to easily create text string files for new locales, to see which strings will be used in a given locale, and to identify strings that have yet to be translated, all without having to work directly in XML-formatted files.</description>
+<topic href="topics/r_localization-string-editor.html" label="Localization Files Editor"/>
+</context>
+</contexts>

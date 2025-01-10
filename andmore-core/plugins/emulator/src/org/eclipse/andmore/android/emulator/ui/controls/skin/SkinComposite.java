@@ -21,7 +21,7 @@ import static org.eclipse.andmore.android.common.log.AndmoreLogger.info;
 
 import java.util.Collection;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.common.utilities.EclipseUtils;
 import org.eclipse.andmore.android.emulator.core.exception.InstanceStopException;
 import org.eclipse.andmore.android.emulator.core.exception.SkinException;
@@ -190,7 +190,7 @@ public class SkinComposite extends Composite implements IAndroidComposite {
 	}
 
 	private void hideEmulatorWindow() {
-		int port = AndroidLogicUtils.getEmulatorPort(DDMSFacade.getSerialNumberByName(androidInstance.getName()));
+		int port = AndroidLogicUtils.getEmulatorPort(DeviceMonitor.instance().getSerialNumberByName(androidInstance.getName()));
 		long windowHandle = NativeUIUtils.getWindowHandle(androidInstance.getName(), port);
 		androidInstance.setWindowHandle(windowHandle);
 		NativeUIUtils.hideWindow(windowHandle);

@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.andmore.android.AndroidPlugin;
-import org.eclipse.andmore.android.DDMSFacade;
 import org.eclipse.andmore.android.DdmsRunnable;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.AndmoreEventManager;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.common.preferences.DialogWithToggleUtils;
@@ -106,12 +106,13 @@ public class EmulatorPlugin extends AbstractUIPlugin {
 	private static DdmsRunnable connectedListener = new DdmsRunnable() {
 		@Override
 		public void run(String serialNumber) {
-			if (DDMSFacade.isEmulator(serialNumber)) {
+			DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+			if (deviceMonitor.isEmulator(serialNumber)) {
 				InstancesListRefresh.refresh();
 
 				info("New Device connected at " + serialNumber);
 
-				String vmName = DDMSFacade.getNameBySerialNumber(serialNumber);
+				String vmName = deviceMonitor.getNameBySerialNumber(serialNumber);
 
 				if (vmName != null) {
 					DeviceFrameworkManager devFrameworkManager = DeviceFrameworkManager.getInstance();
@@ -132,10 +133,11 @@ public class EmulatorPlugin extends AbstractUIPlugin {
 	private static DdmsRunnable disconnectedListener = new DdmsRunnable() {
 		@Override
 		public void run(String serialNum) {
-			if (DDMSFacade.isEmulator(serialNum)) {
+			DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+			if (deviceMonitor.isEmulator(serialNum)) {
 				info("Device just disconnected from serial=" + serialNum);
 
-				String vmName = DDMSFacade.getNameBySerialNumber(serialNum);
+				String vmName = deviceMonitor.getNameBySerialNumber(serialNum);
 
 				if (vmName != null) {
 					IAndroidEmulatorInstance instance = DeviceFrameworkManager.getInstance().getInstanceByName(vmName);

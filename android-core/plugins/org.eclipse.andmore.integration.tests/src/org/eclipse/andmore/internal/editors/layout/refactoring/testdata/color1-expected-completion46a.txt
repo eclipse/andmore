@@ -1,2 +1,2 @@
 Code completion in color1.xml for ^<item android:
-<item /> : Drawable states.
+<item /> : Set of framework-provided states that may be specified on a Drawable.

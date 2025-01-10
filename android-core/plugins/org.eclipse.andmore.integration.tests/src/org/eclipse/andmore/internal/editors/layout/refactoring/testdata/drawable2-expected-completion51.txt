@@ -7,4 +7,6 @@ android:thicknessRatio : Thickness of the ring expressed as a ratio of the ring'
 android:innerRadius : Inner radius of the ring.  [dimension]
 android:thickness : Thickness of the ring.  [dimension]
 android:useLevel : Indicates whether the drawable's level affects the way the gradient  is drawn.
+android:tint : If set, specifies the color to apply to the drawable as a tint.  [color]
+android:tintMode : When a tint color is set, specifies its Porter-Duff blending  mode.
 xmlns:android

@@ -1,0 +1,20 @@
+<config>
+	<property id="DEVICE_PATH">
+		<name>Device path</name>
+		<description>Path where device binaries are located</description>
+		<scope>DEVICE</scope>
+		<rule>READ-ONLY</rule>
+	</property>
+	<property id="HOST">
+		<name>Host</name>
+		<description>Host address</description>
+		<scope>INSTANCE</scope>
+		<rule>WRITABLE</rule>
+	</property>
+	<property id="PORT">
+		<name>Port</name>
+		<description>Connection port</description>
+		<scope>SERVICE</scope>
+		<rule>WRITABLE</rule>
+	</property>	
+</config>

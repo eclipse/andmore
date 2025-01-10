@@ -152,7 +152,7 @@ public class DDMSUtils {
 			public void run() {
 				Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 				ScreenShotDialog sshot = new ScreenShotDialog(new Shell(shell));
-				sshot.open(DDMSFacade.getDeviceBySerialNumber(serialNumber));
+				sshot.open(DeviceMonitor.instance().getDeviceBySerialNumber(serialNumber));
 			}
 		});
 	}
@@ -218,9 +218,9 @@ public class DDMSUtils {
 
 		String appDbPath = "/data/data/" + applicationName + "/databases/";
 
-		Collection<String> commandOutput = DDMSFacade.execRemoteApp(serialNumber, "ls " + appDbPath,
+		Collection<String> commandOutput = DeviceMonitor.instance().execRemoteApp(serialNumber, "ls " + appDbPath,
 				new NullProgressMonitor());
-		List<String> dbPathCandidates = new ArrayList(commandOutput.size() + 10);
+		List<String> dbPathCandidates = new ArrayList<>(commandOutput.size() + 10);
 
 		for (String commandOutline : commandOutput) {
 			String[] strings = commandOutline.split(" ");
@@ -240,7 +240,7 @@ public class DDMSUtils {
 	 */
 	private static FileListingService getFileListingService(String serialNumber) {
 		FileListingService fileListing = null;
-		IDevice dev = DDMSFacade.getDeviceBySerialNumber(serialNumber);
+		IDevice dev = DeviceMonitor.instance().getDeviceBySerialNumber(serialNumber);
 		if (dev != null) {
 			synchronized (dev) {
 				fileListing = deviceFileListingServiceMap.get(serialNumber);
@@ -274,8 +274,8 @@ public class DDMSUtils {
 
 		try {
 			// Do not write the command output to the console
-			languageCommandResult = DDMSFacade.executeCommand(languageCommand, null);
-			countryCommandResult = DDMSFacade.executeCommand(countryCommand, null);
+			languageCommandResult = DeviceMonitor.instance().executeCommand(languageCommand, null);
+			countryCommandResult = DeviceMonitor.instance().executeCommand(countryCommand, null);
 			responses[0] = languageCommandResult.replaceAll("\\n$", "");
 			responses[1] = countryCommandResult.replaceAll("\\n$", "");
 		} catch (IOException e) {
@@ -320,7 +320,7 @@ public class DDMSUtils {
 						bean.setCanOverwrite(wizard.canOverwrite());
 					}
 				} catch (Throwable e) {
-					AndmoreLogger.error(DDMSFacade.class, "Error executing deploy wizard", e);
+					AndmoreLogger.error(DeviceMonitor.class, "Error executing deploy wizard", e);
 				}
 			}
 		});
@@ -395,7 +395,7 @@ public class DDMSUtils {
 	public static IStatus uninstallPackage(File path, String serialNumber, OutputStream processOut) {
 		IStatus returnStatus = null;
 		if ((path != null) && path.exists() && path.isFile()) {
-			IDevice dev = DDMSFacade.getDeviceBySerialNumber(serialNumber);
+			IDevice dev = DeviceMonitor.instance().getDeviceBySerialNumber(serialNumber);
 			String apiLevel = dev.getProperty("ro.build.version.sdk");
 			IAndroidTarget target = SdkUtils.getTargetByAPILevel(Integer.parseInt(apiLevel));
 			String aaptPath = SdkUtils.getTargetAAPTPath(target);
@@ -434,7 +434,7 @@ public class DDMSUtils {
 
 				}
 			} else {
-				AndmoreLogger.error(DDMSFacade.class,
+				AndmoreLogger.error(DeviceMonitor.class,
 						"Impossible to check APK package name. No android targets found inside SDK");
 			}
 
@@ -458,7 +458,7 @@ public class DDMSUtils {
 		String command[] = createUninstallCommand(serialNumber, packageName);
 
 		try {
-			String commandResult = DDMSFacade.executeCommand(command, processOutput);
+			String commandResult = DeviceMonitor.instance().executeCommand(command, processOutput);
 			if (!commandResult.toLowerCase().contains(SUCCESS_CONSTANT.toLowerCase())) {
 				status = new Status(IStatus.ERROR, AndroidPlugin.PLUGIN_ID,
 						AndroidNLS.ERR_DDMSFacade_UninstallPackageError + ": " + packageName);
@@ -467,7 +467,7 @@ public class DDMSUtils {
 		} catch (Exception e) {
 			status = new Status(IStatus.ERROR, AndroidPlugin.PLUGIN_ID,
 					AndroidNLS.ERR_DDMSFacade_UninstallPackageException, e);
-			AndmoreLogger.error(DDMSFacade.class, "Failed to remove package: " + packageName + ". " + e.getMessage());
+			AndmoreLogger.error(DeviceMonitor.class, "Failed to remove package: " + packageName + ". " + e.getMessage());
 		}
 		return status;
 	}
@@ -487,11 +487,11 @@ public class DDMSUtils {
 		String command[] = createMonkeyCommand(serialNumber, allPackages, otherCmd);
 
 		try {
-			DDMSFacade.executeCommand(command, processOutput);
+			DeviceMonitor.instance().executeCommand(command, processOutput);
 
 		} catch (Exception e) {
 			EclipseUtils.showErrorDialog(AndroidNLS.UI_MonkeyError_Title, AndroidNLS.UI_MonkeyError_Msg);
-			AndmoreLogger.error(DDMSFacade.class, "Failed to run monkey command: " + command + " " + e.getMessage());
+			AndmoreLogger.error(DeviceMonitor.class, "Failed to run monkey command: " + command + " " + e.getMessage());
 		}
 		return status;
 	}
@@ -776,11 +776,11 @@ public class DDMSUtils {
 		Map<String, String> packages = new LinkedHashMap<String, String>();
 		String sdkPath = SdkUtils.getSdkPath();
 		String command[] = new String[] {
-				sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator + DDMSFacade.ADB_COMMAND,
-				DDMSFacade.ADB_INSTANCE_PARAMETER, serialNumber, DDMSFacade.SHELL_CMD, PM_CMD, PM_LIST_DIRECTIVE,
+				sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator + DeviceMonitor.ADB_COMMAND,
+				DeviceMonitor.ADB_INSTANCE_PARAMETER, serialNumber, DeviceMonitor.SHELL_CMD, PM_CMD, PM_LIST_DIRECTIVE,
 				PM_PACKAGES_DIRECTIVE, PM_PACKAGES_DIRECTIVE_FORCE };
 
-		String commResult = DDMSFacade.executeCommand(command, null);
+		String commResult = DeviceMonitor.instance().executeCommand(command, null);
 		String[] packageList = null;
 		if ((commResult != null) && (commResult.length() > 0) && !commResult.contains("system running?")) {
 			packageList = commResult.trim().replaceAll("\n\n", "\n").split("\n");
@@ -831,7 +831,7 @@ public class DDMSUtils {
 		}
 
 		// Return if instance is not started
-		if (status.isOK() && !DDMSFacade.isDeviceOnline(serialNumber)) {
+		if (status.isOK() && !DeviceMonitor.instance().isDeviceOnline(serialNumber)) {
 			AndmoreLogger.error("Abort deploy operation. Device is not online.");
 			status = new Status(IStatus.ERROR, AndroidPlugin.PLUGIN_ID, "");
 		}
@@ -840,7 +840,7 @@ public class DDMSUtils {
 		if (status.isOK()) {
 			try {
 				String[] cmd = createInstallCommand(canOverwrite, path, serialNumber);
-				command_results = DDMSFacade.executeCommand(cmd, processOut, serialNumber);
+				command_results = DeviceMonitor.instance().executeCommand(cmd, processOut, serialNumber);
 
 				// Check if the result has a success message
 				if (!command_results.contains(SUCCESS_CONSTANT)) {
@@ -890,7 +890,7 @@ public class DDMSUtils {
 							consoleOut.write(AndroidNLS.UI_ChangeLang_Country + " " + country + "\n");
 						}
 
-						DDMSFacade.executeCommand(cmd, consoleOut);
+						DeviceMonitor.instance().executeCommand(cmd, consoleOut);
 						consoleOut.write("\n " + serialNumber + ":" + AndroidNLS.UI_ChangeLang_Restart_Device_Manually
 								+ "\n\n");
 						AndmoreEventManager.fireEvent(EventType.LANGUAGE_CHANGED, serialNumber);
@@ -932,19 +932,19 @@ public class DDMSUtils {
 
 		// The tools folder should exist and be here, but double-checking
 		// once more wont kill
-		File f = new File(sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator);
+		File f = new File(sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator);
 		if (!f.exists()) {
-			AndmoreLogger.error("Language: Could not find tools folder on " + sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER
+			AndmoreLogger.error("Language: Could not find tools folder on " + sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER
 					+ File.separator);
 		} else {
 			if (!f.isDirectory()) {
-				AndmoreLogger.error("Language: Invalid tools folder " + sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER
+				AndmoreLogger.error("Language: Invalid tools folder " + sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER
 						+ File.separator);
 			}
 		}
 
-		String cmdTemp[] = { sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator + DDMSFacade.ADB_COMMAND,
-				DDMSFacade.ADB_INSTANCE_PARAMETER, serialNumber, "shell", CHANGE_LANGUAGE_CMD };
+		String cmdTemp[] = { sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator + DeviceMonitor.ADB_COMMAND,
+				DeviceMonitor.ADB_INSTANCE_PARAMETER, serialNumber, "shell", CHANGE_LANGUAGE_CMD };
 		cmd = cmdTemp;
 
 		return cmd;
@@ -968,21 +968,21 @@ public class DDMSUtils {
 		String GET_COUNTRY_CMD = "getprop persist.sys.country";
 		// The tools folder should exist and be here, but double-cheking
 		// once more wont kill
-		File f = new File(sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator);
+		File f = new File(sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator);
 		if (!f.exists()) {
-			AndmoreLogger.error("Language: Could not find tools folder on " + sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER
+			AndmoreLogger.error("Language: Could not find tools folder on " + sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER
 					+ File.separator);
 		} else {
 			if (!f.isDirectory()) {
-				AndmoreLogger.error("Language: Invalid tools folder " + sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER
+				AndmoreLogger.error("Language: Invalid tools folder " + sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER
 						+ File.separator);
 			}
 		}
-		String langCmdTemp[] = { sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator + DDMSFacade.ADB_COMMAND,
-				DDMSFacade.ADB_INSTANCE_PARAMETER, serialNumber, "shell", GET_LANGUAGE_CMD };
+		String langCmdTemp[] = { sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator + DeviceMonitor.ADB_COMMAND,
+				DeviceMonitor.ADB_INSTANCE_PARAMETER, serialNumber, "shell", GET_LANGUAGE_CMD };
 		String countryCmdTemp[] = {
-				sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator + DDMSFacade.ADB_COMMAND,
-				DDMSFacade.ADB_INSTANCE_PARAMETER, serialNumber, "shell", GET_COUNTRY_CMD };
+				sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator + DeviceMonitor.ADB_COMMAND,
+				DeviceMonitor.ADB_INSTANCE_PARAMETER, serialNumber, "shell", GET_COUNTRY_CMD };
 		languageCommand = langCmdTemp;
 		countryCommand = countryCmdTemp;
 
@@ -1011,13 +1011,13 @@ public class DDMSUtils {
 
 		// The tools folder should exist and be here, but double-checking
 		// once more wont kill
-		File f = new File(sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator);
+		File f = new File(sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator);
 		if (!f.exists()) {
-			AndmoreLogger.error("Deploy: Could not find tools folder on " + sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER
+			AndmoreLogger.error("Deploy: Could not find tools folder on " + sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER
 					+ File.separator);
 		} else {
 			if (!f.isDirectory()) {
-				AndmoreLogger.error("Deploy: Invalid tools folder " + sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER
+				AndmoreLogger.error("Deploy: Invalid tools folder " + sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER
 						+ File.separator);
 			}
 		}
@@ -1025,14 +1025,14 @@ public class DDMSUtils {
 		if (canOverwrite) {
 			// If overwrite option is checked, create command with the -r
 			// paramater
-			String cmdTemp[] = { sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator + DDMSFacade.ADB_COMMAND,
-					DDMSFacade.ADB_INSTANCE_PARAMETER, serialNumber, INSTALL_CMD, ADB_INSTALL_OVERWRITE, path };
+			String cmdTemp[] = { sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator + DeviceMonitor.ADB_COMMAND,
+					DeviceMonitor.ADB_INSTANCE_PARAMETER, serialNumber, INSTALL_CMD, ADB_INSTALL_OVERWRITE, path };
 			cmd = cmdTemp;
 		} else {
 			// If overwrite option is unchecked, create command without the -r
 			// paramater
-			String cmdTemp[] = { sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator + DDMSFacade.ADB_COMMAND,
-					DDMSFacade.ADB_INSTANCE_PARAMETER, serialNumber, INSTALL_CMD, path };
+			String cmdTemp[] = { sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator + DeviceMonitor.ADB_COMMAND,
+					DeviceMonitor.ADB_INSTANCE_PARAMETER, serialNumber, INSTALL_CMD, path };
 			cmd = cmdTemp;
 		}
 
@@ -1043,19 +1043,19 @@ public class DDMSUtils {
 		String sdkPath = SdkUtils.getSdkPath();
 		// The tools folder should exist and be here, but double-checking
 		// once more wont kill
-		File f = new File(sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator);
+		File f = new File(sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator);
 		if (!f.exists()) {
-			AndmoreLogger.error("Run: Could not find tools folder on " + sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER
+			AndmoreLogger.error("Run: Could not find tools folder on " + sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER
 					+ File.separator);
 		} else {
 			if (!f.isDirectory()) {
-				AndmoreLogger.error("Run: Invalid tools folder " + sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER
+				AndmoreLogger.error("Run: Invalid tools folder " + sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER
 						+ File.separator);
 			}
 		}
 
-		String cmd[] = { sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator + DDMSFacade.ADB_COMMAND,
-				DDMSFacade.ADB_INSTANCE_PARAMETER, serialNumber, DDMSFacade.SHELL_CMD, PM_CMD, PM_UNINSTALL_DIRECTIVE,
+		String cmd[] = { sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator + DeviceMonitor.ADB_COMMAND,
+				DeviceMonitor.ADB_INSTANCE_PARAMETER, serialNumber, DeviceMonitor.SHELL_CMD, PM_CMD, PM_UNINSTALL_DIRECTIVE,
 				packageName };
 
 		return cmd;
@@ -1075,19 +1075,19 @@ public class DDMSUtils {
 		String sdkPath = SdkUtils.getSdkPath();
 		// The tools folder should exist and be here, but double-checking
 		// once more wont kill
-		File f = new File(sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator);
+		File f = new File(sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator);
 		if (!f.exists()) {
-			AndmoreLogger.error("Run: Could not find tools folder on " + sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER
+			AndmoreLogger.error("Run: Could not find tools folder on " + sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER
 					+ File.separator);
 		} else {
 			if (!f.isDirectory()) {
-				AndmoreLogger.error("Run: Invalid tools folder " + sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER
+				AndmoreLogger.error("Run: Invalid tools folder " + sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER
 						+ File.separator);
 			}
 		}
 
-		String cmd[] = { sdkPath + DDMSFacade.PLATFORM_TOOLS_FOLDER + File.separator + DDMSFacade.ADB_COMMAND,
-				DDMSFacade.ADB_INSTANCE_PARAMETER, serialNumber, DDMSFacade.SHELL_CMD, MONKEY_CMD, packagesName,
+		String cmd[] = { sdkPath + DeviceMonitor.PLATFORM_TOOLS_FOLDER + File.separator + DeviceMonitor.ADB_COMMAND,
+				DeviceMonitor.ADB_INSTANCE_PARAMETER, serialNumber, DeviceMonitor.SHELL_CMD, MONKEY_CMD, packagesName,
 				otherCmd };
 
 		return cmd;
@@ -1126,7 +1126,7 @@ public class DDMSUtils {
 
 		if (selectedAppSet[0] != null) {
 			// Dump HPROF file based on the selected application
-			status = DDMSFacade.dumpHprofFile(selectedAppSet[0], serialNumber, monitor);
+			status = DeviceMonitor.instance().dumpHprofFile(selectedAppSet[0], serialNumber, monitor);
 		} else {
 			status = Status.CANCEL_STATUS;
 		}
@@ -1136,7 +1136,7 @@ public class DDMSUtils {
 
 	public static int getDeviceApiVersion(String serialNumber) {
 		int deviceSdkVersion = -1;
-		String deviceProperty = DDMSFacade.getDeviceProperty(serialNumber, "ro.build.version.sdk");
+		String deviceProperty = DeviceMonitor.instance().getDeviceProperty(serialNumber, "ro.build.version.sdk");
 		if (deviceProperty != null) {
 			deviceSdkVersion = Integer.parseInt(deviceProperty);
 		}
@@ -1146,7 +1146,7 @@ public class DDMSUtils {
 
 	public static boolean remoteFileExists(String serialNumber, String remotePath) throws IOException {
 		boolean found = false;
-		Collection<String> results = DDMSFacade.execRemoteApp(serialNumber,
+		Collection<String> results = DeviceMonitor.instance().execRemoteApp(serialNumber,
 				"ls " + FileUtil.getEscapedPath(remotePath, Platform.OS_LINUX), new NullProgressMonitor());
 		for (String result : results) {
 			if (result.equals(remotePath)) {

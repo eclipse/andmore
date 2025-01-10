@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin>
+   <extension point="org.eclipse.help.toc">
+      <toc file="main.xml" primary="true"/>
+      <toc file="main-tasks.xml" primary="false"/>
+      <toc file="main-ref.xml" primary="false"/>
+   </extension>
+   <extension point="org.eclipse.help.index">
+      <index file="index.xml"/>
+   </extension>
+
+<!--Context extension point for all Sequoyah context-sensitive help-->
+<extension point="org.eclipse.help.contexts">
+  <contexts file="cs_sequoyah.xml" plugin="org.eclipse.sequoyah.localization.stringeditor"/>
+</extension>
+</plugin>

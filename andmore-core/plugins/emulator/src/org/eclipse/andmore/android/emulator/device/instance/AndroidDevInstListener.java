@@ -77,17 +77,7 @@ public class AndroidDevInstListener extends InstanceAdapter {
 			AndmoreLogger.info("The android device instance status was updated: " + instance + " Status: "
 					+ instance.getStatus());
 
-			if (androidDevice.isStarted()) {
-				String transitionId = e.getTransitionId();
-				if ((transitionId != null) && transitionId.equals("org.eclipse.andmore.android.emulator.startService")) {
-					// If it is coming from other state than the started,
-					// connect to VNC server
-					
-					EmulatorCoreUtils.refreshEmulatorViews();
-					AndmoreLogger.info("The emulator " + instance
-							+ " transitioned to started state. Try to estabilish a VNC connection...");
-				}
-			} else if (instance.getStatus().equals(EmulatorPlugin.STATUS_OFFLINE)) {
+			if (!androidDevice.isStarted() && instance.getStatus().equals(EmulatorPlugin.STATUS_OFFLINE)) {
 				androidDevice.resetRuntimeVariables();
 				EmulatorCoreUtils.refreshEmulatorViews();
 			}

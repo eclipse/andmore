@@ -35,7 +35,6 @@ import com.google.common.io.Closeables;
 
 import org.eclipse.andmore.AndmoreAndroidPlugin.CheckSdkErrorHandler.Solution;
 import org.eclipse.andmore.ddms.DdmsPlugin;
-import org.eclipse.andmore.internal.VersionCheck;
 import org.eclipse.andmore.internal.actions.SdkManagerAction;
 import org.eclipse.andmore.internal.editors.AndroidXmlEditor;
 import org.eclipse.andmore.internal.editors.IconFactory;
@@ -54,6 +53,7 @@ import org.eclipse.andmore.internal.resources.manager.GlobalProjectMonitor.IProj
 import org.eclipse.andmore.internal.sdk.Sdk;
 import org.eclipse.andmore.internal.sdk.Sdk.ITargetChangeListener;
 import org.eclipse.andmore.internal.ui.EclipseUiHelper;
+import org.eclipse.andmore.service.AdtStartupService;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarkerDelta;
@@ -221,51 +221,62 @@ public class AndmoreAndroidPlugin extends AbstractUIPlugin implements ILogger {
         // get the stream to write in the android console.
         mAndroidConsoleStream = mAndroidConsole.newMessageStream();
         mAndroidConsoleErrorStream = mAndroidConsole.newMessageStream();
+        Job job = new Job("Start bundle " + PLUGIN_ID){
 
-        // get the eclipse store
-        IPreferenceStore eclipseStore = getPreferenceStore();
-        AdtPrefs.init(eclipseStore);
-
-        // set the listener for the preference change
-        eclipseStore.addPropertyChangeListener(new IPropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent event) {
-                // load the new preferences
-                AdtPrefs.getPrefs().loadValues(event);
-
-                // if the SDK changed, we have to do some extra work
-                if (AdtPrefs.PREFS_SDK_DIR.equals(event.getProperty())) {
-
-                    // finally restart adb, in case it's a different version
-                    DdmsPlugin.setToolsLocation(getOsAbsoluteAdb(), true /* startAdb */,
-                            getOsAbsoluteHprofConv(), getOsAbsoluteTraceview());
-
-                    // get the SDK location and build id.
-                    if (checkSdkLocationAndId()) {
-                        // if sdk if valid, reparse it
-
-                        reparseSdk();
-                    }
-                }
-            }
-        });
-
-        // load preferences.
-        AdtPrefs.getPrefs().loadValues(null /*event*/);
-
-        // initialize property-sheet library
-        DesignerPlugin.initialize(
-                this,
-                PLUGIN_ID,
-                CURRENT_PLATFORM == PLATFORM_WINDOWS,
-                CURRENT_PLATFORM == PLATFORM_DARWIN,
-                CURRENT_PLATFORM == PLATFORM_LINUX);
-
-        // initialize editors
-        startEditors();
-
-        // Listen on resource file edits for updates to file inclusion
-        IncludeFinder.start();
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+		        try { 
+			        // get the eclipse store
+			        IPreferenceStore eclipseStore = getPreferenceStore();
+			        AdtPrefs.init(eclipseStore);
+			
+			        // set the listener for the preference change
+			        eclipseStore.addPropertyChangeListener(new IPropertyChangeListener() {
+			            @Override
+			            public void propertyChange(PropertyChangeEvent event) {
+			                // load the new preferences
+			                AdtPrefs.getPrefs().loadValues(event);
+			
+			                // if the SDK changed, we have to do some extra work
+			                if (AdtPrefs.PREFS_SDK_DIR.equals(event.getProperty())) {
+			
+			                    // finally restart adb, in case it's a different version
+			                    DdmsPlugin.setToolsLocation(getOsAbsoluteAdb(), true /* startAdb */,
+			                            getOsAbsoluteHprofConv(), getOsAbsoluteTraceview());
+			
+			                    // get the SDK location and build id.
+			                    if (checkSdkLocationAndId()) {
+			                        // if sdk if valid, reparse it
+			
+			                        reparseSdk();
+			                    }
+			                }
+			            }
+			        });
+			
+			        // load preferences.
+			        AdtPrefs.getPrefs().loadValues(null /*event*/);
+			
+			        // initialize property-sheet library
+			        DesignerPlugin.initialize(
+			        		AndmoreAndroidPlugin.this,
+			                PLUGIN_ID,
+			                CURRENT_PLATFORM == PLATFORM_WINDOWS,
+			                CURRENT_PLATFORM == PLATFORM_DARWIN,
+			                CURRENT_PLATFORM == PLATFORM_LINUX);
+			
+			        // initialize editors
+			        startEditors();
+			
+			        // Listen on resource file edits for updates to file inclusion
+			        IncludeFinder.start();
+		        } catch (Exception e) {
+		        	error(e, "Error in %s", getName());
+		        }
+				return Status.OK_STATUS;
+			}};
+			job.setPriority(Job.BUILD);
+			job.schedule();
     }
 
     /*
@@ -276,7 +287,7 @@ public class AndmoreAndroidPlugin extends AbstractUIPlugin implements ILogger {
     @Override
     public void stop(BundleContext context) throws Exception {
         super.stop(context);
-
+        AdtStartupService.instance().stop();
         stopEditors();
         IncludeFinder.stop();
 
@@ -298,7 +309,7 @@ public class AndmoreAndroidPlugin extends AbstractUIPlugin implements ILogger {
         // This is deferred in separate jobs to avoid blocking the bundle start.
         final boolean isSdkLocationValid = checkSdkLocationAndId();
         if (isSdkLocationValid) {
-        	System.out.println("Parsing sdk content.");
+        	info("Parsing sdk content.");
             // parse the SDK resources.
             // Wait 2 seconds before starting the job. This leaves some time to the
             // other bundles to initialize.
@@ -1435,6 +1446,8 @@ public class AndmoreAndroidPlugin extends AbstractUIPlugin implements ILogger {
                     Sdk sdk = Sdk.loadSdk(AdtPrefs.getPrefs().getOsSdkFolder());
 
                     if (sdk != null) {
+                        // DDMS and DeviceMonitor Jobs pending SDK available can now run
+                        AdtStartupService.instance().start(2);
                         ArrayList<IJavaProject> list = new ArrayList<IJavaProject>();
                         synchronized (Sdk.getLock()) {
                             mSdkLoadedStatus = LoadStatus.LOADED;

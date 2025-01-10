@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.common.exception.AndroidException;
 import org.eclipse.andmore.android.emulator.EmulatorPlugin;
@@ -184,7 +184,7 @@ class VncServerJob extends Job implements ISchedulingRule {
 		try {
 			info("Executing VNC Server on " + serialNumber);
 			AndroidLogicUtils.testDeviceStatus(serialNumber);
-			DDMSFacade.execRemoteApp(serialNumber, remoteCommands, monitor);
+			DeviceMonitor.instance().execRemoteApp(serialNumber, remoteCommands, monitor);
 
 			if (monitor.isCanceled()) {
 				status = Status.CANCEL_STATUS;

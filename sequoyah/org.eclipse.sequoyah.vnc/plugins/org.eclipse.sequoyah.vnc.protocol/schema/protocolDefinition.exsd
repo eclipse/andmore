@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.eclipse.sequoyah.vnc.protocol" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="org.eclipse.sequoyah.vnc.protocol" id="protocolDefinition" name="Protocol Definition"/>
+      </appInfo>
+      <documentation>
+         The Protocol Definition extension point is used for declaring communication protocols to use within the Sequoyah protocol framework.&lt;br&gt;
+A protocol is the set of standard rules for data representation, signalling, authentication and error detection required to send information over a communication channel. It usually comprises a initialization/handshake routine, then a ordinary message exchange phase and finalization routine in the end.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <choice minOccurs="1" maxOccurs="unbounded">
+            <element ref="protocol"/>
+         </choice>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A fully qualified identifier of the target extension point.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  An optional identifier of the extension instance.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  An optional name of the extension instance.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="protocol">
+      <annotation>
+         <appInfo>
+            <meta.element labelAttribute="protocolId"/>
+         </appInfo>
+         <documentation>
+            A protocol declaration shall be done using this element
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="protocolId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Define the protocol id for your definition here. The id you use in this attribute will be linked to all messages declared by means of the &lt;samp&gt;ProtocolMessage&lt;/samp&gt; extension point as belonging to the protocol. Besides, it is used for protocol actions by means of the methods in &lt;samp&gt;PluginProtocolActions&lt;/samp&gt; base class.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="parentProtocol" type="string">
+            <annotation>
+               <documentation>
+                  If this protocol is an extension of another protocol declared as an extension of &lt;samp&gt;ProtocolDefinition&lt;/samp&gt; extension point, register the parent protocol here. By doing this, the framework will load all messages belonging to the parent protocol as being part of this protocol, unless you declare a message that uses the same message code (see &lt;samp&gt;ProtocolMessage&lt;/samp&gt; extension point for more information about the message code).
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="isBigEndianProtocol" type="boolean" use="default" value="false">
+            <annotation>
+               <documentation>
+                  Choose &lt;code&gt;true&lt;/code&gt; if the protocol is defined to send the most significant byte of number types bigger than 1 byte through the socket first, or &lt;code&gt;false&lt;/code&gt; if it is to be sent last.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="handshake" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A class that represents a part of the protocol communication (server and/or client). I must provide an implementations of the procedures to be used during protocol handshake/init phases.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.sequoyah.vnc.protocol.lib.IProtocolHandshake"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         0.4.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         The following is an example of the extension point:
+&lt;p&gt;
+&lt;pre&gt;
+   &lt;extension
+         point=&quot;org.eclipse.sequoyah.vnc.protocol.protocolDefinition&quot;&gt;
+      &lt;protocol
+            class=&quot;org.xyz.protocol.ProtocolImplementorClass1&quot;
+            isBigEndianProtocol=&quot;true&quot;
+            protocolId=&quot;xyz&quot;
+            serverPort=&quot;10000&quot;&gt;
+      &lt;/protocol&gt;   
+   &lt;/extension&gt;
+&lt;/pre&gt;
+&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         The value of the class attribute must be a fully qualified name of a class that implements &lt;samp&gt;org.eclipse.sequoyah.vnc.protocol.lib.IProtocolInit&lt;/samp&gt;.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         The protocol init class must contain the routines for initialization as defined in the IProtocolInit interface. It is expected that it contains attributes and methods that describe a single instance of a client and/or server side of the communication. That means that data regarding an instance should be accessed from there.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         Copyright (c) 2007-2010 Motorola Inc. All rights reserved.
+ This program and the accompanying materials are made available under the terms
+ of the Eclipse Public License v1.0 which accompanies this distribution, and is
+ available at http://www.eclipse.org/legal/epl-v10.html
+
+
+      </documentation>
+   </annotation>
+
+</schema>

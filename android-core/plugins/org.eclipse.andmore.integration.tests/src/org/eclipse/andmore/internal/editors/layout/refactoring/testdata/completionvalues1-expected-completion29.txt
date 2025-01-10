@@ -1,3 +1,3 @@
 Code completion in completionvalues1.xml for <item name="gr^">:
-android:gravity : Specifies how to place the content of an object, both on the  x- and y-axis, within the object itself.  [flag]
+android:gravity : Specifies how an object should position its content, on both  the X and Y axes, within its own bounds.  [flag]
 android:groupIndicator : Indicator shown beside the group View.  [reference]

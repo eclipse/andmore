@@ -76,6 +76,13 @@
                 <enabled>false</enabled>
             </snapshots>
 		</repository>
+ 		<repository>
+ 			<id>jcenter</id>
+ 			<url>https://jcenter.bintray.com/</url>
+ 			<snapshots>
+ 				<enabled>false</enabled>
+ 			</snapshots>
+ 		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -104,6 +111,7 @@
 	</distributionManagement>
 
 	<modules>
+		<module>sequoyah</module>
 		<module>andmore-swt</module>
 		<module>android-core</module>
 		<module>andmore-core</module>

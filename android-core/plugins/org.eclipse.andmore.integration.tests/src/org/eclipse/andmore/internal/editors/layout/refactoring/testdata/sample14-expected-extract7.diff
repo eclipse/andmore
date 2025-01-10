@@ -1,0 +1,85 @@
+@@ -2 +2
+- <LinearLayout android:id="@+id/LinearLayout2"
+-     xmlns:android="http://schemas.android.com/apk/res/android"
+-     android:layout_width="match_parent" android:layout_height="match_parent"
+-     android:orientation="vertical">
+-     <Button android:text="FirstButton" android:id="@+id/button1"
+-         android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+-     <FrameLayout android:id="@+id/outer"
+-         android:layout_width="match_parent" android:layout_height="wrap_content">
+-         <LinearLayout android:layout_height="wrap_content"
+-             android:id="@+id/linearLayout4" android:layout_width="match_parent">
+-             <LinearLayout android:layout_height="match_parent"
+-                 android:layout_width="wrap_content" android:id="@+id/linearLayout5">
+-                 <LinearLayout android:layout_height="match_parent"
+-                     android:id="@+id/linearLayout6"
+-                     android:layout_width="wrap_content">
+-                     <Button android:text="Button" android:id="@+id/button6"
+-                         android:layout_width="wrap_content"
+-                         android:layout_height="wrap_content"></Button>
+-                 </LinearLayout>
+-             </LinearLayout>
+-         </LinearLayout>
++ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++     android:id="@+id/LinearLayout2"
++     android:layout_width="match_parent"
++     android:layout_height="match_parent"
++     android:orientation="vertical" >
++
++     <Button
++         android:id="@+id/button1"
++         android:layout_width="wrap_content"
++         android:layout_height="wrap_content"
++         android:text="FirstButton" >
++     </Button>
++
++     <FrameLayout
++         android:id="@+id/outer"
++         android:layout_width="match_parent"
++         android:layout_height="wrap_content" >
++
++         <include
++             android:id="@+id/linearLayout4_ref"
++             android:layout_width="match_parent"
++             android:layout_height="wrap_content"
++             layout="@layout/newlayout7" />
+@@ -24 +26
+-     <FrameLayout android:id="@+id/outer"
+-         android:layout_width="match_parent" android:layout_height="wrap_content">
+-         <LinearLayout android:layout_height="wrap_content"
+-             android:id="@+id/linearLayout4" android:layout_width="match_parent">
+-             <LinearLayout android:layout_height="match_parent"
+-                 android:layout_width="wrap_content" android:id="@+id/linearLayout5">
+-                 <LinearLayout android:layout_height="match_parent"
++
++     <FrameLayout
++         android:id="@+id/outer"
++         android:layout_width="match_parent"
++         android:layout_height="wrap_content" >
++
++         <LinearLayout
++             android:id="@+id/linearLayout4"
++             android:layout_width="match_parent"
++             android:layout_height="wrap_content" >
++
++             <LinearLayout
++                 android:id="@+id/linearLayout5"
++                 android:layout_width="wrap_content"
++                 android:layout_height="match_parent" >
++
++                 <LinearLayout
+@@ -32 +44
+-                     android:layout_width="wrap_content">
+-                     <Button android:text="Button" android:id="@+id/button6"
++                     android:layout_width="wrap_content"
++                     android:layout_height="match_parent" >
++
++                     <Button
++                         android:id="@+id/button6"
+@@ -35 +50
+-                         android:layout_height="wrap_content"></Button>
++                         android:layout_height="wrap_content"
++                         android:text="Button" >
++                     </Button>
+@@ -40 +57
++

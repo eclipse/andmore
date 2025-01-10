@@ -17,7 +17,7 @@ package org.eclipse.andmore.android.wizards.mat;
 
 import java.util.Collection;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.wizards.elements.TableWithLoadingInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -72,6 +72,6 @@ public class DumpHPROFTable extends TableWithLoadingInfo<DumpHPROFWizardPage, Co
 	@Override
 	protected Collection<String> callServiceForRetrievingDataToPopulateTable(String serialNumber) {
 		// get the running applications
-		return DDMSFacade.getRunningApplications(serialNumber);
+		return DeviceMonitor.instance().getRunningApplications(serialNumber);
 	}
 }

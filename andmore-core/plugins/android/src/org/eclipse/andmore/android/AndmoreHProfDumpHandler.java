@@ -54,6 +54,7 @@ import com.android.ddmuilib.handler.BaseFileHandler;
  * Class to handle post HPROF dumping things. Based on the existing HprofHandler
  * from ADT.
  */
+@SuppressWarnings("deprecation") // Now used via recommended HprofData mechanism
 public class AndmoreHProfDumpHandler extends BaseFileHandler implements IHprofDumpHandler {
 	public final static String SAVE_ACTION = "hprof.save"; //$NON-NLS-1$
 
@@ -106,9 +107,6 @@ public class AndmoreHProfDumpHandler extends BaseFileHandler implements IHprofDu
 						.getClientData().getClientDescription(), message != null ? message + "\n\n" : ""); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		});
-		synchronized (DDMSFacade.class) {
-			DDMSFacade.class.notify();
-		}
 	}
 
 	@Override
@@ -119,9 +117,6 @@ public class AndmoreHProfDumpHandler extends BaseFileHandler implements IHprofDu
 				extractRemoteHprof(remoteFilePath, client);
 			}
 		});
-		synchronized (DDMSFacade.class) {
-			DDMSFacade.class.notify();
-		}
 	}
 
 	private void extractRemoteHprof(final String remoteFilePath, final Client client) {
@@ -190,9 +185,6 @@ public class AndmoreHProfDumpHandler extends BaseFileHandler implements IHprofDu
 				extractLocalHprof(data, client, progressMonitor);
 			}
 		});
-		synchronized (DDMSFacade.class) {
-			DDMSFacade.class.notify();
-		}
 	}
 
 	private void extractLocalHprof(final byte[] data, final Client client, IProgressMonitor monitor) {

@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.common.log.AndmoreLogger;
 import org.eclipse.andmore.android.remote.RemoteDeviceConstants;
@@ -83,7 +83,7 @@ public class DisconnectFromRemoteHandler extends ServiceHandler {
 		String timeout = prop.getProperty(RemoteDeviceInstance.PROPERTY_TIMEOUT);
 
 		try {
-			status = DDMSFacade.disconnectTcpIp((ISerialNumbered) instance, host, port, Integer.parseInt(timeout),
+			status = DeviceMonitor.instance().disconnectTcpIp((ISerialNumbered) instance, host, port, Integer.parseInt(timeout),
 					monitor);
 		} catch (IOException e) {
 			return new Status(IStatus.ERROR, RemoteDevicePlugin.PLUGIN_ID,

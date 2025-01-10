@@ -35,6 +35,7 @@ import org.eclipse.andmore.base.resources.ImageFactory;
 import org.eclipse.andmore.base.resources.JFaceImageLoader;
 import org.eclipse.andmore.ddms.i18n.Messages;
 import org.eclipse.andmore.ddms.preferences.PreferenceInitializer;
+import org.eclipse.andmore.service.AdtStartupService;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
@@ -148,6 +149,7 @@ public final class DdmsPlugin extends AbstractUIPlugin implements IDeviceChangeL
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
 	 * )
 	 */
+	@SuppressWarnings("resource")
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
@@ -302,12 +304,12 @@ public final class DdmsPlugin extends AbstractUIPlugin implements IDeviceChangeL
 		mHasDebuggerConnectors = dcce.length > 0;
 
 		// get the other configElements and instantiante them in a Job.
-		new Job(Messages.DdmsPlugin_DDMS_Post_Create_Init) {
+		Job adbJob = new Job(Messages.DdmsPlugin_DDMS_Post_Create_Init) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					// init the lib
-					AndroidDebugBridge.init(true /* debugger support */);
+					AndroidDebugBridge.initIfNeeded(true /* debugger support */);
 
 					// get the available adb locators
 					IConfigurationElement[] elements = findConfigElements("org.eclipse.andmore.ddms.toolsLocator"); //$NON-NLS-1$
@@ -320,10 +322,13 @@ public final class DdmsPlugin extends AbstractUIPlugin implements IDeviceChangeL
 							String traceviewLocation = locator.getTraceViewLocation();
 							String hprofConvLocation = locator.getHprofConvLocation();
 							if (adbLocation != null && traceviewLocation != null && hprofConvLocation != null) {
-								// checks if the location is valid.
+								// The bridge can also be created by Adt Preference listener, so avoid repeat bridge creation
+						        String previousAdbLocation = sAdbLocation;
+								// Checks if the location is valid.
 								if (setToolsLocation(adbLocation, hprofConvLocation, traceviewLocation)) {
 
-									AndroidDebugBridge.createBridge(sAdbLocation, true /* forceNewBridge */);
+									if (!adbLocation.equals(previousAdbLocation))
+										AndroidDebugBridge.createBridge(sAdbLocation, true /* forceNewBridge */);
 
 									// no need to look at the other locators.
 									break;
@@ -346,7 +351,9 @@ public final class DdmsPlugin extends AbstractUIPlugin implements IDeviceChangeL
 					return e.getStatus();
 				}
 			}
-		}.schedule();
+		};
+		adbJob.setPriority(Job.BUILD);
+		AdtStartupService.instance().put(adbJob);
 	}
 
 	private void showConsoleView(MessageConsole console) {
@@ -570,15 +577,17 @@ public final class DdmsPlugin extends AbstractUIPlugin implements IDeviceChangeL
 	 */
 	public static void setToolsLocation(String adbLocation, boolean startAdb, String hprofConvLocation,
 			String traceViewLocation) {
-
+        String previousAdbLocation = sAdbLocation;
 		if (setToolsLocation(adbLocation, hprofConvLocation, traceViewLocation)) {
 			// starts the server in a thread in case this is blocking.
-			if (startAdb) {
+			if (!adbLocation.equals(previousAdbLocation) && startAdb) {
 				new Thread() {
 					@Override
 					public void run() {
 						// create and start the bridge
 						try {
+							// init the lib
+							AndroidDebugBridge.initIfNeeded(true /* debugger support */);
 							AndroidDebugBridge.createBridge(sAdbLocation, false /* forceNewBridge */);
 						} catch (Throwable t) {
 							Status status = new Status(IStatus.ERROR, PLUGIN_ID, "Failed to create AndroidDebugBridge",

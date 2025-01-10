@@ -232,23 +232,24 @@ public abstract class RefactoringTest extends AdtProjectTest {
 		// Iteration order for the info file should match exactly the UI model
 		// so
 		// we can just advance the line index sequentially as we traverse
-
-		return create(model, Arrays.asList(lines).iterator());
+        Iterator<String> iterator = Arrays.asList(lines).iterator();
+		return create(model, iterator);
 	}
 
 	protected ViewInfo create(UiElementNode node, Iterator<String> lineIterator) {
 		// android.widget.LinearLayout [0,36,240,320]
-		Pattern pattern = Pattern.compile("(\\s*)(\\S+) \\[(\\d+),(\\d+),(\\d+),(\\d+)\\].*");
+		Pattern pattern = Pattern.compile("(\\d+),(\\d+),(\\d+),(\\d+)");
 		assertTrue(lineIterator.hasNext());
 		String description = lineIterator.next();
-		Matcher matcher = pattern.matcher(description);
-		assertTrue(matcher.matches());
-		// String indent = matcher.group(1);
-		// String fqcn = matcher.group(2);
-		String left = matcher.group(3);
-		String top = matcher.group(4);
-		String right = matcher.group(5);
-		String bottom = matcher.group(6);
+		int startIndex = description.lastIndexOf('[');
+		int endIndex = description.lastIndexOf(']');
+		assertTrue(description, startIndex != -1 && endIndex != -1);
+		Matcher matcher = pattern.matcher(description.substring(startIndex + 1, endIndex));
+		assertTrue(description.substring(startIndex + 1, endIndex), matcher.matches());
+		String left = matcher.group(1);
+		String top = matcher.group(2);
+		String right = matcher.group(3);
+		String bottom = matcher.group(4);
 
 		ViewInfo view = new ViewInfo(node.getXmlNode().getLocalName(), node, Integer.parseInt(left),
 				Integer.parseInt(top), Integer.parseInt(right), Integer.parseInt(bottom));

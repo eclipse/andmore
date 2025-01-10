@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.sequoyah.feature"
+      label="Sequoyah Feature"
+      version="0.5.2.qualifier"
+      license-feature="org.eclipse.license"
+      license-feature-version="0.0.0">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license>
+      %license
+   </license>
+
+   <includes
+         id="org.eclipse.sequoyah.device.common.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sequoyah.device.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sequoyah.localization.android.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sequoyah.localization.tools.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sequoyah.vnc.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sequoyah.vnc.protocol.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.sequoyah.vnc.vncviewer.feature"
+         version="0.0.0"/>
+
+</feature>

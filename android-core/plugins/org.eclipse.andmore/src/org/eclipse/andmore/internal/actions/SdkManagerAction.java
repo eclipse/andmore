@@ -16,20 +16,13 @@
 
 package org.eclipse.andmore.internal.actions;
 
-import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.eclipse.andmore.AndmoreAndroidPlugin;
-import org.eclipse.andmore.internal.preferences.AdtPrefs;
 import org.eclipse.andmore.internal.sdk.AdtConsoleSdkLog;
 import org.eclipse.andmore.internal.sdk.Sdk;
 import org.eclipse.andmore.sdktool.SdkCallAgent;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -38,16 +31,9 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-import com.android.SdkConstants;
-import com.android.annotations.NonNull;
-import com.android.annotations.Nullable;
-import com.android.repository.io.FileOpUtils;
 import com.android.sdkuilib.repository.ISdkChangeListener;
 import com.android.sdkuilib.repository.SdkUpdaterWindow;
 import com.android.sdkuilib.repository.SdkUpdaterWindow.SdkInvocationContext;
-import com.android.utils.GrabProcessOutput;
-import com.android.utils.GrabProcessOutput.IProcessOutput;
-import com.android.utils.GrabProcessOutput.Wait;
 
 /**
  * Delegate for the toolbar/menu action "Android SDK Manager".

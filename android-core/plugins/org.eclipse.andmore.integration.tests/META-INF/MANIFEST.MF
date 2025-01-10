@@ -7,6 +7,7 @@ Bundle-Vendor: Eclipse Andmore
 Fragment-Host: org.eclipse.andmore
 Require-Bundle: org.junit,
  org.eclipse.andmore.swt,
+ org.eclipse.andmore.sdkuilib,
  org.eclipse.andmore,
  org.easymock,
  org.custommonkey.xmlunit,

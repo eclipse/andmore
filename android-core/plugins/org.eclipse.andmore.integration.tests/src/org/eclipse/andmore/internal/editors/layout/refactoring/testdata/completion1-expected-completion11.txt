@@ -1,5 +1,6 @@
 Code completion in completion1.xml for ^<TextView:
 <AbsoluteLayout ></AbsoluteLayout>
+<ActionMenuView ></ActionMenuView>
 <AdapterViewFlipper ></AdapterViewFlipper>
 <AnalogClock />
 <AutoCompleteTextView />
@@ -45,11 +46,13 @@ Code completion in completion1.xml for ^<TextView:
 <TabWidget ></TabWidget>
 <TableLayout ></TableLayout>
 <TableRow ></TableRow>
+<TextClock />
 <TextSwitcher ></TextSwitcher>
 <TextView />
 <TextureView />
 <TimePicker />
 <ToggleButton />
+<Toolbar ></Toolbar>
 <TwoLineListItem />
 <VideoView />
 <View /> : Attributes that can be used with android.view.View or any of its subclasses.

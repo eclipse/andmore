@@ -92,9 +92,6 @@
         
          <extension
                point="org.eclipse.ui.startup">
-            <startup
-                  class="org.eclipse.andmore.android.AndmoreDeviceChangeListener">
-            </startup>
              <startup
                   class="org.eclipse.andmore.android.AssociateProguardEditor">
             </startup>

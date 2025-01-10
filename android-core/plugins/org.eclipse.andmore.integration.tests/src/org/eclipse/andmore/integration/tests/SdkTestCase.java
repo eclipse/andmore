@@ -19,6 +19,7 @@ import static org.eclipse.andmore.test.utils.XMLAssert.*;
 
 import org.custommonkey.xmlunit.*;
 import org.eclipse.andmore.AndmoreAndroidPlugin;
+import org.eclipse.core.resources.IProject;
 
 import com.android.SdkConstants;
 import com.google.common.base.Charsets;
@@ -208,6 +209,24 @@ public abstract class SdkTestCase {
 		// that in golden file.
 		// Appears in strings.xml etc.
 		xml = removeSessionData(xml);
+		return xml;
+	}
+ 
+	@SuppressWarnings("resource")
+	protected String readTestFile(IProject project, String relativePath, boolean expectExists) throws IOException {
+		InputStream stream = getTestResource(relativePath, expectExists);
+		if (expectExists) {
+			assertNotNull(relativePath + " does not exist", stream);
+		} else if (stream == null) {
+			return null;
+		}
+		String xml = new String(ByteStreams.toByteArray(stream), Charsets.UTF_8);
+		try {
+			Closeables.close(stream, true /* swallowIOException */);
+		} catch (IOException e) {
+			// cannot happen
+		}
+		assertTrue(xml.length() > 0);
 		return xml;
 	}
 

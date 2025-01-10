@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/LinearLayout2"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+    <Button android:text="FirstButton" android:id="@+id/button1"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+    <FrameLayout android:id="@+id/outer"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+        <LinearLayout android:layout_height="wrap_content"
+            android:id="@+id/linearLayout4" android:layout_width="match_parent">
+            <LinearLayout android:layout_height="match_parent"
+                android:layout_width="wrap_content" android:id="@+id/linearLayout5">
+                <LinearLayout android:layout_height="match_parent"
+                    android:id="@+id/linearLayout6"
+                    android:layout_width="wrap_content">
+                    <Button android:text="Button" android:id="@+id/button6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"></Button>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+    <FrameLayout android:id="@+id/outer"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+        <LinearLayout android:layout_height="wrap_content"
+            android:id="@+id/linearLayout4" android:layout_width="match_parent">
+            <LinearLayout android:layout_height="match_parent"
+                android:layout_width="wrap_content" android:id="@+id/linearLayout5">
+                <LinearLayout android:layout_height="match_parent"
+                    android:id="@+id/linearLayout6"
+                    android:layout_width="wrap_content">
+                    <Button android:text="Button" android:id="@+id/button6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"></Button>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

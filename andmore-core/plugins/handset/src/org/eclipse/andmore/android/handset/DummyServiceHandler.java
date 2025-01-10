@@ -18,7 +18,7 @@ package org.eclipse.andmore.android.handset;
 import java.util.Map;
 import java.util.Properties;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.handset.i18n.AndroidHandsetNLS;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -62,9 +62,10 @@ public class DummyServiceHandler extends ServiceHandler {
 	 */
 	@Override
 	public IStatus runService(IInstance arg0, Map<Object, Object> arg1, IProgressMonitor arg2) {
-		String serialNumber = DDMSFacade.getSerialNumberByName(arg0.getName());
+		DeviceMonitor deviceMonitor = DeviceMonitor.instance();
+		String serialNumber = deviceMonitor.getSerialNumberByName(arg0.getName());
 		int tries = 0;
-		while (!DDMSFacade.isDeviceOnline(serialNumber) && ((tries >= 0) && (tries < 10))) {
+		while (!deviceMonitor.isDeviceOnline(serialNumber) && ((tries >= 0) && (tries < 10))) {
 			try {
 				Thread.sleep(100);
 				tries++;

@@ -17,7 +17,7 @@ package org.eclipse.andmore.android.emulator.logic;
 
 import java.io.IOException;
 
-import org.eclipse.andmore.android.DDMSFacade;
+import org.eclipse.andmore.android.DeviceMonitor;
 import org.eclipse.andmore.android.ISerialNumbered;
 import org.eclipse.andmore.android.common.exception.AndroidException;
 import org.eclipse.andmore.android.emulator.core.exception.InstanceStartException;
@@ -38,7 +38,7 @@ public class ForwardVncPortLogic implements IAndroidLogic {
 				throw new InstanceStartException(e.getMessage());
 			}
 
-			boolean forwardOk = DDMSFacade.createForward(serialNumber, port, 5901);
+			boolean forwardOk = DeviceMonitor.instance().createForward(serialNumber, port, 5901);
 			if (!forwardOk) {
 				throw new IOException("Could not forward VNC port 5901 to " + port + " on " + instance.getName());
 			}

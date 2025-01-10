@@ -584,9 +584,8 @@ public class DeviceChooserDialog extends Dialog implements IDeviceChangeListener
                 if (mDeviceTable.isDisposed() == false) {
                     // refresh all
                     mViewer.refresh();
-
                     // update the selection
-                    updateDefaultSelection();
+                     updateDefaultSelection();
 
                     // update the display of AvdInfo (since it's filtered to only display
                     // non running AVD.)
@@ -671,7 +670,6 @@ public class DeviceChooserDialog extends Dialog implements IDeviceChangeListener
      */
     private void enableOkButton() {
         Button okButton = getButton(IDialogConstants.OK_ID);
-
         if (isDeviceMode()) {
             okButton.setEnabled(mResponse.getDeviceToUse() != null &&
                     mResponse.getDeviceToUse().isOnline());
@@ -719,7 +717,10 @@ public class DeviceChooserDialog extends Dialog implements IDeviceChangeListener
 
     private void handleSelection(IDevice device) {
         mResponse.setDeviceToUse(device);
-        enableOkButton();
+        Button okButton = getButton(IDialogConstants.OK_ID);
+        // Check that the button has beeb created as events can occur before the dialog is open
+        if (okButton != null) 
+        	enableOkButton();
     }
 
     /**

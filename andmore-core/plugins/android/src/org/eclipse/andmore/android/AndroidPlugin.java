@@ -27,10 +27,6 @@ import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.IWindowListener;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -100,13 +96,16 @@ public class AndroidPlugin extends AbstractUIPlugin {
 
 		super.start(context);
 		plugin = this;
-
+		// The Device Monitor places a job on a queue which starts after the workbench is ready
+		DeviceMonitor.instance().start();
+/*		
 		Thread t = new Thread("DDMS Setup") {
 			@Override
 			public void run() {
+
 				IWorkbench workbench = PlatformUI.getWorkbench();
 				IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-
+*/
 				/*
 				 * Linux problem with e4. Check if workbench window is done
 				 * before calling DDMSFacade#setup(). If the workbench window is
@@ -115,7 +114,7 @@ public class AndroidPlugin extends AbstractUIPlugin {
 				 * that e4 changed its behavior when loading plugins, which was
 				 * causing deadlocks on linux startup. This workaround works in
 				 * any OS.
-				 */
+				 *//*
 				if (window != null) {
 					AndmoreLogger.debug(AndroidPlugin.class, "Starting DDMS facade WITHOUT using listener...");
 
@@ -152,7 +151,7 @@ public class AndroidPlugin extends AbstractUIPlugin {
 				}
 			};
 		};
-
+*/
 		getPreferenceStore().setDefault(AndroidPlugin.SHALL_UNEMBED_EMULATORS_PREF_KEY, true);
 
 		// every time the Android SDK Job finishes its execution
@@ -190,7 +189,7 @@ public class AndroidPlugin extends AbstractUIPlugin {
 				}
 			}
 		});
-		t.start();
+		//t.start();
 
 		AndmoreLogger.debug(AndroidPlugin.class, "Andmore Plugin started.");
 	}
@@ -204,6 +203,7 @@ public class AndroidPlugin extends AbstractUIPlugin {
 	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		DeviceMonitor.dispose();
 		plugin = null;
 		super.stop(context);
 	}

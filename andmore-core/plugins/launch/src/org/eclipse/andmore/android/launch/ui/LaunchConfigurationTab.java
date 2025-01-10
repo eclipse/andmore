@@ -53,6 +53,7 @@ import org.eclipse.sequoyah.device.framework.events.InstanceEvent;
 import org.eclipse.sequoyah.device.framework.events.InstanceEventManager;
 import org.eclipse.sequoyah.device.framework.model.IInstance;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -128,8 +129,12 @@ public class LaunchConfigurationTab extends AbstractLaunchConfigurationTab {
 
 					@Override
 					public void run() {
-						updateDeviceChooserButton();
-						updateLaunchConfigurationDialog();
+						try {
+							updateDeviceChooserButton();
+							updateLaunchConfigurationDialog();
+						} catch (SWTException ignore) {
+							// The widget may be disposed. There is no way to anticipate this error
+						}
 					}
 				});
 			}

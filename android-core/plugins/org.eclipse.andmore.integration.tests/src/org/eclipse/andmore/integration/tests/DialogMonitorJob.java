@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Display;
 
 public class DialogMonitorJob extends Thread {
 
-	boolean m_allDone;
+	volatile boolean m_allDone;
 
 	Display m_display;
 
@@ -73,7 +73,7 @@ public class DialogMonitorJob extends Thread {
 
 	@Override
 	public void run() {
-		while (true) {
+		while (!m_display.isDisposed()) {
 
 			if (isSyncMode) {
 				m_display.syncExec(new Runnable() {

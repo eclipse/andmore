@@ -23,6 +23,7 @@ import org.eclipse.andmore.internal.editors.layout.refactoring.AdtProjectTest;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.text.DocumentCommand;
 import org.eclipse.jface.text.IDocument;
@@ -30,6 +31,7 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.junit.Before;
@@ -39,9 +41,66 @@ import org.junit.Test;
 @SuppressWarnings("javadoc")
 public class AndroidXmlAutoEditStrategyTest extends AdtProjectTest {
 
+	private AndroidXmlEditor layoutEditor;
+	
+	@SuppressWarnings("null")
+	@Override
+	protected IProject createProject(String name) {
+		IProject project = null; 
+		//assertTrue(editor instanceof AndroidXmlEditor);
+		int iterations = 0;
+		IEditorPart editor = null;
+		while (true) {
+			if (iterations == 50) {
+				fail("Couldn't get IDE to open CommonXmlEditor; ran out of time");
+			}
+			project = super.createProject(name);
+			// All tests just operate on the "edithandling" document; the contents
+			// are
+			// ignored and replaced with the before-document passed in
+			IFile file = null;
+			try {
+				file = getLayoutFile(project, "edithandling.xml");
+			} catch (Exception e) {
+				fail("Exception geting layout file: " + e.getMessage());
+			}
+
+			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			assertNotNull(page);
+			try {
+				editor = IDE.openEditor(page, file);
+			} catch (PartInitException e) {
+				fail("Exception opening layout file: " + e.getMessage());
+			}
+			if (editor instanceof AndroidXmlEditor)
+				break;
+			editor.dispose();
+			NullProgressMonitor monitor = new NullProgressMonitor();
+			try {
+				file.delete(true, monitor);
+			} catch (CoreException e) {
+				fail("Exception deleting layout file: " + e.getMessage());
+			}
+			try {
+				project.close(monitor);
+		        project.delete(true, monitor);
+			} catch (CoreException e) {
+				fail("Exception closing project: " + e.getMessage());
+			}
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				break;
+			}
+			iterations++;
+		}
+		layoutEditor = (AndroidXmlEditor) editor;
+		return project;
+	}
+	
 	public void checkInsertNewline(String before, String after) throws Exception {
 		AndroidXmlAutoEditStrategy s = new AndroidXmlAutoEditStrategy();
-
+/*
 		// All tests just operate on the "edithandling" document; the contents
 		// are
 		// ignored and replaced with the before-document passed in
@@ -49,9 +108,21 @@ public class AndroidXmlAutoEditStrategyTest extends AdtProjectTest {
 
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		assertNotNull(page);
-		IEditorPart editor = IDE.openEditor(page, file);
-		assertTrue(editor instanceof AndroidXmlEditor);
-		AndroidXmlEditor layoutEditor = (AndroidXmlEditor) editor;
+		IEditorPart editor = null;
+		//assertTrue(editor instanceof AndroidXmlEditor);
+		int iterations = 0;
+		while (true) {
+			if (iterations == 100) {
+				fail("Couldn't get IDE to open CommonXmlEditor; ran out of time");
+			}
+			editor = IDE.openEditor(page, file);
+			if (editor instanceof AndroidXmlEditor)
+				break;
+			editor.dispose();
+			Thread.sleep(250);
+			iterations++;
+		}
+		*/
 		ISourceViewer viewer = layoutEditor.getStructuredSourceViewer();
 
 		String newDocumentContent = stripCaret(before);
